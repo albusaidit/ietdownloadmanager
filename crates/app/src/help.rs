@@ -12,9 +12,9 @@ use crate::dialogs::{Outcome, window};
 use crate::winui::{self, ButtonKind, r};
 
 /// IET Download Manager's own repository (this fork): problem reports, releases, source,
-/// licences. OWNER is a placeholder until the fork is on GitHub (also LATEST below and
-/// crates/crash/src/github.rs).
-pub const REPO: &str = "https://github.com/OWNER/ietdownloadmanager";
+/// licences. Also used by LATEST below and
+/// crates/crash/src/github.rs.
+pub const REPO: &str = "https://github.com/albusaidit/ietdownloadmanager";
 /// The project this fork is based on: Mister Download Manager by Ahmed Nefzaoui
 /// (GPL-3.0-or-later).
 #[allow(dead_code)]
@@ -22,7 +22,7 @@ pub const UPSTREAM: &str = "https://github.com/anefzaoui/misterdownloadmanager";
 /// The creator's GitHub Sponsors page: Help → Support IETDM, About's last line. The website, the
 /// extension's popup and the repository's Sponsor button (.github/FUNDING.yml) point there too.
 pub const SPONSORS: &str = "https://github.com/sponsors/anefzaoui";
-const LATEST: &str = "https://api.github.com/repos/OWNER/ietdownloadmanager/releases/latest";
+const LATEST: &str = "https://api.github.com/repos/albusaidit/ietdownloadmanager/releases/latest";
 pub const VERSION: &str = env!("CARGO_PKG_VERSION");
 pub const COMMIT: &str = env!("MDM_COMMIT");
 /// While IETDM runs, the automatic check comes again this often (it also checks at every start).

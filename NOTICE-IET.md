@@ -17,7 +17,7 @@ Forked from upstream commit `a156528` (version 0.5.2) on 2026-11-13.
   installer AppId, so it can be installed next to Mister Download Manager without touching it.
 - Replaced the app icon with an original IET icon.
 - Pointed problem reports, crash reports and the update check at this fork's own repository
-  (`OWNER/ietdownloadmanager`, a placeholder until it is published) instead of upstream's.
+  (`albusaidit/ietdownloadmanager`) instead of upstream's.
 - The About box credits the original project and author.
 
 Links to upstream's website (help pages) and source are kept. Upstream's documentation in

@@ -3,8 +3,8 @@
 
 use serde::Deserialize;
 
-// OWNER: placeholder until the fork is on GitHub (see crates/app/src/help.rs REPO).
-pub const REPO: &str = "OWNER/ietdownloadmanager";
+// This fork's repository (see crates/app/src/help.rs REPO).
+pub const REPO: &str = "albusaidit/ietdownloadmanager";
 
 /// GitHub turns away very long addresses: the form's address is kept under this, the report cut
 /// to fit (the full one goes in as the attached file).
