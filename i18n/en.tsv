@@ -251,12 +251,12 @@
 #. button in rssdlg.rs
 #. RSS feeds window: button that subscribes to the feed whose address is typed
 	Add feed	Add feed
-#. text in playlistdlg.rs
-#. title of the question asked before a playlist adds many downloads
-	Add many downloads	Add many downloads
 #. window title in extension.rs
 #. title of the window that offers the browser extension
 	Add IET Download Manager to your browser	Add IET Download Manager to your browser
+#. text in playlistdlg.rs
+#. title of the question asked before a playlist adds many downloads
+	Add many downloads	Add many downloads
 #. message or event log entry in the main window; text in the tray icon's menu
 #. link in the empty download list: opens Add URL
 	Add new download	Add new download
@@ -499,6 +499,8 @@
 #. text in countries.rs
 #. a country's name (where a download's server is)
 	Barbados	Barbados
+#. text in the Help menu's windows (About, updates, shortcuts, Tell a friend)
+	Based on Mister Download Manager by Ahmed Nefzaoui, modified for IET. Free and open source under the GNU GPL, version 3 or later. Videos are found by yt-dlp; torrents run on librqbit.	Based on Mister Download Manager by Ahmed Nefzaoui, modified for IET. Free and open source under the GNU GPL, version 3 or later. Videos are found by yt-dlp; torrents run on librqbit.
 #. window title in the Batch download window
 	Batch download	Batch download
 #. text in countries.rs
@@ -842,11 +844,11 @@
 #. text in the Options window
 	Customize "Download progress" dialog	Customize "Download progress" dialog
 #. text in the Options window
-	Customize keys to prevent or force downloading with IETDM	Customize keys to prevent or force downloading with IETDM
-#. text in the Options window
 	Customize IETDM Download panels in browsers	Customize IETDM Download panels in browsers
 #. text in the Options window
 	Customize IETDM menu items in context menu of browsers	Customize IETDM menu items in context menu of browsers
+#. text in the Options window
+	Customize keys to prevent or force downloading with IETDM	Customize keys to prevent or force downloading with IETDM
 #. text in countries.rs
 #. a country's name (where a download's server is)
 	Cyprus	Cyprus
@@ -1580,6 +1582,65 @@
 #. text in countries.rs
 #. a country's name (where a download's server is)
 	Iceland	Iceland
+#. message or event log entry in the main window; window title in a dialog box; text in the Help menu's windows (About, updates, shortcuts, Tell a friend)
+	IET Download Manager	IET Download Manager
+#. text in unix.rs
+#. Linux, at start, on the terminal and in a message box: a library the window needs isn't installed; {libraries} = its file names (libxkbcommon-x11.so.0…), left as they are
+	IET Download Manager can't open its window: this system lacks {libraries}.	IET Download Manager can't open its window: this system lacks {libraries}.
+#. text in crashui.rs
+#. crash report window heading: IETDM crashed and is gone
+	IET Download Manager closed unexpectedly	IET Download Manager closed unexpectedly
+#. window title in the Options window
+	IET Download Manager Configuration	IET Download Manager Configuration
+#. text in crashui.rs
+	IET Download Manager crash report	IET Download Manager crash report
+#. text in crashui.rs
+#. crash report window heading: an internal error, IETDM still running
+	IET Download Manager hit an internal error	IET Download Manager hit an internal error
+#. text in wake.rs
+#. why the computer isn't going to sleep, in the system's list of programs that keep it awake; {queue} = the queue's name
+#. {queue} = a queue name such as "Main queue" (keep the braces as they are)
+	IET Download Manager is running the queue "{queue}"	IET Download Manager is running the queue "{queue}"
+#. text in crashui.rs
+#. crash report window heading: IETDM's window doesn't answer (frozen)
+	IET Download Manager stopped responding	IET Download Manager stopped responding
+#. text in crashui.rs
+	IET Download Manager stopped responding for a while	IET Download Manager stopped responding for a while
+#. text in the Options window
+#. \\n starts a new line: break lines where they fit the translation
+	IET Download Manager writes every connection straight into the final\nfile (a sparse part file next to it), so no temporary directory and no\nassembling step are needed.	IET Download Manager writes every connection straight into the final\nfile (a sparse part file next to it), so no temporary directory and no\nassembling step are needed.
+#. text in the Help menu's windows (About, updates, shortcuts, Tell a friend)
+#. {version} = a version number (keep the braces as they are)
+	IET Download Manager {version} is available (released {date}).	IET Download Manager {version} is available (released {date}).
+#. text in helpers.rs
+#. Video helpers: {version} = the version of IETDM's own copy
+#. {version} = a version number (keep the braces as they are)
+	IET Download Manager's own copy, version {version}	IET Download Manager's own copy, version {version}
+#. text in unix.rs
+#. Linux, at start, on the terminal: the libraries an X11 window needs aren't installed, so the window opens through Wayland instead, where menus can't be placed under what was clicked; {libraries} = their file names, left as they are
+	IET Download Manager's X11 window needs {libraries}, which this system lacks: it opens on Wayland instead, where its menus may open away from their titles.	IET Download Manager's X11 window needs {libraries}, which this system lacks: it opens on Wayland instead, where its menus may open away from their titles.
+#. text in the Options window
+#. Options → Remote → Pair a device: the remote control isn't listening (no network, port taken): the Remote page says why
+	IETDM can't be reached on the network now: Options → Remote says why.	IETDM can't be reached on the network now: Options → Remote says why.
+#. text in remote.rs
+#. remote control page (on a phone): the address typed isn't one IETDM downloads (not http, https, ftp or magnet)
+	IETDM cannot download this address.	IETDM cannot download this address.
+#. text in remote.rs
+#. remote control page (on a phone): adding a download failed
+	IETDM could not add it.	IETDM could not add it.
+#. text in remote.rs
+#. remote control page (on a phone): an action failed
+	IETDM could not do it.	IETDM could not do it.
+#. text in remote.rs
+#. remote control page (on a phone): IETDM can't be reached while pairing
+	IETDM does not answer. Check that it is running and on the same network.	IETDM does not answer. Check that it is running and on the same network.
+#. text in remote.rs
+#. remote control page (on a phone): IETDM can't be reached now; the page keeps trying by itself
+#. the trailing ... means it is still going on: keep it
+	IETDM does not answer. Trying again...	IETDM does not answer. Trying again...
+#. text in remote.rs
+#. remote control page (on a phone): no pairing code is shown in IETDM; "Pair a device" is IETDM's button
+	IETDM shows no code now. Click Pair a device there first.	IETDM shows no code now. Click Pair a device there first.
 #. text in the Options window
 	If a duplicate download link is added:	If a duplicate download link is added:
 #. text in the Options window
@@ -1974,28 +2035,6 @@
 #. text in countries.rs
 #. a country's name (where a download's server is)
 	Mayotte	Mayotte
-#. text in the Options window
-#. Options → Remote → Pair a device: the remote control isn't listening (no network, port taken): the Remote page says why
-	IETDM can't be reached on the network now: Options → Remote says why.	IETDM can't be reached on the network now: Options → Remote says why.
-#. text in remote.rs
-#. remote control page (on a phone): the address typed isn't one IETDM downloads (not http, https, ftp or magnet)
-	IETDM cannot download this address.	IETDM cannot download this address.
-#. text in remote.rs
-#. remote control page (on a phone): adding a download failed
-	IETDM could not add it.	IETDM could not add it.
-#. text in remote.rs
-#. remote control page (on a phone): an action failed
-	IETDM could not do it.	IETDM could not do it.
-#. text in remote.rs
-#. remote control page (on a phone): IETDM can't be reached while pairing
-	IETDM does not answer. Check that it is running and on the same network.	IETDM does not answer. Check that it is running and on the same network.
-#. text in remote.rs
-#. remote control page (on a phone): IETDM can't be reached now; the page keeps trying by itself
-#. the trailing ... means it is still going on: keep it
-	IETDM does not answer. Trying again...	IETDM does not answer. Trying again...
-#. text in remote.rs
-#. remote control page (on a phone): no pairing code is shown in IETDM; "Pair a device" is IETDM's button
-	IETDM shows no code now. Click Pair a device there first.	IETDM shows no code now. Click Pair a device there first.
 #. text in whereis.rs
 #. how far a download's server is, by its round trip (60 to 150 ms)
 	medium	medium
@@ -2028,43 +2067,6 @@
 #. text in a download's progress window
 #. legend: pieces not downloaded yet
 	Missing	Missing
-#. message or event log entry in the main window; window title in a dialog box; text in the Help menu's windows (About, updates, shortcuts, Tell a friend)
-	IET Download Manager	IET Download Manager
-#. text in unix.rs
-#. Linux, at start, on the terminal and in a message box: a library the window needs isn't installed; {libraries} = its file names (libxkbcommon-x11.so.0…), left as they are
-	IET Download Manager can't open its window: this system lacks {libraries}.	IET Download Manager can't open its window: this system lacks {libraries}.
-#. text in crashui.rs
-#. crash report window heading: IETDM crashed and is gone
-	IET Download Manager closed unexpectedly	IET Download Manager closed unexpectedly
-#. window title in the Options window
-	IET Download Manager Configuration	IET Download Manager Configuration
-#. text in crashui.rs
-	IET Download Manager crash report	IET Download Manager crash report
-#. text in crashui.rs
-#. crash report window heading: an internal error, IETDM still running
-	IET Download Manager hit an internal error	IET Download Manager hit an internal error
-#. text in wake.rs
-#. why the computer isn't going to sleep, in the system's list of programs that keep it awake; {queue} = the queue's name
-#. {queue} = a queue name such as "Main queue" (keep the braces as they are)
-	IET Download Manager is running the queue "{queue}"	IET Download Manager is running the queue "{queue}"
-#. text in crashui.rs
-#. crash report window heading: IETDM's window doesn't answer (frozen)
-	IET Download Manager stopped responding	IET Download Manager stopped responding
-#. text in crashui.rs
-	IET Download Manager stopped responding for a while	IET Download Manager stopped responding for a while
-#. text in the Options window
-#. \\n starts a new line: break lines where they fit the translation
-	IET Download Manager writes every connection straight into the final\nfile (a sparse part file next to it), so no temporary directory and no\nassembling step are needed.	IET Download Manager writes every connection straight into the final\nfile (a sparse part file next to it), so no temporary directory and no\nassembling step are needed.
-#. text in the Help menu's windows (About, updates, shortcuts, Tell a friend)
-#. {version} = a version number (keep the braces as they are)
-	IET Download Manager {version} is available (released {date}).	IET Download Manager {version} is available (released {date}).
-#. text in helpers.rs
-#. Video helpers: {version} = the version of IETDM's own copy
-#. {version} = a version number (keep the braces as they are)
-	IET Download Manager's own copy, version {version}	IET Download Manager's own copy, version {version}
-#. text in unix.rs
-#. Linux, at start, on the terminal: the libraries an X11 window needs aren't installed, so the window opens through Wayland instead, where menus can't be placed under what was clicked; {libraries} = their file names, left as they are
-	IET Download Manager's X11 window needs {libraries}, which this system lacks: it opens on Wayland instead, where its menus may open away from their titles.	IET Download Manager's X11 window needs {libraries}, which this system lacks: it opens on Wayland instead, where its menus may open away from their titles.
 #. text in the Scheduler window
 #. Monday, as short as a calendar's column head (two letters in English)
 	Mo	Mo
@@ -2437,13 +2439,13 @@
 #. title of the message when the folder of a downloaded file can't be shown
 #. button that opens the torrent's containing folder in the file manager
 	Open folder	Open folder
+#. text in the tray icon's menu
+	Open IET Download Manager	Open IET Download Manager
 #. text in a download's progress window
 #. button in a download's progress window when the site sent a web page (a waiting page, a captcha) instead of the file: opens the download's link in the web browser
 	Open in browser	Open in browser
 #. checkbox in the Add torrent window
 	Open magnet links and .torrent files with IET Download Manager	Open magnet links and .torrent files with IET Download Manager
-#. text in the tray icon's menu
-	Open IET Download Manager	Open IET Download Manager
 #. text in extension.rs
 #. step 2 of turning on the Safari extension; Cmd is the Command key
 	Open Safari's settings (Cmd+,).	Open Safari's settings (Cmd+,).
@@ -3377,8 +3379,6 @@
 #. message or event log entry in the main window
 #. {error} = an error message (keep the braces as they are)
 	The download list could not be saved: {error}. Changes are kept while IETDM runs.	The download list could not be saved: {error}. Changes are kept while IETDM runs.
-#. text in the Help menu's windows (About, updates, shortcuts, Tell a friend)
-	Based on Mister Download Manager by Ahmed Nefzaoui, modified for IET. Free and open source under the GNU GPL, version 3 or later. Videos are found by yt-dlp; torrents run on librqbit.	Based on Mister Download Manager by Ahmed Nefzaoui, modified for IET. Free and open source under the GNU GPL, version 3 or later. Videos are found by yt-dlp; torrents run on librqbit.
 #. text in a dialog box
 	The download queue is done.	The download queue is done.
 #. text in errors.rs
@@ -4553,6 +4553,36 @@ extension	Hold Alt while clicking a link to let the browser download it.	Hold Al
 #. link under a connection problem in the toolbar button's popup, to the help page's section for it
 extension	How to fix it	How to fix it
 #. text in the browser extension
+#. the extension's name in the browser's list of extensions and on its toolbar button; keep the name IET Download Manager as it is
+extension	IET Download Manager	IET Download Manager
+#. text in the browser extension
+#. status when the app was started for a download but didn't answer in time; keep the name IET Download Manager as it is
+extension	IET Download Manager didn't start in time	IET Download Manager didn't start in time
+#. text in the browser extension
+#. status when the app refuses this copy of the extension (another copy is installed, or it came from another store); keep the name IET Download Manager as it is
+extension	IET Download Manager doesn't accept this copy of the extension	IET Download Manager doesn't accept this copy of the extension
+#. text in the browser extension
+#. in the menu under the download button over a video: the app is already looking up other videos and can't look this one up now; keep the name IET Download Manager as it is
+extension	IET Download Manager is busy with other videos	IET Download Manager is busy with other videos
+#. text in the browser extension
+#. shown briefly on the download button when the app could not be reached; keep the name IET Download Manager as it is
+extension	IET Download Manager isn't installed or didn't start	IET Download Manager isn't installed or didn't start
+#. text in the browser extension
+#. status when the browser can't find the app's connection; keep the name IET Download Manager as it is
+extension	IET Download Manager isn't installed, or its browser integration isn't set up	IET Download Manager isn't installed, or its browser integration isn't set up
+#. text in the browser extension
+#. in the menu under the download button over a video: the app needs the yt-dlp tool (a program's name, keep it as it is) to find this video's qualities, and it isn't installed; keep the name IET Download Manager as it is
+extension	IET Download Manager needs yt-dlp for this video	IET Download Manager needs yt-dlp for this video
+#. text in the browser extension
+#. tooltip of the switch Send downloads through this browser's proxy or VPN extension; keep the name IET Download Manager as it is
+extension	IET Download Manager then downloads through the same proxy as this browser. The browser asks you once to allow it; turning this off takes that back.	IET Download Manager then downloads through the same proxy as this browser. The browser asks you once to allow it; turning this off takes that back.
+#. text in the browser extension
+#. tooltip of the switch Send downloads through this browser's proxy or VPN extension in Chrome, Edge and the other Chromium browsers (they ask for no permission at the switch); keep the name IET Download Manager as it is
+extension	IET Download Manager then downloads through the same proxy as this browser. While this is off, the extension doesn't read the browser's proxy.	IET Download Manager then downloads through the same proxy as this browser. While this is off, the extension doesn't read the browser's proxy.
+#. text in the browser extension
+#. on the download button (red) over a video when the app isn't installed or didn't start; 'Get IETDM' and 'Retry' buttons follow; IETDM is the app's short name, keep it; short
+extension	IETDM didn't answer	IETDM didn't answer
+#. text in the browser extension
 #. pairing failed for another reason
 extension	It didn't work. Try again.	It didn't work. Try again.
 #. text in the browser extension
@@ -4584,38 +4614,8 @@ extension	Looking up the qualities…	Looking up the qualities…
 #. in the menu under the download button over a video: the app took more than a minute to find the video's qualities, so the menu stopped waiting
 extension	Looking up took too long	Looking up took too long
 #. text in the browser extension
-#. on the download button (red) over a video when the app isn't installed or didn't start; 'Get IETDM' and 'Retry' buttons follow; IETDM is the app's short name, keep it; short
-extension	IETDM didn't answer	IETDM didn't answer
-#. text in the browser extension
 #. heading in the toolbar button's popup over the list of the videos, sounds and streams the current web page has loaded
 extension	Media on this page	Media on this page
-#. text in the browser extension
-#. the extension's name in the browser's list of extensions and on its toolbar button; keep the name IET Download Manager as it is
-extension	IET Download Manager	IET Download Manager
-#. text in the browser extension
-#. status when the app was started for a download but didn't answer in time; keep the name IET Download Manager as it is
-extension	IET Download Manager didn't start in time	IET Download Manager didn't start in time
-#. text in the browser extension
-#. status when the app refuses this copy of the extension (another copy is installed, or it came from another store); keep the name IET Download Manager as it is
-extension	IET Download Manager doesn't accept this copy of the extension	IET Download Manager doesn't accept this copy of the extension
-#. text in the browser extension
-#. in the menu under the download button over a video: the app is already looking up other videos and can't look this one up now; keep the name IET Download Manager as it is
-extension	IET Download Manager is busy with other videos	IET Download Manager is busy with other videos
-#. text in the browser extension
-#. shown briefly on the download button when the app could not be reached; keep the name IET Download Manager as it is
-extension	IET Download Manager isn't installed or didn't start	IET Download Manager isn't installed or didn't start
-#. text in the browser extension
-#. status when the browser can't find the app's connection; keep the name IET Download Manager as it is
-extension	IET Download Manager isn't installed, or its browser integration isn't set up	IET Download Manager isn't installed, or its browser integration isn't set up
-#. text in the browser extension
-#. in the menu under the download button over a video: the app needs the yt-dlp tool (a program's name, keep it as it is) to find this video's qualities, and it isn't installed; keep the name IET Download Manager as it is
-extension	IET Download Manager needs yt-dlp for this video	IET Download Manager needs yt-dlp for this video
-#. text in the browser extension
-#. tooltip of the switch Send downloads through this browser's proxy or VPN extension; keep the name IET Download Manager as it is
-extension	IET Download Manager then downloads through the same proxy as this browser. The browser asks you once to allow it; turning this off takes that back.	IET Download Manager then downloads through the same proxy as this browser. The browser asks you once to allow it; turning this off takes that back.
-#. text in the browser extension
-#. tooltip of the switch Send downloads through this browser's proxy or VPN extension in Chrome, Edge and the other Chromium browsers (they ask for no permission at the switch); keep the name IET Download Manager as it is
-extension	IET Download Manager then downloads through the same proxy as this browser. While this is off, the extension doesn't read the browser's proxy.	IET Download Manager then downloads through the same proxy as this browser. While this is off, the extension doesn't read the browser's proxy.
 #. text in the browser extension
 #. the small arrow next to the Download video button that opens its menu (read aloud by screen readers)
 extension	More options	More options
@@ -4640,14 +4640,14 @@ extension	Not reached. Open its address once in this browser and accept its cert
 #. on the download button over a video (grey) when the button is turned off on this web site; a 'Turn on' button follows it; short
 extension	Off on this site	Off on this site
 #. text in the browser extension
+#. button in the toolbar button's popup; keep the name IET Download Manager as it is
+extension	Open IET Download Manager	Open IET Download Manager
+#. text in the browser extension
 #. button: open the other IETDM's address in a tab (to accept its certificate once)
 extension	Open it	Open it
 #. text in the browser extension
 #. help under the pairing boxes; Options, Remote and Pair a device are the app's window, tab and button; keep ietdownloadmanager-cli pair as it is
 extension	Open its address once and accept its certificate, then enter a code from its Options, Remote, Pair a device (or ietdownloadmanager-cli pair).	Open its address once and accept its certificate, then enter a code from its Options, Remote, Pair a device (or ietdownloadmanager-cli pair).
-#. text in the browser extension
-#. button in the toolbar button's popup; keep the name IET Download Manager as it is
-extension	Open IET Download Manager	Open IET Download Manager
 #. text in the browser extension
 #. button on the download button over a video in a feed: opens the post the video belongs to in a new tab; verb; very short
 extension	Open post	Open post
@@ -5099,6 +5099,9 @@ menu	Hide drop target	Hide drop target
 #. View → Theme: black and white with strong edges, for low vision
 menu	High contrast	High contrast
 #. menu command in the main window
+#. & marks the keyboard shortcut letter: keep one & before a letter of the translation
+menu	IET Download Manager &Home Page	IET Download Manager &Home Page
+#. menu command in the main window
 #. View → Draw with: a greyed note under "… didn't start here"; why: another error, written in IETDM's log
 menu	It couldn't start: the log says why	It couldn't start: the log says why
 #. menu command in the main window
@@ -5122,9 +5125,6 @@ menu	Metal draws with a software renderer	Metal draws with a software renderer
 #. menu command in the main window
 #. View → Theme: a style theme's name (Windows 8's flat look); keep "Metro" unless your language writes it otherwise
 menu	Metro	Metro
-#. menu command in the main window
-#. & marks the keyboard shortcut letter: keep one & before a letter of the translation
-menu	IET Download Manager &Home Page	IET Download Manager &Home Page
 #. menu command in the main window
 menu	Move/Rename (Ctrl-M)	Move/Rename (Ctrl-M)
 #. menu command in the main window
