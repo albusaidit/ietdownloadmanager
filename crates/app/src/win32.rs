@@ -4346,7 +4346,7 @@ mod startup_tests {
         assert!(startup_outdated(&format!("\"{EXE}\""), exe));
         // Written by hand: unquoted, in another case, with other slashes.
         assert!(startup_outdated(
-            r"c:\program files\mister download manager\MISTERDOWNLOADMANAGER.EXE",
+            r"c:\program files\iet download manager\IETDOWNLOADMANAGER.EXE",
             exe
         ));
         assert!(startup_outdated(
