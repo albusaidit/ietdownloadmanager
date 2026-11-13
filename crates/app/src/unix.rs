@@ -2906,8 +2906,7 @@ mod host_copy_tests {
             std::fs::create_dir_all(d).unwrap();
         }
         let write = |dir: &Path, path: &Path| {
-            let json =
-                serde_json::json!({ "name": "com.ietdownloadmanager.host", "path": path });
+            let json = serde_json::json!({ "name": "com.ietdownloadmanager.host", "path": path });
             std::fs::write(dir.join(MANIFEST), json.to_string()).unwrap();
         };
         let dirs = || vec![(a.clone(), Family::Chromium), (b.clone(), Family::Gecko)];

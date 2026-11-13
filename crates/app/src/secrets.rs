@@ -915,7 +915,10 @@ mod tests {
             let _ = on_disk(&loaded);
             copy.run_once();
             let json = on_disk(&loaded);
-            assert_eq!(json.matches("keychain:IETDM-test-unit/cccc0006/").count(), 3);
+            assert_eq!(
+                json.matches("keychain:IETDM-test-unit/cccc0006/").count(),
+                3
+            );
             copy.after_write();
             copy.run_once();
         });

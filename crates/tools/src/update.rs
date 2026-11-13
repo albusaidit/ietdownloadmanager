@@ -349,8 +349,10 @@ Connection: close
 
     #[tokio::test]
     async fn a_release_file_is_taken_only_from_a_list_signed_by_mdm() {
-        let zip = "IETDownloadManager-9.9.9-x64.zip";
-        let setup = "IETDownloadManager-9.9.9-setup.exe";
+        // Upstream's signed fixtures (tests/fixtures), kept under their original names: the
+        // signature covers them.
+        let zip = "MisterDownloadManager-9.9.9-x64.zip";
+        let setup = "MisterDownloadManager-9.9.9-setup.exe";
         let assets = |base: &str| -> Vec<(String, String)> {
             ["SHA256SUMS.txt", "SHA256SUMS.txt.sig", zip, setup]
                 .iter()
@@ -377,7 +379,7 @@ Connection: close
         let out = dir.path().join("out");
         unzip(&file, &out).unwrap();
         assert_eq!(
-            std::fs::read(single_folder(&out).join("ietdownloadmanager.exe")).unwrap(),
+            std::fs::read(single_folder(&out).join("misterdownloadmanager.exe")).unwrap(),
             b"new program"
         );
         // A file that isn't the one the signed list names is refused, and not kept.
@@ -519,17 +521,13 @@ Connection: close
 
     #[test]
     fn bundles_on_a_mac() {
-        let exe = Path::new(
-            "/Applications/IET Download Manager.app/Contents/MacOS/ietdownloadmanager",
-        );
+        let exe =
+            Path::new("/Applications/IET Download Manager.app/Contents/MacOS/ietdownloadmanager");
         assert_eq!(
             app_bundle(exe).as_deref(),
             Some(Path::new("/Applications/IET Download Manager.app"))
         );
-        assert_eq!(
-            app_bundle(Path::new("/usr/bin/ietdownloadmanager")),
-            None
-        );
+        assert_eq!(app_bundle(Path::new("/usr/bin/ietdownloadmanager")), None);
     }
 
     #[test]

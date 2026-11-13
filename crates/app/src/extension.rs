@@ -569,10 +569,8 @@ pub fn set_up(ctx: &egui::Context) {
             #[cfg(windows)]
             if let Ok(exe) = std::env::current_exe() {
                 crate::launch::run_within(
-                    std::process::Command::new(
-                        exe.with_file_name("ietdownloadmanager-nmhost.exe"),
-                    )
-                    .arg("--register"),
+                    std::process::Command::new(exe.with_file_name("ietdownloadmanager-nmhost.exe"))
+                        .arg("--register"),
                     SET_UP_LIMIT,
                 );
             }

@@ -273,9 +273,7 @@ fn explain(answer: Result<String, String>) -> Result<String, String> {
             );
         }
         "gone" => {
-            return Err(
-                "IET Download Manager is closing; try again once it has started.".into(),
-            );
+            return Err("IET Download Manager is closing; try again once it has started.".into());
         }
         _ => {}
     }

@@ -4358,10 +4358,7 @@ mod startup_tests {
         assert!(!startup_outdated(&format!("\"{EXE}\" /startup"), exe));
         assert!(!startup_outdated(&format!("\"{EXE}\" /STARTUP"), exe));
         // Another copy's (a portable one, a build elsewhere).
-        assert!(!startup_outdated(
-            r#""D:\mdm\ietdownloadmanager.exe""#,
-            exe
-        ));
+        assert!(!startup_outdated(r#""D:\mdm\ietdownloadmanager.exe""#, exe));
         assert!(!startup_outdated("", exe));
     }
 

@@ -434,7 +434,7 @@
         },
         "pair": {
           "default": false,
-          "description": "The remote control (#157, `misterdownloadmanager-cli pair`): show a new pairing code;\nanswered with it, the page's addresses and a QR code to scan ([`api::PairAnswer`]).",
+          "description": "The remote control (#157, `ietdownloadmanager-cli pair`): show a new pairing code;\nanswered with it, the page's addresses and a QR code to scan ([`api::PairAnswer`]).",
           "type": "boolean"
         },
         "panel_hide_site": {
@@ -555,7 +555,7 @@
         },
         "startup": {
           "default": false,
-          "description": "`/startup` (beyond IDM): started with the session (Options → General → Launch on\nstartup, or the installer's \"Start when Windows starts\", #226): MDM starts in the\nnotification area, its window hidden. Changes nothing in a running app.",
+          "description": "`/startup` (beyond IDM): started with the session (Options → General → Launch on\nstartup, or the installer's \"Start when Windows starts\", #226): IETDM starts in the\nnotification area, its window hidden. Changes nothing in a running app.",
           "type": "boolean"
         },
         "token": {
@@ -707,7 +707,7 @@
         },
         "label": {
           "default": "",
-          "description": "What the menu shows (\"720p mp4\"), in MDM's language.",
+          "description": "What the menu shows (\"720p mp4\"), in IETDM's language.",
           "type": "string"
         },
         "original": {
@@ -765,14 +765,14 @@
       "description": "The browser's quality menu (`video_lookup`, `video_poll`, `video_pick`): where a look-up is,\nor what became of a choice. Answered whatever the automation API's switch (the browser's\nhost asks, not a program).",
       "properties": {
         "choices": {
-          "description": "`ready`: the qualities to choose from, labelled in MDM's language; `video_pick` takes a\nplace in this list.",
+          "description": "`ready`: the qualities to choose from, labelled in IETDM's language; `video_pick` takes a\nplace in this list.",
           "items": {
             "$ref": "#/$defs/VideoChoice"
           },
           "type": "array"
         },
         "message": {
-          "description": "`failed` with [`lookup::ERROR`]: why, in MDM's words and language.",
+          "description": "`failed` with [`lookup::ERROR`]: why, in IETDM's words and language.",
           "type": [
             "string",
             "null"
@@ -819,7 +819,7 @@
       "type": "object"
     },
     "VideoNotice": {
-      "description": "A word in the browser's quality menu on what the look-up lacked (#852), in MDM's language.",
+      "description": "A word in the browser's quality menu on what the look-up lacked (#852), in IETDM's language.",
       "properties": {
         "link": {
           "default": "",
@@ -833,7 +833,7 @@
         },
         "url": {
           "default": "",
-          "description": "The help page it opens, on MDM's website.",
+          "description": "The help page it opens, on IETDM's website.",
           "type": "string"
         }
       },
@@ -870,5 +870,5 @@
   "$ref": "#/$defs/Request",
   "$schema": "https://json-schema.org/draft/2020-12/schema",
   "description": "One JSON line to the port in ipc.json (on 127.0.0.1), one line back. A request is `Request`. A command (an address to add, start_queue) is answered `ok`; a question is answered with the JSON object for it (`ListAnswer`, `ActAnswer`, `ApiAnswer`) or an `ErrorAnswer`. A wrong token is answered `denied`, an app that doesn't answer within 2 seconds `timeout`. The browser's quality menu (`video_lookup`, `video_poll`, `video_pick`, sent by its native host) is answered with a `VideoLookupAnswer`. Guide: https://misterdownloadmanager.com/help/command-line.html#the-automation-api",
-  "title": "Mister Download Manager automation API"
+  "title": "IET Download Manager automation API"
 }
