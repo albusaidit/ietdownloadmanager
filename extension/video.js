@@ -275,7 +275,7 @@
   function noticeOf(s) {
     const n = s && typeof s === "object" ? s.notice : null;
     if (!n || typeof n !== "object" || typeof n.text !== "string" || !n.text.trim()) return null;
-    const ok = typeof n.url === "string" && /^https:\/\/ietdownloadmanager\.com\//.test(n.url);
+    const ok = typeof n.url === "string" && /^https:\/\/misterdownloadmanager\.com\//.test(n.url);
     const link = ok && typeof n.link === "string" && n.link.trim() ? n.link.slice(0, 100) : "";
     return { text: n.text.slice(0, 400), link, url: link ? n.url : "" };
   }
