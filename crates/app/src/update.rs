@@ -1,7 +1,7 @@
 //! Updating in place (Help → Check for updates → Update now): this copy's release file, fetched
 //! and checked in the background (`mdm_tools::update`: the release's signed checksum list), then
 //! put where this copy is, on a thread of its own too (unpacking, `tar`, `hdiutil`, `ditto`: the
-//! window's thread waits for none of them, #222). MDM closes for it; the new copy starts with
+//! window's thread waits for none of them, #222). IETDM closes for it; the new copy starts with
 //! `/updated`, waits for the old one to be gone, and removes what the update set aside.
 
 use std::path::{Path, PathBuf};
@@ -18,11 +18,11 @@ pub const UPDATED: &str = "/updated";
 /// What follows once the file is in place.
 #[derive(Debug)]
 pub enum Next {
-    /// MDM closes once this has started: the new copy (or the installer, which starts it).
+    /// IETDM closes once this has started: the new copy (or the installer, which starts it).
     /// Started by the window when it takes the result, so an update cancelled meanwhile starts
     /// nothing.
     Restart(Command),
-    /// Handed to the system's package installer (a .deb or .rpm): MDM stays open.
+    /// Handed to the system's package installer (a .deb or .rpm): IETDM stays open.
     Opened,
 }
 
@@ -143,7 +143,7 @@ fn apply(install: Install, file: &Path) -> Result<Next, String> {
         Ok(Next::Restart(cmd))
     };
     match install {
-        // The installer closes MDM itself (/exit), installs where it was (the same install
+        // The installer closes IETDM itself (/exit), installs where it was (the same install
         // mode), and starts it again (/relaunch, tools/installer/mdm.iss).
         Install::Installer => {
             let mut cmd = Command::new(file);
@@ -281,16 +281,16 @@ mod tests {
                 .collect()
         };
         let full = a(&[
-            "MisterDownloadManager-0.2.2-setup.exe",
+            "IETDownloadManager-0.2.2-setup.exe",
             "SHA256SUMS.txt",
             "SHA256SUMS.txt.sig",
         ]);
         assert_eq!(
             asset_for(Install::Installer, "0.2.2", &full).as_deref(),
-            Some("MisterDownloadManager-0.2.2-setup.exe")
+            Some("IETDownloadManager-0.2.2-setup.exe")
         );
         // An unsigned release, another kind's file, a build from source: no.
-        let unsigned = a(&["MisterDownloadManager-0.2.2-setup.exe", "SHA256SUMS.txt"]);
+        let unsigned = a(&["IETDownloadManager-0.2.2-setup.exe", "SHA256SUMS.txt"]);
         assert_eq!(asset_for(Install::Installer, "0.2.2", &unsigned), None);
         assert_eq!(asset_for(Install::PortableZip, "0.2.2", &full), None);
         assert_eq!(asset_for(Install::Source, "0.2.2", &full), None);
@@ -307,9 +307,9 @@ mod tests {
                 .map(|n| (n.to_string(), format!("https://x/{n}")))
                 .collect()
         };
-        let old = "MisterDownloadManager-0.3.0-linux-x86_64-experimental.AppImage";
-        let new = "MisterDownloadManager-0.3.0-linux-x86_64.AppImage";
-        let deb = "MisterDownloadManager-0.3.0-linux-x86_64.deb";
+        let old = "IETDownloadManager-0.3.0-linux-x86_64-experimental.AppImage";
+        let new = "IETDownloadManager-0.3.0-linux-x86_64.AppImage";
+        let deb = "IETDownloadManager-0.3.0-linux-x86_64.deb";
         for (assets, want) in [
             (release(&[old]), Some(old)),
             (release(&[new, deb]), Some(new)),

@@ -1,4 +1,4 @@
-//! Issue #507: a magnet link handed to MDM while Add torrent was already open was dropped
+//! Issue #507: a magnet link handed to IETDM while Add torrent was already open was dropped
 //! without a word (the channel answered ok, nothing happened). It now waits its turn: Add torrent
 //! opens again for it once the first one closes. The real app, off the screens (MDM_OFFSCREEN),
 //! with a data folder of its own: two magnet links handed over as Windows starts the program for
@@ -16,7 +16,7 @@ use std::path::Path;
 use std::process::{Child, Command};
 use std::time::{Duration, Instant};
 
-const APP: &str = env!("CARGO_BIN_EXE_misterdownloadmanager");
+const APP: &str = env!("CARGO_BIN_EXE_ietdownloadmanager");
 
 /// The app's log so far (every file of `logs/`).
 fn log(data: &Path) -> String {
@@ -121,9 +121,9 @@ fn a_magnet_handed_over_while_add_torrent_is_open_opens_after_it() {
     let result = std::panic::catch_unwind(std::panic::AssertUnwindSafe(|| {
         wait_for(&mut app, data, "window opened: main", 1, wait);
         let first =
-            "magnet:?xt=urn:btih:5b4f0c3a9e1d27f86c0b3a4e9d1f2a7c6e8b0d14&dn=MDM%20test%201";
+            "magnet:?xt=urn:btih:5b4f0c3a9e1d27f86c0b3a4e9d1f2a7c6e8b0d14&dn=IETDM%20test%201";
         let second =
-            "magnet:?xt=urn:btih:7c1e9a2b4d6f8e0a1c3b5d7f9e2a4c6b8d0f1e23&dn=MDM%20test%202";
+            "magnet:?xt=urn:btih:7c1e9a2b4d6f8e0a1c3b5d7f9e2a4c6b8d0f1e23&dn=IETDM%20test%202";
         second_launch(data, &[first]);
         wait_for(&mut app, data, opened, 1, wait);
         // Its first frames drawn (a close asked before then isn't seen by the window yet).

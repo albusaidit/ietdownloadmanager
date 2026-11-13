@@ -148,14 +148,14 @@ pub struct VideoLookupAnswer {
     /// by its address, as the Download video window names it ([`crate::Command::video_title`]).
     #[serde(skip_serializing_if = "Option::is_none")]
     pub title: Option<String>,
-    /// `ready`: the qualities to choose from, labelled in MDM's language; `video_pick` takes a
+    /// `ready`: the qualities to choose from, labelled in IETDM's language; `video_pick` takes a
     /// place in this list.
     #[serde(skip_serializing_if = "Vec::is_empty")]
     pub choices: Vec<VideoChoice>,
     /// `failed`: [`lookup::NO_YTDLP`], [`lookup::NO_CHOICES`] or [`lookup::ERROR`].
     #[serde(skip_serializing_if = "Option::is_none")]
     pub reason: Option<String>,
-    /// `failed` with [`lookup::ERROR`]: why, in MDM's words and language.
+    /// `failed` with [`lookup::ERROR`]: why, in IETDM's words and language.
     #[serde(skip_serializing_if = "Option::is_none")]
     pub message: Option<String>,
     /// `ready` (and `failed` with [`lookup::NO_CHOICES`]): what the look-up lacked and how to
@@ -165,7 +165,7 @@ pub struct VideoLookupAnswer {
     pub notice: Option<VideoNotice>,
 }
 
-/// A word in the browser's quality menu on what the look-up lacked (#852), in MDM's language.
+/// A word in the browser's quality menu on what the look-up lacked (#852), in IETDM's language.
 #[derive(Clone, Debug, Default, PartialEq, Serialize, Deserialize, JsonSchema)]
 #[serde(default)]
 pub struct VideoNotice {
@@ -173,7 +173,7 @@ pub struct VideoNotice {
     pub text: String,
     /// The link's words ("How to install one").
     pub link: String,
-    /// The help page it opens, on MDM's website.
+    /// The help page it opens, on IETDM's website.
     pub url: String,
 }
 
@@ -181,7 +181,7 @@ pub struct VideoNotice {
 #[derive(Clone, Debug, Default, PartialEq, Serialize, Deserialize, JsonSchema)]
 #[serde(default)]
 pub struct VideoChoice {
-    /// What the menu shows ("720p mp4"), in MDM's language.
+    /// What the menu shows ("720p mp4"), in IETDM's language.
     pub label: String,
     /// The file's type (`mp4`, `mp3`).
     pub ext: String,
@@ -225,7 +225,7 @@ pub mod lookup {
     pub const READY: &str = "ready";
     /// Not found: `reason`, with `message` for an error.
     pub const FAILED: &str = "failed";
-    /// The page is a list of videos (a playlist, a channel): chosen in MDM's window.
+    /// The page is a list of videos (a playlist, a channel): chosen in IETDM's window.
     pub const LIST: &str = "list";
     /// Two look-ups are running already.
     pub const BUSY: &str = "busy";
@@ -233,16 +233,16 @@ pub mod lookup {
     pub const OFF: &str = "off";
     /// No such token (never given, or forgotten after 10 minutes).
     pub const GONE: &str = "gone";
-    /// The Download video window does it instead (MDM not running, an older MDM, a Google Drive
-    /// file, MDM without a window, a choice that doesn't fit its look-up).
+    /// The Download video window does it instead (IETDM not running, an older IETDM, a Google Drive
+    /// file, IETDM without a window, a choice that doesn't fit its look-up).
     pub const USE_WINDOW: &str = "use-window";
     /// The choice is downloading.
     pub const STARTED: &str = "started";
     /// The choice was added to the queue (Options: "only add to the queue").
     pub const QUEUED: &str = "queued";
-    /// MDM took the choice, and it isn't a new download: it is in the list already in that
+    /// IETDM took the choice, and it isn't a new download: it is in the list already in that
     /// quality (Options' "If a duplicate download link is added": that one was opened or
-    /// resumed, or MDM asks what to do in its own window). From the browser's host: MDM didn't
+    /// resumed, or IETDM asks what to do in its own window). From the browser's host: IETDM didn't
     /// say in time what became of it (`timeout`); the command is in its queue and will run.
     /// Either way the Download video window mustn't do it a second time; the extension takes it
     /// for `started`.
@@ -314,7 +314,7 @@ pub fn schema() -> serde_json::Value {
     serde_json::json!({
         "$schema": "https://json-schema.org/draft/2020-12/schema",
         "$id": "https://misterdownloadmanager.com/automation-api.schema.json",
-        "title": "Mister Download Manager automation API",
+        "title": "IET Download Manager automation API",
         "description": "One JSON line to the port in ipc.json (on 127.0.0.1), one line back. \
             A request is `Request`. A command (an address to add, start_queue) is answered \
             `ok`; a question is answered with the JSON object for it (`ListAnswer`, \

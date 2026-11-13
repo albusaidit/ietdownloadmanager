@@ -1,6 +1,6 @@
-//! Mister Download Manager's command channel (shared by the app, its command line and the browser host).
+//! IET Download Manager's command channel (shared by the app, its command line and the browser host).
 //! Single-instance command channel. The running app listens on a localhost port and writes
-//! `{port, token}` to `%APPDATA%\misterdownloadmanager\ipc.json`; a second launch (IDM-style command line)
+//! `{port, token}` to `%APPDATA%\ietdownloadmanager\ipc.json`; a second launch (IDM-style command line)
 //! or the browser's native messaging host sends one JSON line per command, carrying the token.
 //! Only connections from 127.0.0.1 with the right token are accepted.
 
@@ -88,14 +88,14 @@ pub struct Command {
     /// The remote control: an uploaded .torrent file's bytes (never read from a request line).
     #[serde(skip)]
     pub torrent_file: Option<Vec<u8>>,
-    /// The remote control (#157, `misterdownloadmanager-cli pair`): show a new pairing code;
+    /// The remote control (#157, `ietdownloadmanager-cli pair`): show a new pairing code;
     /// answered with it, the page's addresses and a QR code to scan ([`api::PairAnswer`]).
     pub pair: bool,
     /// `/exit` (beyond IDM): the running app saves and quits (the installer, before an upgrade
     /// or an uninstall). Starts nothing when no app runs.
     pub exit: bool,
     /// `/startup` (beyond IDM): started with the session (Options → General → Launch on
-    /// startup, or the installer's "Start when Windows starts", #226): MDM starts in the
+    /// startup, or the installer's "Start when Windows starts", #226): IETDM starts in the
     /// notification area, its window hidden. Changes nothing in a running app.
     pub startup: bool,
     /// `/show <window>` (beyond IDM): the running app opens one of its windows by name, for
@@ -275,12 +275,12 @@ pub fn set_data_dir(dir: PathBuf) {
 }
 
 /// `dir` as a full path (#834): the helpers run in a folder of their own, and are given paths in
-/// the data folder (their programs, ffmpeg's place, the files MDM writes for them).
+/// the data folder (their programs, ffmpeg's place, the files IETDM writes for them).
 fn full(dir: PathBuf) -> PathBuf {
     std::path::absolute(&dir).unwrap_or(dir)
 }
 
-/// The app's data folder, `%APPDATA%\misterdownloadmanager` (list, settings, channel, crash
+/// The app's data folder, `%APPDATA%\ietdownloadmanager` (list, settings, channel, crash
 /// log). The folder of the app's former codename, `idmnext`, is moved here once.
 ///
 /// `MDM_DATA_DIR` overrides it (a separate instance with its own list and channel: tests,
@@ -302,7 +302,7 @@ pub fn data_dir() -> Option<PathBuf> {
             return Some(dir);
         }
         let base = dirs::data_dir()?;
-        let dir = base.join("misterdownloadmanager");
+        let dir = base.join("ietdownloadmanager");
         let legacy = base.join("idmnext");
         if !dir.exists() && legacy.is_dir() {
             let _ = std::fs::rename(&legacy, &dir);
@@ -426,7 +426,7 @@ impl std::fmt::Display for SendError {
     }
 }
 
-/// Send `cmd` to a running Mister Download Manager.
+/// Send `cmd` to a running IET Download Manager.
 pub fn send(cmd: &Command) -> Result<(), SendError> {
     let ack = exchange(cmd, ANSWER_WAIT)?;
     if ack.trim() == "ok" {
@@ -692,7 +692,7 @@ pub fn random_token() -> String {
 }
 
 /// The argument every startup entry passes (the Run key, the XDG autostart entry, the
-/// LaunchAgent, the installer's): MDM starts in the notification area ([`Command::startup`]).
+/// LaunchAgent, the installer's): IETDM starts in the notification area ([`Command::startup`]).
 pub const STARTUP: &str = "/startup";
 
 /// Parse IDM's command line: `/d URL [/p dir] [/f name] [/a] [/n] [/q] [/s]` (case-insensitive;

@@ -11,7 +11,7 @@
 //! source N times), `--wait S` (give up after S seconds, 180 by default, as the app),
 //! `--state DIR` (the session's folder, kept: a later run starts with the DHT nodes and the port
 //! of the one before, as the app's next session does), `--bootstrap HOST:PORT,...` (the DHT's
-//! first nodes instead of MDM's public routers, #650), `--listen-ip ADDR` (listen there only:
+//! first nodes instead of IETDM's public routers, #650), `--listen-ip ADDR` (listen there only:
 //! 127.0.0.1 or ::1 keeps Windows Firewall out of it; the DHT then stays on it too, and local
 //! peer discovery is off).
 //! Prints a Markdown table, a row a run; times in seconds from the session's start. RUST_LOG

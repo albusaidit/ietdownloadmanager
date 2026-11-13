@@ -1,7 +1,7 @@
 //! Debrid services (#44): the user's own account at a service such as Real-Debrid turns a file
-//! host's link into a direct link, which MDM's engine then downloads as any file (every
+//! host's link into a direct link, which IETDM's engine then downloads as any file (every
 //! connection, resume). Only the services' official, documented APIs, with the user's own
-//! account; MDM ships no host lists or link sources, and never shows or copies the direct links
+//! account; IETDM ships no host lists or link sources, and never shows or copies the direct links
 //! (the services forbid sharing them).
 //!
 //! The engine knows nothing of accounts: the app asks [`Debrid::unlocker_for`] for each download
@@ -28,7 +28,7 @@ use serde::{Deserialize, Serialize};
 use tokio_util::sync::CancellationToken;
 use url::Url;
 
-/// The services MDM knows.
+/// The services IETDM knows.
 #[derive(Clone, Copy, Debug, Default, PartialEq, Eq, Hash, Serialize, Deserialize)]
 pub enum ServiceKind {
     #[default]
@@ -69,13 +69,13 @@ impl ServiceKind {
     }
 
     /// Whether it signs in by code in the browser (Real-Debrid's device flow, AllDebrid's PIN,
-    /// TorBox's device code). Premiumize's needs a client registered by MDM's maintainer: its API
+    /// TorBox's device code). Premiumize's needs a client registered by IETDM's maintainer: its API
     /// key is pasted.
     pub fn signs_in_by_code(self) -> bool {
         !matches!(self, ServiceKind::Premiumize)
     }
 
-    /// The requests a minute MDM allows itself (each service's published limit, halved or more:
+    /// The requests a minute IETDM allows itself (each service's published limit, halved or more:
     /// Real-Debrid 250 a minute, AllDebrid 600; Premiumize publishes none). TorBox: 300 a minute
     /// for each endpoint, per API key, and 60 new web downloads (or uncached torrents) an hour
     /// (https://support.torbox.app/en/articles/13726368-api-rate-limits); a refused request
@@ -344,7 +344,7 @@ impl Http {
         let (status, body, retry_after) = self.send(ServiceKind::RealDebrid, req).await?;
         if (200..300).contains(&status) {
             return serde_json::from_slice(&body).map_err(|_| {
-                Fault::Service(ServiceFault::Other("an answer MDM can't read".into()))
+                Fault::Service(ServiceFault::Other("an answer IETDM can't read".into()))
             });
         }
         let f = fault(status, &body, retry_after);
@@ -353,7 +353,7 @@ impl Http {
     }
 }
 
-const USER_AGENT: &str = concat!("MisterDownloadManager/", env!("CARGO_PKG_VERSION"));
+const USER_AGENT: &str = concat!("IETDownloadManager/", env!("CARGO_PKG_VERSION"));
 
 /// One account, signed in: its access token in memory (Real-Debrid's device flow gives tokens
 /// that expire; a pasted token doesn't).
@@ -589,7 +589,7 @@ pub(crate) fn plain_id(id: &str) -> Result<&str, Fault> {
         Ok(id)
     } else {
         Err(Fault::Service(ServiceFault::Other(
-            "the service gave an id MDM can't use".into(),
+            "the service gave an id IETDM can't use".into(),
         )))
     }
 }
@@ -721,7 +721,7 @@ impl Debrid {
         Some(Arc::new(AccountUnlocker { session }))
     }
 
-    /// A download of `url` through an account ended (done, or taken off MDM's list): on TorBox,
+    /// A download of `url` through an account ended (done, or taken off IETDM's list): on TorBox,
     /// its web downloads leave the account's list, as a torrent does once downloaded. The other
     /// services keep no list of unlocked links.
     pub async fn release(&self, url: &Url) -> Result<(), Fault> {
@@ -867,7 +867,7 @@ impl mdm_engine::Unlocker for AccountUnlocker {
 }
 
 /// Sign-in by code: Real-Debrid's device flow, AllDebrid's PIN, TorBox's device code. The code to
-/// show and the page to type it at, then a poll until the user allowed MDM there.
+/// show and the page to type it at, then a poll until the user allowed IETDM there.
 pub mod signin {
     use super::*;
 
@@ -941,7 +941,7 @@ pub mod signin {
         }
     }
 
-    /// The page MDM opens in the browser for the user to type the code at comes from the
+    /// The page IETDM opens in the browser for the user to type the code at comes from the
     /// service's answer: it is opened only on the service's own site, over https. Anything else
     /// is a service that isn't answering as it should.
     fn own_page(service: ServiceKind, page: &str) -> Result<(), Fault> {
@@ -1020,7 +1020,7 @@ pub mod signin {
             assert!(
                 own_page(
                     tb,
-                    "https://torbox.app/oauth/device?app=MisterDownloadManager"
+                    "https://torbox.app/oauth/device?app=IETDownloadManager"
                 )
                 .is_ok()
             );

@@ -1,3 +1,11 @@
+# IET Download Manager
+
+IET Download Manager is a modified version of [Mister Download Manager](https://github.com/anefzaoui/misterdownloadmanager)
+by Ahmed Nefzaoui, licensed under the GNU GPL v3 or later. See [NOTICE-IET.md](NOTICE-IET.md) for what
+this fork changed. Everything below is the original project's README.
+
+---
+
 # Mister Download Manager
 
 <p align="center">

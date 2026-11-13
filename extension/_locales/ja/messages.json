@@ -1,12 +1,12 @@
 {
   "name": {
-    "message": "Mister Download Manager"
+    "message": "IET Download Manager"
   },
   "description": {
-    "message": "ブラウザーから Mister Download Manager にダウンロードを渡します。"
+    "message": "ブラウザーから IET Download Manager にダウンロードを渡します。"
   },
   "menu": {
-    "message": "Mister Download Manager でダウンロード"
+    "message": "IET Download Manager でダウンロード"
   },
   "video_download": {
     "message": "動画をダウンロード"
@@ -30,19 +30,19 @@
     "message": "ボタンの設定..."
   },
   "video_sent": {
-    "message": "Mister Download Manager に送信済み"
+    "message": "IET Download Manager に送信済み"
   },
   "menu_selected": {
-    "message": "Mister Download Manager で選択したリンクをダウンロード"
+    "message": "IET Download Manager で選択したリンクをダウンロード"
   },
   "menu_all": {
-    "message": "Mister Download Manager で全リンクをダウンロード"
+    "message": "IET Download Manager で全リンクをダウンロード"
   },
   "status_connected": {
-    "message": "Mister Download Manager に接続済み"
+    "message": "IET Download Manager に接続済み"
   },
   "status_connected_version": {
-    "message": "Mister Download Manager $version$ に接続済み",
+    "message": "IET Download Manager $version$ に接続済み",
     "placeholders": {
       "version": {
         "content": "$1",
@@ -54,22 +54,22 @@
     "message": "一時停止: ダウンロードはブラウザーに残ります"
   },
   "status_not_installed": {
-    "message": "Mister Download Manager がインストールされていないか、ブラウザー統合が設定されていません"
+    "message": "IET Download Manager がインストールされていないか、ブラウザー統合が設定されていません"
   },
   "status_forbidden": {
-    "message": "Mister Download Manager はこの拡張機能のコピーを受け入れません"
+    "message": "IET Download Manager はこの拡張機能のコピーを受け入れません"
   },
   "status_not_running": {
-    "message": "Mister Download Manager が時間内に起動しませんでした"
+    "message": "IET Download Manager が時間内に起動しませんでした"
   },
   "status_host_failed": {
-    "message": "Mister Download Manager への接続に失敗しました"
+    "message": "IET Download Manager への接続に失敗しました"
   },
   "status_too_large": {
     "message": "このダウンロードの詳細は大きすぎて引き渡せませんでした"
   },
   "status_update_app": {
-    "message": "この拡張機能のすべての機能を使用するには、Mister Download Manager を更新してください"
+    "message": "この拡張機能のすべての機能を使用するには、IET Download Manager を更新してください"
   },
   "popup_take": {
     "message": "このブラウザーからのダウンロードを取得する"
@@ -78,10 +78,10 @@
     "message": "このブラウザーのプロキシまたは VPN 拡張機能経由でダウンロードを送信する"
   },
   "popup_proxy_title": {
-    "message": "Mister Download Manager は、このブラウザーと同じプロキシ経由でダウンロードします。ブラウザーは一度だけ許可を求めます。これをオフにすると、その許可は取り消されます。"
+    "message": "IET Download Manager は、このブラウザーと同じプロキシ経由でダウンロードします。ブラウザーは一度だけ許可を求めます。これをオフにすると、その許可は取り消されます。"
   },
   "popup_proxy_title_chromium": {
-    "message": "Mister Download Manager は、このブラウザーと同じプロキシ経由でダウンロードします。これがオフの場合、拡張機能はブラウザーのプロキシを読み取りません。"
+    "message": "IET Download Manager は、このブラウザーと同じプロキシ経由でダウンロードします。これがオフの場合、拡張機能はブラウザーのプロキシを読み取りません。"
   },
   "popup_exclude_site": {
     "message": "$site$ からのダウンロードは今後取得しない",
@@ -102,7 +102,7 @@
     }
   },
   "popup_open": {
-    "message": "Mister Download Manager を開く"
+    "message": "IET Download Manager を開く"
   },
   "popup_options": {
     "message": "オプション..."
@@ -111,7 +111,7 @@
     "message": "ヘルプ"
   },
   "popup_support": {
-    "message": "MDM をサポート"
+    "message": "IETDM をサポート"
   },
   "popup_fix": {
     "message": "修正方法"
@@ -189,16 +189,16 @@
     "message": "ここにはダウンロードできる動画がありません"
   },
   "video_playlist": {
-    "message": "動画の一覧: Mister Download Manager で選択してください"
+    "message": "動画の一覧: IET Download Manager で選択してください"
   },
   "video_no_ytdlp": {
-    "message": "この動画には Mister Download Manager に yt-dlp が必要です"
+    "message": "この動画には IET Download Manager に yt-dlp が必要です"
   },
   "video_too_long": {
     "message": "検索に時間がかかりすぎました"
   },
   "video_busy": {
-    "message": "Mister Download Manager は他の動画の処理中です"
+    "message": "IET Download Manager は他の動画の処理中です"
   },
   "video_queued": {
     "message": "キューに追加しました"
@@ -222,7 +222,7 @@
     "message": "このコンピューター"
   },
   "popup_send_remote": {
-    "message": "別の Mister Download Manager (サーバー)"
+    "message": "別の IET Download Manager (サーバー)"
   },
   "popup_remote_code": {
     "message": "ペアリング コード"
@@ -234,7 +234,7 @@
     "message": "ペアリング"
   },
   "popup_remote_help": {
-    "message": "一度アドレスを開いて証明書を承認し、そのオプション、リモート、デバイスのペアリング (または misterdownloadmanager-cli pair) からコードを入力してください。"
+    "message": "一度アドレスを開いて証明書を承認し、そのオプション、リモート、デバイスのペアリング (または ietdownloadmanager-cli pair) からコードを入力してください。"
   },
   "status_remote": {
     "message": "ダウンロードは $address$ に送信されます",
@@ -291,19 +291,19 @@
     "message": "最高品質をダウンロード"
   },
   "video_sending": {
-    "message": "MDM に送信しています..."
+    "message": "IETDM に送信しています..."
   },
   "video_added": {
-    "message": "MDM に追加済み"
+    "message": "IETDM に追加済み"
   },
   "video_show": {
     "message": "表示"
   },
   "video_no_answer": {
-    "message": "MDM が応答しません"
+    "message": "IETDM が応答しません"
   },
   "video_get_mdm": {
-    "message": "MDM を入手"
+    "message": "IETDM を入手"
   },
   "video_retry": {
     "message": "再試行"
@@ -318,7 +318,7 @@
     "message": "すべての画質と字幕..."
   },
   "video_failed": {
-    "message": "Mister Download Manager がインストールされていないか、起動していません"
+    "message": "IET Download Manager がインストールされていないか、起動していません"
   },
   "video_download_best": {
     "message": "最高画質をダウンロード"

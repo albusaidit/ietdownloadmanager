@@ -1,4 +1,4 @@
-// Mister Download Manager's download button over videos (a content script, in every page and
+// IET Download Manager's download button over videos (a content script, in every page and
 // frame). Our own design: a pill of dark frosted glass at the video's edge that appears while
 // the pointer moves over the video (or it has the keyboard's focus) and fades when the pointer
 // rests or leaves. As it appears the app looks the video up (an embedded player's own address,
@@ -41,7 +41,7 @@
     video_more: "More options",
     video_hide_here: "Hide on this video",
     video_settings: "Button settings...",
-    video_sent: "Sent to Mister Download Manager",
+    video_sent: "Sent to IET Download Manager",
     video_off: "Off on this site",
     video_drm: "Protected video",
     video_cant_save: "can't be saved",
@@ -51,11 +51,11 @@
     video_drag_dots: "Drag the dots to move it along the edge",
     video_tip: "Download $1",
     video_tip_best: "Download the best quality",
-    video_sending: "Sending to MDM...",
-    video_added: "Added to MDM",
+    video_sending: "Sending to IETDM...",
+    video_added: "Added to IETDM",
     video_show: "Show",
-    video_no_answer: "MDM didn't answer",
-    video_get_mdm: "Get MDM",
+    video_no_answer: "IETDM didn't answer",
+    video_get_mdm: "Get IETDM",
     video_retry: "Retry",
     video_turn_on: "Turn on",
     video_best: "best",
@@ -64,10 +64,10 @@
     video_all_qualities: "All qualities and subtitles...",
     video_looking: "Looking up the qualities…",
     video_no_choices: "No video to download here",
-    video_playlist: "A list of videos: choose them in Mister Download Manager",
-    video_no_ytdlp: "Mister Download Manager needs yt-dlp for this video",
+    video_playlist: "A list of videos: choose them in IET Download Manager",
+    video_no_ytdlp: "IET Download Manager needs yt-dlp for this video",
     video_too_long: "Looking up took too long",
-    video_busy: "Mister Download Manager is busy with other videos",
+    video_busy: "IET Download Manager is busy with other videos",
     video_queued: "Added to the queue",
     video_failed_lookup: "Could not look it up",
     video_tab_video: "Video",
@@ -252,7 +252,7 @@
       took = now() - asked;
       if (!alive() || !r || r.gone) return null;
       if (r.late) return { state: "late" };
-      // Another MDM chosen meanwhile: the window, as for a click.
+      // Another IETDM chosen meanwhile: the window, as for a click.
       s = r.fallback ? { state: "use-window" } : r.lookup;
     }
   }
@@ -260,7 +260,7 @@
   // The background's answer to a lookup or to a choice, as a lookup's state: null when there is
   // nothing to show (the extension gone); "late" past the minute, "unnamed" for a video it can't
   // tell, "feed" for a video in a feed no post names (#689), and "use-window" for no lookups here
-  // (another MDM, an older one) or an answer that isn't one.
+  // (another IETDM, an older one) or an answer that isn't one.
   function replyState(r) {
     if (r && r.gone) return null;
     if (r && r.late) return { state: "late" };
@@ -271,11 +271,11 @@
 
   // The app's word on what the look-up lacked, to show with its qualities (#852: YouTube without
   // a JavaScript runtime lists only some): its text, its link's words and the help page it
-  // opens, on MDM's own site only. Null when there is none (an app older than it) or it isn't one.
+  // opens, on IETDM's own site only. Null when there is none (an app older than it) or it isn't one.
   function noticeOf(s) {
     const n = s && typeof s === "object" ? s.notice : null;
     if (!n || typeof n !== "object" || typeof n.text !== "string" || !n.text.trim()) return null;
-    const ok = typeof n.url === "string" && /^https:\/\/misterdownloadmanager\.com\//.test(n.url);
+    const ok = typeof n.url === "string" && /^https:\/\/ietdownloadmanager\.com\//.test(n.url);
     const link = ok && typeof n.link === "string" && n.link.trim() ? n.link.slice(0, 100) : "";
     return { text: n.text.slice(0, 400), link, url: link ? n.url : "" };
   }
@@ -824,8 +824,8 @@
   })) root.style.setProperty(k, v, "important");
   const shadow = root.attachShadow({ mode: "closed" });
   // It sits on the video like the player's own controls: dark frosted glass that reads over any
-  // frame (bright ones too), MDM's one blue for the action, and its own colour for each thing that
-  // stops it (green done, amber the user's step, red MDM's problem, grey can't by design). Start
+  // frame (bright ones too), IETDM's one blue for the action, and its own colour for each thing that
+  // stops it (green done, amber the user's step, red IETDM's problem, grey can't by design). Start
   // and end, never left and right: a right-to-left language mirrors it whole.
   const CSS = `
 :host { all: initial; }
@@ -837,7 +837,7 @@
   --sh: 0 1px 2px rgba(17, 19, 24, .18), 0 6px 14px rgba(17, 19, 24, .18);
   --font: "Segoe UI Variable Text", "Segoe UI", system-ui, -apple-system, Roboto, "Noto Sans", sans-serif;
 }
-/* Windows (the system) in dark mode, not the page: MDM's navy board; the green stays. */
+/* Windows (the system) in dark mode, not the page: IETDM's navy board; the green stays. */
 @media (prefers-color-scheme: dark) {
   .pill, .menu, .tip, .guide {
     --accent: #7fe07f; --ok: #7fe07f; --warn: #ffd36b; --err: #ff99a4;
@@ -940,7 +940,7 @@ button:focus-visible { outline: none; }
 .line.v { width: 0; border-inline-start: 1.5px dashed rgba(255, 255, 255, .75); }
 .snap { position: absolute; width: 10px; height: 10px; margin: -5px 0 0 -5px; border-radius: 50%;
   border: 2px solid #fff; background: var(--go); }
-/* The list: paper white (MDM's navy board in dark mode), one line per quality. */
+/* The list: paper white (IETDM's navy board in dark mode), one line per quality. */
 .menu {
   position: absolute; width: 318px; max-width: calc(100vw - 16px); padding: 4px; border-radius: 6px;
   background: var(--bg); color: var(--tx); border: 1px solid var(--bd); box-shadow: var(--sh);
@@ -1073,12 +1073,12 @@ button:focus-visible { outline: none; }
   // By what the button sends for it (its address and its own file): one look-up each, kept for
   // the page's life (the app keeps its own ten minutes, and shares one between two askings). A
   // video that plays a plain file needs none: the browser says its picture's size, and it goes
-  // to MDM as a file.
+  // to IETDM as a file.
   const looks = new Map();
   // Shown this long over the same video first: previews the pointer only crosses aren't looked up.
   const LOOK_DELAY_MS = 600;
-  // An answer that isn't a look-up's (no MDM, an older one, too many at once) is asked again after
-  // this; meanwhile a click goes to MDM's window, as it did before.
+  // An answer that isn't a look-up's (no IETDM, an older one, too many at once) is asked again after
+  // this; meanwhile a click goes to IETDM's window, as it did before.
   const LOOK_RETRY_MS = 15000;
   let lookTimer = 0;
   // A stream's manifest the page plays as its file (Safari's way, Chrome's own HLS): looked up.
@@ -1177,7 +1177,7 @@ button:focus-visible { outline: none; }
   }
 
   // ---- what it shows ------------------------------------------------------------------------
-  // `status`: what happened after a click (sending, sent, the user's step, MDM's problem, off),
+  // `status`: what happened after a click (sending, sent, the user's step, IETDM's problem, off),
   // shown instead of the quality until it ends: {state, text, sub, acts: [[name, words]], …}.
   let status = null;
   let statusTimer = 0;
@@ -1655,9 +1655,9 @@ button:focus-visible { outline: none; }
     return Promise.race([promise, late]).finally(() => clearTimeout(timer));
   };
 
-  // The click: the best quality its look-up found, started by MDM at once (while the look-up
+  // The click: the best quality its look-up found, started by IETDM at once (while the look-up
   // runs, as soon as it ends); the video's own plain file as a file. `row`: a quality of its menu
-  // instead. `toWindow`: "All qualities and subtitles…", MDM's Download video window, which is
+  // instead. `toWindow`: "All qualities and subtitles…", IETDM's Download video window, which is
   // also where a click goes when nothing was found (no look-ups here, yt-dlp missing, a list, an
   // error: the window says so and offers what to do).
   async function download(row, toWindow = false) {
@@ -1696,7 +1696,7 @@ button:focus-visible { outline: none; }
     }
   }
 
-  // A quality the look-up offered: MDM downloads it (its own choice of it, with what it looked the
+  // A quality the look-up offered: IETDM downloads it (its own choice of it, with what it looked the
   // video up with) without its window. Only the token and the quality's number go.
   async function pick(j, l, i) {
     if (!l.token || l.picked || !(i >= 0 && i < Math.min(l.choices.length, 100))) return useWindow(j);
@@ -1727,7 +1727,7 @@ button:focus-visible { outline: none; }
   }
 
   // The click as it always was: the app's Download video window for this video, once per click;
-  // or (`direct`) the video's own plain file, downloaded by MDM as a file at once.
+  // or (`direct`) the video's own plain file, downloaded by IETDM as a file at once.
   async function useWindow(j, { direct = false, words = "" } = {}) {
     if (!firstWindow(j)) return;
     // Where the video is now, for the background to ask the page's player there.
@@ -1741,11 +1741,11 @@ button:focus-visible { outline: none; }
     }
     if (r.why === "options") return offStatus();
     if (r.why === "unnamed" || r.why === "feed") return showFlash({ kind: "warn", text: t(r.why === "unnamed" ? "video_unnamed" : "video_open_post") }, null);
-    // MDM isn't there or didn't start: red, with the way to get it and another try.
+    // IETDM isn't there or didn't start: red, with the way to get it and another try.
     setStatus({ state: "err", text: t("video_no_answer"), acts: [["get", t("video_get_mdm")], ["retry", t("video_retry")]], again: { row: j.row, toWindow: j.toWindow } }, 9000);
   }
 
-  // A status's buttons: "Show", "Open post", "Get MDM", "Retry", "Turn on". Only the user's own.
+  // A status's buttons: "Show", "Open post", "Get IETDM", "Retry", "Turn on". Only the user's own.
   let lastShow = "";
   acts.addEventListener("click", async (e) => {
     if (!e.isTrusted) return;
@@ -1774,7 +1774,7 @@ button:focus-visible { outline: none; }
 
   // ---- the menu -------------------------------------------------------------------------------
   // The video's qualities as its look-up found them: "Download best" first, then one numbered
-  // line per quality (video, then sound); MDM's whole window; hiding and settings. Filled as it
+  // line per quality (video, then sound); IETDM's whole window; hiding and settings. Filled as it
   // opens and again when the look-up ends.
   function fillMenu() {
     const c = video ? describeNow(video) : null;

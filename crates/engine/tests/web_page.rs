@@ -163,7 +163,7 @@ async fn an_untyped_answer_is_looked_into() {
     assert_eq!(asked.load(std::sync::atomic::Ordering::SeqCst), 2);
 }
 
-/// Downloads `url` as [`get`] does, into a folder (named by MDM), with the browser's announced
+/// Downloads `url` as [`get`] does, into a folder (named by IETDM), with the browser's announced
 /// size `size`.
 async fn get_sized(url: &str, size: Option<u64>) -> (Result<Vec<u8>, Error>, Vec<String>) {
     let dir = tempfile::tempdir().unwrap();
@@ -204,7 +204,7 @@ async fn a_waiting_page_is_never_the_archive() {
         "html=1&html_cd=1&html_type=application/octet-stream",
     ] {
         let url = s.url(&format!("/gen/37K/KtK.zip?{faults}"));
-        // Named by the browser, and named by MDM (from the address or the server).
+        // Named by the browser, and named by IETDM (from the address or the server).
         for name in [Some("KtK.zip"), None] {
             let (out, files) = get(&url, name, None).await;
             assert!(

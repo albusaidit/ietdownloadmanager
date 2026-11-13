@@ -1,16 +1,16 @@
 //! TorBox's API, as documented at <https://api-docs.torbox.app/> and
-//! <https://api.torbox.app/openapi.json> (read 2026-11-10). Only what MDM uses: the account, the
+//! <https://api.torbox.app/openapi.json> (read 2026-11-10). Only what IETDM uses: the account, the
 //! hosters list, and two kinds of its downloads (web downloads for file-host links, and
 //! torrents), which go the same way: created, fetched on TorBox's servers (`mylist` until
 //! finished), then each file's link asked (`requestdl`).
 //!
 //! - Every call carries `Authorization: Bearer <API key>`, except `requestdl`, whose documented
-//!   sign-in is the `token` query parameter: MDM never logs or shows that address, and asks it
+//!   sign-in is the `token` query parameter: IETDM never logs or shows that address, and asks it
 //!   with `redirect=false` so the API key never reaches the download's own address.
 //! - Every answer is `{"success", "error", "detail", "data"}`; `error` is a code
 //!   (`BAD_TOKEN`, `UNSUPPORTED_SITE`...). Note `ITEM_NOT_FOUND` comes with `success: true`.
 //! - Sign-in by code (`user/auth/device/start`, then `user/auth/device/token` until allowed): the
-//!   user types the code at TorBox's page (its short address is `tor.box/link`), and MDM gets the
+//!   user types the code at TorBox's page (its short address is `tor.box/link`), and IETDM gets the
 //!   account's API key. Or the key is pasted from the account's settings page.
 
 use serde::Deserialize;
@@ -23,7 +23,7 @@ use crate::{Fault, Http, ServiceKind};
 /// Where TorBox answers (tests: the lab server's `/tb/v1/api/`).
 pub const BASE: &str = "https://api.torbox.app/v1/api/";
 
-/// TorBox's kinds of downloads MDM uses: the same calls under their own path and id names.
+/// TorBox's kinds of downloads IETDM uses: the same calls under their own path and id names.
 #[derive(Clone, Copy, Debug, PartialEq, Eq)]
 pub(crate) enum Kind {
     Web,
@@ -77,7 +77,7 @@ struct Envelope {
     data: Value,
 }
 
-/// What an error code means for MDM (the codes the documentation's examples show).
+/// What an error code means for IETDM (the codes the documentation's examples show).
 pub(crate) fn fault_of(code: &str, detail: &str) -> Fault {
     use mdm_engine::ServiceFault as F;
     Fault::Service(match code {
@@ -107,7 +107,7 @@ fn read(status: u16, body: &[u8], retry: Option<u64>) -> Result<Value, Fault> {
         return Err(Fault::Service(if status >= 500 {
             F::ServiceDown
         } else {
-            F::Other("an answer MDM can't read".into())
+            F::Other("an answer IETDM can't read".into())
         }));
     };
     match e.error.filter(|c| !c.is_empty()) {
@@ -120,7 +120,7 @@ fn read(status: u16, body: &[u8], retry: Option<u64>) -> Result<Value, Fault> {
 fn data<T: serde::de::DeserializeOwned>(v: Value) -> Result<T, Fault> {
     serde_json::from_value(v).map_err(|_| {
         Fault::Service(mdm_engine::ServiceFault::Other(
-            "an answer MDM can't read".into(),
+            "an answer IETDM can't read".into(),
         ))
     })
 }
@@ -170,11 +170,11 @@ pub(crate) async fn device_start(http: &Http) -> Result<DeviceCode, Fault> {
     let mut u = url(http, "user/auth/device/start");
     // Letters and digits only, as the docs ask: shown on TorBox's page.
     u.query_pairs_mut()
-        .append_pair("app", "MisterDownloadManager");
+        .append_pair("app", "IETDownloadManager");
     data(call(http, http.get(&u)).await?)
 }
 
-/// `POST user/auth/device/token`: the API key once the user allowed MDM, None while not yet
+/// `POST user/auth/device/token`: the API key once the user allowed IETDM, None while not yet
 /// (`DEVICE_CODE_NOT_USED`).
 pub(crate) async fn device_token(http: &Http, device_code: &str) -> Result<Option<String>, Fault> {
     #[derive(Deserialize)]
@@ -289,7 +289,7 @@ pub(crate) async fn item(http: &Http, key: &str, kind: Kind, id: u64) -> Result<
     }
 }
 
-/// A download of `link` ended (done, or taken off MDM's list): its web downloads leave the
+/// A download of `link` ended (done, or taken off IETDM's list): its web downloads leave the
 /// account's TorBox list, as a torrent does once downloaded. Found by the link they were made
 /// from, so those made before a restart, or by a refreshed link, go too.
 pub(crate) async fn release(http: &Http, key: &str, link: &Url) -> Result<(), Fault> {
@@ -354,7 +354,7 @@ pub(crate) async fn link(
     let d = call(http, http.get(&u)).await?;
     d.as_str().and_then(|l| Url::parse(l).ok()).ok_or_else(|| {
         Fault::Service(mdm_engine::ServiceFault::Other(
-            "the service gave a link MDM can't read".into(),
+            "the service gave a link IETDM can't read".into(),
         ))
     })
 }
@@ -397,7 +397,7 @@ pub(crate) async fn delete(http: &Http, key: &str, kind: Kind, id: u64) -> Resul
 pub(crate) fn torrent_id(t: &str) -> Result<u64, Fault> {
     t.parse().map_err(|_| {
         Fault::Service(mdm_engine::ServiceFault::Other(
-            "the service gave an id MDM can't use".into(),
+            "the service gave an id IETDM can't use".into(),
         ))
     })
 }

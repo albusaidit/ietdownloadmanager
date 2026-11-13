@@ -1,12 +1,12 @@
 {
   "name": {
-    "message": "Mister Download Manager"
+    "message": "IET Download Manager"
   },
   "description": {
-    "message": "Передает загрузки из браузера в Mister Download Manager."
+    "message": "Передает загрузки из браузера в IET Download Manager."
   },
   "menu": {
-    "message": "Загрузить с помощью Mister Download Manager"
+    "message": "Загрузить с помощью IET Download Manager"
   },
   "video_download": {
     "message": "Скачать видео"
@@ -30,19 +30,19 @@
     "message": "Настройки кнопки..."
   },
   "video_sent": {
-    "message": "Отправлено в Mister Download Manager"
+    "message": "Отправлено в IET Download Manager"
   },
   "menu_selected": {
-    "message": "Загрузить выбранные ссылки с Mister Download Manager"
+    "message": "Загрузить выбранные ссылки с IET Download Manager"
   },
   "menu_all": {
-    "message": "Загрузить все ссылки с Mister Download Manager"
+    "message": "Загрузить все ссылки с IET Download Manager"
   },
   "status_connected": {
-    "message": "Подключено к Mister Download Manager"
+    "message": "Подключено к IET Download Manager"
   },
   "status_connected_version": {
-    "message": "Подключено к Mister Download Manager $version$",
+    "message": "Подключено к IET Download Manager $version$",
     "placeholders": {
       "version": {
         "content": "$1",
@@ -54,22 +54,22 @@
     "message": "Приостановлено: загрузки остаются в браузере"
   },
   "status_not_installed": {
-    "message": "Mister Download Manager не установлен или его интеграция с браузером не настроена"
+    "message": "IET Download Manager не установлен или его интеграция с браузером не настроена"
   },
   "status_forbidden": {
-    "message": "Mister Download Manager не принимает эту копию расширения"
+    "message": "IET Download Manager не принимает эту копию расширения"
   },
   "status_not_running": {
-    "message": "Mister Download Manager не запустился вовремя"
+    "message": "IET Download Manager не запустился вовремя"
   },
   "status_host_failed": {
-    "message": "Не удалось подключиться к Mister Download Manager"
+    "message": "Не удалось подключиться к IET Download Manager"
   },
   "status_too_large": {
     "message": "Сведения об этой загрузке были слишком велики для передачи"
   },
   "status_update_app": {
-    "message": "Обновите Mister Download Manager, чтобы использовать все возможности этого расширения"
+    "message": "Обновите IET Download Manager, чтобы использовать все возможности этого расширения"
   },
   "popup_take": {
     "message": "Перехватывать загрузки из этого браузера"
@@ -78,10 +78,10 @@
     "message": "Отправлять загрузки через прокси-сервер или расширение VPN этого браузера"
   },
   "popup_proxy_title": {
-    "message": "Mister Download Manager загружает файлы через тот же прокси-сервер, что и этот браузер. Браузер один раз запросит у вас разрешение; отключение этой функции отменяет это разрешение."
+    "message": "IET Download Manager загружает файлы через тот же прокси-сервер, что и этот браузер. Браузер один раз запросит у вас разрешение; отключение этой функции отменяет это разрешение."
   },
   "popup_proxy_title_chromium": {
-    "message": "Mister Download Manager будет загружать файлы через тот же прокси-сервер, что и этот браузер. Если этот параметр отключен, расширение не будет считывать прокси-сервер браузера."
+    "message": "IET Download Manager будет загружать файлы через тот же прокси-сервер, что и этот браузер. Если этот параметр отключен, расширение не будет считывать прокси-сервер браузера."
   },
   "popup_exclude_site": {
     "message": "Никогда не загружать с $site$",
@@ -102,7 +102,7 @@
     }
   },
   "popup_open": {
-    "message": "Открыть Mister Download Manager"
+    "message": "Открыть IET Download Manager"
   },
   "popup_options": {
     "message": "Параметры..."
@@ -111,7 +111,7 @@
     "message": "Справка"
   },
   "popup_support": {
-    "message": "Поддержать MDM"
+    "message": "Поддержать IETDM"
   },
   "popup_fix": {
     "message": "Как исправить"
@@ -189,16 +189,16 @@
     "message": "Здесь нет видео для скачивания"
   },
   "video_playlist": {
-    "message": "Список видео: выберите их в Mister Download Manager"
+    "message": "Список видео: выберите их в IET Download Manager"
   },
   "video_no_ytdlp": {
-    "message": "Для этого видео Mister Download Manager нужен yt-dlp"
+    "message": "Для этого видео IET Download Manager нужен yt-dlp"
   },
   "video_too_long": {
     "message": "Поиск занял слишком много времени"
   },
   "video_busy": {
-    "message": "Mister Download Manager занят другими видео"
+    "message": "IET Download Manager занят другими видео"
   },
   "video_queued": {
     "message": "Добавлено в очередь"
@@ -222,7 +222,7 @@
     "message": "Этот компьютер"
   },
   "popup_send_remote": {
-    "message": "Другой Mister Download Manager (сервер)"
+    "message": "Другой IET Download Manager (сервер)"
   },
   "popup_remote_code": {
     "message": "Код сопряжения"
@@ -234,7 +234,7 @@
     "message": "Сопрячь"
   },
   "popup_remote_help": {
-    "message": "Откройте его адрес один раз и примите его сертификат, затем введите код из его «Параметров», «Удаленного доступа», «Сопрячь устройство» (или misterdownloadmanager-cli pair)."
+    "message": "Откройте его адрес один раз и примите его сертификат, затем введите код из его «Параметров», «Удаленного доступа», «Сопрячь устройство» (или ietdownloadmanager-cli pair)."
   },
   "status_remote": {
     "message": "Загрузки отправляются на $address$",
@@ -291,19 +291,19 @@
     "message": "Скачать в лучшем качестве"
   },
   "video_sending": {
-    "message": "Отправка в MDM..."
+    "message": "Отправка в IETDM..."
   },
   "video_added": {
-    "message": "Добавлено в MDM"
+    "message": "Добавлено в IETDM"
   },
   "video_show": {
     "message": "Показать"
   },
   "video_no_answer": {
-    "message": "MDM не отвечает"
+    "message": "IETDM не отвечает"
   },
   "video_get_mdm": {
-    "message": "Получить MDM"
+    "message": "Получить IETDM"
   },
   "video_retry": {
     "message": "Повторить"
@@ -318,7 +318,7 @@
     "message": "Все качества и субтитры..."
   },
   "video_failed": {
-    "message": "Mister Download Manager не установлен или не запустился"
+    "message": "IET Download Manager не установлен или не запустился"
   },
   "video_download_best": {
     "message": "Скачать лучшее"

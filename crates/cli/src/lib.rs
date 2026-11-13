@@ -1,6 +1,6 @@
-//! `misterdownloadmanager-cli`'s commands. The app's program carries them (#25: one download
-//! engine shipped, not two): `misterdownloadmanager-cli` (main.rs) is a small launcher that runs
-//! `misterdownloadmanager --cli <arguments>`, and the app's `main` hands those to [`main`].
+//! `ietdownloadmanager-cli`'s commands. The app's program carries them (#25: one download
+//! engine shipped, not two): `ietdownloadmanager-cli` (main.rs) is a small launcher that runs
+//! `ietdownloadmanager --cli <arguments>`, and the app's `main` hands those to [`main`].
 
 use std::ffi::OsString;
 use std::io::Write;
@@ -18,8 +18,8 @@ use serde_json::json;
 #[derive(Parser)]
 #[command(
     version,
-    about = "Mister Download Manager command line",
-    long_about = "Mister Download Manager command line: downloads, videos and torrents without the \
+    about = "IET Download Manager command line",
+    long_about = "IET Download Manager command line: downloads, videos and torrents without the \
                   window, and the running app's automation API. Guide: \
                   https://misterdownloadmanager.com/help/command-line.html"
 )]
@@ -123,7 +123,7 @@ enum Cmd {
         /// Put the subtitles into the video file instead of beside it (needs ffmpeg; MP4/MKV).
         #[arg(long)]
         embed_subs: bool,
-        /// Connections per stream (1 to 128), as `get`'s: MDM's engine downloads the streams
+        /// Connections per stream (1 to 128), as `get`'s: IETDM's engine downloads the streams
         /// yt-dlp finds (#769), one in pieces (HLS, DASH) this many pieces at once.
         #[arg(short, long, default_value_t = Options::default().max_connections,
               value_parser = clap::value_parser!(u32).range(1..=MAX_CONNECTIONS_UNLOCKED as i64))]
@@ -320,7 +320,7 @@ impl std::error::Error for Reported {}
 /// `{"error"}` answer fails the command.
 fn ask(cmd: mdm_ipc::Command) -> anyhow::Result<()> {
     let answer = mdm_ipc::request(&cmd)
-        .map_err(|e| anyhow::anyhow!("Mister Download Manager isn't running ({e})"))?;
+        .map_err(|e| anyhow::anyhow!("IET Download Manager isn't running ({e})"))?;
     println!("{answer}");
     if serde_json::from_str::<mdm_ipc::api::ErrorAnswer>(&answer).is_ok() {
         return Err(Reported.into());
@@ -334,7 +334,7 @@ fn pair() -> anyhow::Result<()> {
         pair: true,
         ..Default::default()
     })
-    .map_err(|e| anyhow::anyhow!("Mister Download Manager isn't running ({e})"))?;
+    .map_err(|e| anyhow::anyhow!("IET Download Manager isn't running ({e})"))?;
     match mdm_ipc::api::parse::<mdm_ipc::api::PairAnswer>(&answer).map_err(anyhow::Error::msg)? {
         Ok(a) => {
             println!("{}", a.qr);
@@ -380,7 +380,7 @@ fn js_runtime_note() -> String {
 }
 
 /// The launcher's name, which the commands' help and messages show.
-pub const NAME: &str = "misterdownloadmanager-cli";
+pub const NAME: &str = "ietdownloadmanager-cli";
 
 /// The app's program, started for the command line.
 pub struct Launch {
@@ -426,14 +426,14 @@ pub fn launched(args: Vec<OsString>) -> Option<Launch> {
     })
 }
 
-/// Run the command line `args` (without the program's name): what `misterdownloadmanager-cli`
+/// Run the command line `args` (without the program's name): what `ietdownloadmanager-cli`
 /// does, its output, and its exit code (1 when a command fails).
 pub fn main(args: Vec<OsString>) -> ExitCode {
     main_with(args, None)
 }
 
 /// [`main`], downloading through the app's debrid `accounts` (#44).
-/// Does the command line `args` (as [`main_with`] takes them) download a link with MDM's own
+/// Does the command line `args` (as [`main_with`] takes them) download a link with IETDM's own
 /// User-Agent (`get`, `resume`)? The app waits for the default browser's (#668) only for these.
 pub fn downloads(args: &[OsString]) -> bool {
     Cli::try_parse_from(std::iter::once(OsString::from(NAME)).chain(args.iter().cloned()))
@@ -546,24 +546,24 @@ async fn run(cmd: Cmd, json: bool, accounts: Option<&dyn Accounts>) -> anyhow::R
                 mdm_tools::proc::set_route(r.clone());
             }
             let dir = mdm_tools::tools_dir().ok_or_else(|| anyhow::anyhow!("no data folder"))?;
-            // A gallery-dl of the person's too old for MDM is passed over (#236), said plainly.
+            // A gallery-dl of the person's too old for IETDM is passed over (#236), said plainly.
             let old = mdm_tools::gallery::chosen_too_old(&dir).map(|old| {
                 format!(
-                    "your gallery-dl {} ({}) is too old: MDM needs {} or newer",
+                    "your gallery-dl {} ({}) is too old: IETDM needs {} or newer",
                     old.version,
                     old.exe.display(),
                     mdm_tools::gallery::OLDEST
                 )
             });
             let tool = mdm_tools::gallery::installed(&dir).ok_or_else(|| match &old {
-                Some(why) => anyhow::anyhow!("{why}; run install-gallery-dl for MDM's own copy"),
+                Some(why) => anyhow::anyhow!("{why}; run install-gallery-dl for IETDM's own copy"),
                 None => anyhow::anyhow!("gallery-dl is not installed: run install-gallery-dl"),
             })?;
             if let Some(why) = &old {
                 if tool.is_system() {
                     eprintln!("{why}: using the system's, {}", tool.exe.display());
                 } else {
-                    eprintln!("{why}: using MDM's own copy, {}", tool.version);
+                    eprintln!("{why}: using IETDM's own copy, {}", tool.version);
                 }
             }
             if !mdm_tools::gallery::handles(&tool, &url)? {
@@ -1120,7 +1120,7 @@ fn subs_arg(langs: &str, automatic: bool, embed: bool) -> mdm_tools::video::Subs
     }
 }
 
-/// MDM's engine for a video's streams (#769): this many connections each, through `route`.
+/// IETDM's engine for a video's streams (#769): this many connections each, through `route`.
 fn video_engine(connections: u32, route: Option<mdm_engine::Route>) -> mdm_tools::streams::Engine {
     mdm_tools::streams::Engine {
         handle: tokio::runtime::Handle::current(),
@@ -1131,7 +1131,7 @@ fn video_engine(connections: u32, route: Option<mdm_engine::Route>) -> mdm_tools
     }
 }
 
-/// A download's options: the app's defaults (the default browser's User-Agent, #668, and MDM's
+/// A download's options: the app's defaults (the default browser's User-Agent, #668, and IETDM's
 /// former one once if a site refuses it, #372).
 fn opts(connections: u32) -> Options {
     Options {
@@ -1432,7 +1432,7 @@ mod tests {
         assert!(launched(args(&["mdm", "--cli=x"])).is_none());
         assert!(launched(args(&["mdm", "--client"])).is_none());
         // A link named as the launcher (Linux and macOS).
-        let named = launched(args(&["/usr/bin/misterdownloadmanager-cli", "status"]));
+        let named = launched(args(&["/usr/bin/ietdownloadmanager-cli", "status"]));
         assert_eq!(named.is_some(), cfg!(unix));
     }
 }

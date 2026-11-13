@@ -217,7 +217,7 @@ const QUEUE_GATES: [&str; 2] = ["file-info", "duplicate"];
 
 /// A window that must be on the screen and isn't (hidden, not minimized): shown again after a
 /// moment, however it got that way, directly: winit believes it is still visible and ignores
-/// `Visible(true)`. The other platforms have nothing to ask: MDM's windows have no owner there,
+/// `Visible(true)`. The other platforms have nothing to ask: IETDM's windows have no owner there,
 /// and the window manager doesn't say whether it shows a window.
 #[cfg(windows)]
 fn keep_on_screen(ctx: &egui::Context, key: egui::Id, title: &str) {
@@ -629,7 +629,7 @@ impl AddUrl {
         }
     }
 
-    /// The clipboard's text in the box, when it is an address MDM downloads and the box is
+    /// The clipboard's text in the box, when it is an address IETDM downloads and the box is
     /// still empty (nothing typed or picked meanwhile).
     fn fill_from_clipboard(&mut self, clip: &str) {
         let clip = clip.trim();
@@ -862,7 +862,7 @@ impl AddUrl {
 pub(crate) struct PlaceAsk {
     pub dir: PathBuf,
     pub name: String,
-    /// A name MDM gave: numbered on when it is taken there (`naming::destination`). A typed one
+    /// A name IETDM gave: numbered on when it is taken there (`naming::destination`). A typed one
     /// only has its folder looked at (its download is numbered as it starts if it is taken).
     pub number: bool,
 }
@@ -919,7 +919,7 @@ impl SaveAsPlace {
         }
     }
 
-    /// `name` in `dir` as MDM names it: Save As's text for now (fitted, not numbered: no wait
+    /// `name` in `dir` as IETDM names it: Save As's text for now (fitted, not numbered: no wait
     /// for the disk), its free numbered name asked for.
     pub fn name_in(&mut self, dir: &Path, name: &str) -> String {
         let shown = display_path(&mdm_engine::naming::guess(dir, name));
@@ -954,7 +954,7 @@ impl SaveAsPlace {
     }
 
     /// Each frame, never waiting: once the answer has come for what Save As (`save_as`) still
-    /// shows, a name MDM gave takes its free numbered name; whether its folder is there. None
+    /// shows, a name IETDM gave takes its free numbered name; whether its folder is there. None
     /// while it hasn't come, or when Save As was typed over since.
     pub fn follow(&mut self, save_as: &mut String) -> Option<bool> {
         let (ask, shown, asked) = self.asking.as_mut()?;
@@ -1003,7 +1003,7 @@ pub struct FileInfo {
     /// … category on last selected" says.
     pub remember: bool,
     url_text: String,
-    /// The URL box holds no address MDM downloads: Start and Later wait.
+    /// The URL box holds no address IETDM downloads: Start and Later wait.
     url_bad: bool,
     /// Save As has been given the focus (once, when the dialog opens).
     focused: bool,
@@ -1157,7 +1157,7 @@ impl FileInfo {
     }
 
     /// The account that takes the address appeared or changed (the services' host lists are
-    /// read when MDM starts, and Options may change them while the dialog is open): looked up
+    /// read when IETDM starts, and Options may change them while the dialog is open): looked up
     /// again its way. A download the browser had started keeps the browser's answer, and goes
     /// directly unless the line is ticked.
     fn follow_route(&mut self, ctx: &egui::Context) {
@@ -1172,7 +1172,7 @@ impl FileInfo {
         }
     }
 
-    /// The URL box changed: a new address MDM downloads is the one to download (looked up
+    /// The URL box changed: a new address IETDM downloads is the one to download (looked up
     /// again; its file name too, unless Save As was edited); anything else holds Start and
     /// Later back.
     fn url_edited(&mut self, ctx: &egui::Context) {
@@ -1282,7 +1282,7 @@ impl FileInfo {
     }
 
     /// Whether Save As's folder is there, as looked at off the window's thread for the name it
-    /// shows now (None: not known yet). A name MDM gave has its free numbered name by then.
+    /// shows now (None: not known yet). A name IETDM gave has its free numbered name by then.
     pub fn folder_found(&mut self) -> Option<bool> {
         self.place.folder(&mut self.save_as)
     }
@@ -1763,7 +1763,7 @@ fn cancel_waiting(ctx: &egui::Context, n: usize) -> Outcome<bool> {
     question(
         ctx,
         "cancel-waiting",
-        "Mister Download Manager",
+        "IET Download Manager",
         [374.0, 100.0 + extra],
         false,
         winui::BG(),
@@ -1862,7 +1862,7 @@ pub struct Complete {
     pub opening: Option<crate::launch::Asked<PathBuf, bool>>,
     /// Snooze picked a time (#741): the window closes, and no other opens until then.
     pub snooze: Option<crate::finish::SnoozeFor>,
-    /// The file was dragged out of the box to a place MDM couldn't learn (#869): Open and Open
+    /// The file was dragged out of the box to a place IETDM couldn't learn (#869): Open and Open
     /// folder say so.
     pub moved_away: bool,
 }
@@ -2002,7 +2002,7 @@ impl Complete {
                 // Drag handle: white box with a 1 px #828790 border; drag it to drop the file into
                 // Explorer, a mail or a chat (IDM 5.05). The drop target decides, as for a file
                 // dragged in Explorer: moved on the same drive (or with Shift), copied to another
-                // (or with Ctrl), and MDM's download follows a move (#869). Windows only: dragging
+                // (or with Ctrl), and IETDM's download follows a move (#869). Windows only: dragging
                 // a file out to another app goes through OLE there; Linux and macOS have no such
                 // drag built yet (no drag source in their window library), so the handle isn't
                 // shown there and nothing is moved: Open folder is the way to the file.
@@ -2354,7 +2354,7 @@ impl GroupDone {
                     unreachable!("three buttons")
                 };
                 let folder = btn(ui, folder_at, "Open folder", ButtonKind::Default);
-                // i18n: button: shows these downloads in MDM's list, selected
+                // i18n: button: shows these downloads in IETDM's list, selected
                 let list = btn(ui, list_at, "Show in list", ButtonKind::Normal);
                 // i18n: verb: closes this window
                 let close = btn(ui, close_at, "Close", ButtonKind::Normal);
@@ -2472,7 +2472,7 @@ impl SpeedSettings {
                     ui,
                     o + vec2(11.0, 86.0),
                     &mut self.on_startup,
-                    "Always turn on Speed Limiter on Mister Download Manager startup",
+                    "Always turn on Speed Limiter on IET Download Manager startup",
                     true,
                 );
                 // Beyond IDM: a limit for all downloads together.
@@ -2740,7 +2740,7 @@ impl TurnOffCountdown {
         question(
             ctx,
             "turn-off",
-            "Mister Download Manager",
+            "IET Download Manager",
             [374.0, 100.0],
             false,
             winui::LIGHT_BG(),
@@ -2907,7 +2907,7 @@ impl ConfirmDelete {
                 let text = if n == 1 && self.unfinished {
                     crate::i18n::t(
                         "The selected download is not complete. Are you sure you want to delete
-it from Mister Download Manager list of downloads?",
+it from IET Download Manager list of downloads?",
                     )
                     .to_owned()
                 } else if n == 1 {
@@ -2915,7 +2915,7 @@ it from Mister Download Manager list of downloads?",
                     let name = self.name.clone();
                     crate::i18n::fmt(
                         crate::i18n::t(
-                            "Are you sure you want to delete \"{name}\" from Mister Download Manager list of downloads?",
+                            "Are you sure you want to delete \"{name}\" from IET Download Manager list of downloads?",
                         ),
                         // A file name keeps its own direction (an Arabic one reads right to left).
                         &[("name", &crate::i18n::isolate(&name))],
@@ -2927,8 +2927,8 @@ it from Mister Download Manager list of downloads?",
                         // i18n: never shown for a single download
                         &crate::i18n::tn(
                             n,
-                            "Are you sure you want to delete {n} download from Mister Download Manager list of downloads?",
-                            "Are you sure you want to delete these {n} downloads from Mister Download Manager list of downloads?",
+                            "Are you sure you want to delete {n} download from IET Download Manager list of downloads?",
+                            "Are you sure you want to delete these {n} downloads from IET Download Manager list of downloads?",
                         ),
                         &[("n", &crate::i18n::integer(n))],
                     )
@@ -3052,7 +3052,7 @@ fn tell_turn_off_failed(why: String) {
 pub enum DraggedOut {
     /// Moved there (the shell said where).
     Moved(PathBuf),
-    /// Gone from its place, to somewhere MDM couldn't learn (a program that took it, the
+    /// Gone from its place, to somewhere IETDM couldn't learn (a program that took it, the
     /// Recycle Bin).
     MovedAway,
 }
@@ -3087,7 +3087,7 @@ pub fn open_file(path: &Path) {
 }
 
 /// [`open_file`] for a download: `moved_away`, its file was dragged out of Download complete to
-/// a place MDM couldn't learn (#869), which is said when it isn't there.
+/// a place IETDM couldn't learn (#869), which is said when it isn't there.
 pub fn open_download(path: &Path, moved_away: bool) {
     let path = path.to_owned();
     crate::launch::spawn("open file", move || {
@@ -3117,20 +3117,20 @@ pub fn open_download_now(path: &Path, moved_away: bool) -> bool {
     })
 }
 
-/// Why a download's file isn't where MDM saved it, when it was dragged out of Download complete
-/// to a place MDM couldn't learn (#869).
+/// Why a download's file isn't where IETDM saved it, when it was dragged out of Download complete
+/// to a place IETDM couldn't learn (#869).
 fn moved_away_text(path: &Path) -> String {
     let name = crate::i18n::isolate(&path.file_name().unwrap_or_default().to_string_lossy());
     crate::i18n::fmt(
         crate::i18n::t(
-            "{file} was moved elsewhere by dragging it out of Download complete, and MDM couldn't learn where. Look for it where you dropped it.",
+            "{file} was moved elsewhere by dragging it out of Download complete, and IETDM couldn't learn where. Look for it where you dropped it.",
         ),
         &[("file", &name)],
     )
 }
 
 /// Hand the downloaded file `path` to `hand` (which opens it, or shows a chooser for it), or say
-/// why not: moved or deleted since (`moved_away`: dragged out to a place MDM couldn't learn,
+/// why not: moved or deleted since (`moved_away`: dragged out to a place IETDM couldn't learn,
 /// #869), or `hand`'s error. True when it was handed over. Waits for `hand`, so it runs on a
 /// thread other than the window's.
 fn hand_over(
@@ -3170,7 +3170,7 @@ pub fn show_in_folder(path: &Path) {
 }
 
 /// [`show_in_folder`] for a download: `moved_away`, its file was dragged out of Download
-/// complete to a place MDM couldn't learn (#869): when it isn't there, that is said instead of
+/// complete to a place IETDM couldn't learn (#869): when it isn't there, that is said instead of
 /// opening the folder it left.
 pub fn show_download_in_folder(path: &Path, moved_away: bool) {
     let path = path.to_owned();
@@ -3234,7 +3234,7 @@ pub fn open_download_with(path: &Path, moved_away: bool) {
                     std::io::Error::from_raw_os_error(hr).to_string()
                 })
             }
-            // Linux and macOS have no chooser MDM can call for a file: the desktop's opener
+            // Linux and macOS have no chooser IETDM can call for a file: the desktop's opener
             // (xdg-open, which goes through the desktop portal in a sandbox, or macOS's `open`)
             // opens it with the program set for its type, which the user changes there.
             #[cfg(not(windows))]
@@ -4305,7 +4305,7 @@ mod tests {
                         ui.painter().text(
                             origin + vec2(10.0, 10.0),
                             egui::Align2::LEFT_TOP,
-                            "Mister Download Manager",
+                            "IET Download Manager",
                             egui::FontId::proportional(12.0),
                             egui::Color32::BLACK,
                         );

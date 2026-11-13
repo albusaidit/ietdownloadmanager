@@ -1,4 +1,4 @@
-# Mister Download Manager in Portuguese (Brazil) (Português (Brasil)): tools/i18n/translate.py
+# IET Download Manager in Portuguese (Brazil) (Português (Brasil)): tools/i18n/translate.py
 # writes the rows marked '#, machine'; a native speaker deletes that line after checking.
 # context	source	translation (craft-i18n format, rows as in en.tsv)
 @id	language.name	Português (Brasil)
@@ -11,7 +11,7 @@
 #. never shown for a single download
 #. {n} = a number (keep the braces as they are)
 #, machine
-@plural	Are you sure you want to delete {n} download from Mister Download Manager list of downloads?|Are you sure you want to delete these {n} downloads from Mister Download Manager list of downloads?	Tem certeza de que deseja excluir {n} download da lista de downloads do Mister Download Manager?|Tem certeza de que deseja excluir estes {n} downloads da lista de downloads do Mister Download Manager?
+@plural	Are you sure you want to delete {n} download from IET Download Manager list of downloads?|Are you sure you want to delete these {n} downloads from IET Download Manager list of downloads?	Tem certeza de que deseja excluir {n} download da lista de downloads do IET Download Manager?|Tem certeza de que deseja excluir estes {n} downloads da lista de downloads do IET Download Manager?
 #. count in the Add torrent window
 #. while a magnet link's file list is fetched; {n} = peers that answered
 #. {n} = a number (keep the braces as they are)
@@ -217,7 +217,7 @@
 #. text in the Options window
 #. Options → Accounts: what these accounts are, and the services' rule against sharing
 #, machine
-	A debrid service downloads a file host's link with your own paid account and gives MDM a direct link. Use only your own account: sharing an account or its links breaks the services' terms and can get it suspended. Downloads the browser already started stay as they are.	Um serviço de desbridamento baixa um link de um host de arquivos com sua própria conta paga e fornece ao MDM um link direto. Use apenas sua própria conta: compartilhar uma conta ou seus links viola os termos de serviço e pode resultar na suspensão da conta. Os downloads que o navegador já iniciou permanecem como estão.
+	A debrid service downloads a file host's link with your own paid account and gives IETDM a direct link. Use only your own account: sharing an account or its links breaks the services' terms and can get it suspended. Downloads the browser already started stay as they are.	Um serviço de desbridamento baixa um link de um host de arquivos com sua própria conta paga e fornece ao IETDM um link direto. Use apenas sua própria conta: compartilhar uma conta ou seus links viola os termos de serviço e pode resultar na suspensão da conta. Os downloads que o navegador já iniciou permanecem como estão.
 #. text in a download's progress window
 #. reason shown on the Rename box when the entered name ends with a period
 #, machine
@@ -261,7 +261,7 @@
 #, machine
 	A single-file torrent keeps its name	Um torrent de arquivo único mantém seu nome
 #. text in the Add torrent window
-#. Add trackers: MDM never contacts a tracker on this computer or the local network
+#. Add trackers: IETDM never contacts a tracker on this computer or the local network
 #, machine
 	A tracker on this computer or the local network is never contacted: {line}	Um rastreador neste computador ou na rede local nunca é contatado: {line}
 #. text in extracting archives (a download's log, the Archive password window)
@@ -270,7 +270,7 @@
 	a volume of it is missing	um volume está faltando
 #. window title in the Help menu's windows (About, updates, shortcuts, Tell a friend)
 #, machine
-	About Mister Download Manager	Sobre o Mister Download Manager
+	About IET Download Manager	Sobre o IET Download Manager
 #. text in whereis.rs
 #. a download's server's round trip: {ms} a number of milliseconds, {reach} near, medium or far
 #, machine
@@ -333,7 +333,7 @@
 #. window title in extension.rs
 #. title of the window that offers the browser extension
 #, machine
-	Add Mister Download Manager to your browser	Adicionar Mister Download Manager ao seu navegador
+	Add IET Download Manager to your browser	Adicionar IET Download Manager ao seu navegador
 #. message or event log entry in the main window; text in the tray icon's menu
 #. link in the empty download list: opens Add URL
 #, machine
@@ -395,9 +395,9 @@
 #, machine
 	Added.	Adicionado.
 #. text in remote.rs
-#. remote control page (on a phone): a magnet link or .torrent file was added; MDM reads the torrent's files first
+#. remote control page (on a phone): a magnet link or .torrent file was added; IETDM reads the torrent's files first
 #, machine
-	Added. MDM is reading the torrent: it joins the list in a moment.	Adicionado. O MDM está lendo o torrent: ele entrará na lista em um momento.
+	Added. IETDM is reading the torrent: it joins the list in a moment.	Adicionado. O IETDM está lendo o torrent: ele entrará na lista em um momento.
 #. text in the Batch download window; text in a dialog box; label in the Options window; text in a download's progress window
 #. noun: the web address (URL)
 #. column title: the web address (URL)
@@ -481,7 +481,7 @@
 #, machine
 	Already reported as issue #{number}: {title}	Já relatado como problema #{number}: {title}
 #. checkbox in crashui.rs
-#. crash report window: checkbox; the .dmp file holds what MDM had in memory
+#. crash report window: checkbox; the .dmp file holds what IETDM had in memory
 #, machine
 	Also attach the crash data (.dmp): it may hold addresses, cookies and passwords	Anexar também os dados de falha (.dmp): pode conter endereços, cookies e senhas
 #. text in a dialog box
@@ -500,7 +500,7 @@
 	Always into a folder named after it	Sempre em uma pasta com o nome dele
 #. checkbox in a dialog box
 #, machine
-	Always turn on Speed Limiter on Mister Download Manager startup	Sempre ativar o Limitador de Velocidade na inicialização do Mister Download Manager
+	Always turn on Speed Limiter on IET Download Manager startup	Sempre ativar o Limitador de Velocidade na inicialização do IET Download Manager
 #. text in regional.rs; text in the Scheduler window
 #. before noon, after a time of day (12-hour clock). Its pair is "PM": write both the same way (this language's own short marks, or both kept as AM and PM)
 #, machine
@@ -566,7 +566,7 @@
 #. text in a dialog box
 #. {name} = a file name (keep the braces as they are)
 #, machine
-	Are you sure you want to delete "{name}" from Mister Download Manager list of downloads?	Tem certeza de que deseja excluir "{name}" da lista de downloads do Mister Download Manager?
+	Are you sure you want to delete "{name}" from IET Download Manager list of downloads?	Tem certeza de que deseja excluir "{name}" da lista de downloads do IET Download Manager?
 #. text in countries.rs
 #. a country's name (where a download's server is)
 #, machine
@@ -626,7 +626,7 @@
 #, machine
 	Austria	Áustria
 #. checkbox in the Options window; text in the Options window
-#. checkbox: the User-Agent is the default browser's, which MDM finds itself
+#. checkbox: the User-Agent is the default browser's, which IETDM finds itself
 #, machine
 	Automatic	Automático
 #. text in remote.rs
@@ -709,7 +709,7 @@
 	Bosnia and Herzegovina	Bósnia e Herzegovina
 #. text in helpers.rs
 #, machine
-	Both are open source. MDM gets them from their official releases with its own downloader and checks each file's signature before it runs. About 100 MB, once.	Ambos são de código aberto. O MDM os obtém de seus lançamentos oficiais com seu próprio baixador e verifica a assinatura de cada arquivo antes de executá-lo. Cerca de 100 MB, uma vez.
+	Both are open source. IETDM gets them from their official releases with its own downloader and checks each file's signature before it runs. About 100 MB, once.	Ambos são de código aberto. O IETDM os obtém de seus lançamentos oficiais com seu próprio baixador e verifica a assinatura de cada arquivo antes de executá-lo. Cerca de 100 MB, uma vez.
 #. text in countries.rs
 #. a country's name (where a download's server is)
 #, machine
@@ -739,7 +739,7 @@
 	Browse...	Procurar...
 #. text in extension.rs
 #, machine
-	Browser integration isn't set up on this computer, so no browser can reach Mister Download Manager yet.	A integração do navegador não está configurada neste computador, então nenhum navegador pode acessar Mister Download Manager ainda.
+	Browser integration isn't set up on this computer, so no browser can reach IET Download Manager yet.	A integração do navegador não está configurada neste computador, então nenhum navegador pode acessar IET Download Manager ainda.
 #. page title in the Options window
 #, machine
 	Browser/System Integration	Integração com Navegador/Sistema
@@ -871,7 +871,7 @@
 #, machine
 	Check for updates	Verificar atualizações
 #. checkbox in the Help menu's windows (About, updates, shortcuts, Tell a friend)
-#. check box in the update window: look for a new version every time MDM starts
+#. check box in the update window: look for a new version every time IETDM starts
 #, machine
 	Check for updates at every start	Verificar atualizações a cada inicialização
 #. text in errors.rs
@@ -883,9 +883,9 @@
 #, machine
 	Check your connection, then try again, or get them later from the video window.	Verifique sua conexão e tente novamente, ou obtenha-os mais tarde na janela de vídeo.
 #. text in the Options window
-#. tooltip of the close-setting: checked keeps MDM running when the window closes, in the notification area when available or else the taskbar; downloads continue; unchecked closing quits
+#. tooltip of the close-setting: checked keeps IETDM running when the window closes, in the notification area when available or else the taskbar; downloads continue; unchecked closing quits
 #, machine
-	Checked, closing the window keeps MDM running: it hides in the notification area when available, or minimizes to the taskbar otherwise, and downloads continue; unchecked, closing quits MDM	Marcado: ao fechar a janela, o MDM continua em execução, oculto na área de notificação (se disponível) ou minimizado na barra de tarefas, e os downloads continuam; desmarcado: ao fechar, o MDM é encerrado
+	Checked, closing the window keeps IETDM running: it hides in the notification area when available, or minimizes to the taskbar otherwise, and downloads continue; unchecked, closing quits IETDM	Marcado: ao fechar a janela, o IETDM continua em execução, oculto na área de notificação (se disponível) ou minimizado na barra de tarefas, e os downloads continuam; desmarcado: ao fechar, o IETDM é encerrado
 #. message or event log entry in the main window
 #. event log entry after Recheck: {have} and {total} are sizes ("1.2 GB of 4 GB there")
 #, machine
@@ -944,7 +944,7 @@
 	Choose a language	Escolher um idioma
 #. text in langpick.rs
 #, machine
-	Choose the language Mister Download Manager shows its windows in:	Escolha o idioma em que o Mister Download Manager mostra suas janelas:
+	Choose the language IET Download Manager shows its windows in:	Escolha o idioma em que o IET Download Manager mostra suas janelas:
 #. text in the Options window
 #. Options → Sites Logins → Cookies for video sites: the title of the window, and the tooltip of the button, that pick a browser profile's folder
 #, machine
@@ -1032,7 +1032,7 @@
 #, machine
 	Congo	Congo
 #. text in extension.rs
-#. in the browser extension's window, beside a browser whose extension reached MDM
+#. in the browser extension's window, beside a browser whose extension reached IETDM
 #, machine
 	Connected	Conectado
 #. text in extension.rs
@@ -1084,7 +1084,7 @@
 #, machine
 	Could not be read: {error}	Não foi possível ler: {error}
 #. text in errors.rs
-#. a helper (yt-dlp, ffmpeg) couldn't be downloaded: the proxy set in Options ({proxy}, its address) didn't let MDM connect
+#. a helper (yt-dlp, ffmpeg) couldn't be downloaded: the proxy set in Options ({proxy}, its address) didn't let IETDM connect
 #, machine
 	could not connect through the proxy {proxy}	não foi possível conectar através do proxy {proxy}
 #. text in errors.rs
@@ -1122,13 +1122,13 @@
 	Customize "Download progress" dialog	Personalizar caixa de diálogo "Progresso do download"
 #. text in the Options window
 #, machine
-	Customize keys to prevent or force downloading with MDM	Personalizar teclas para impedir ou forçar o download com o MDM
+	Customize keys to prevent or force downloading with IETDM	Personalizar teclas para impedir ou forçar o download com o IETDM
 #. text in the Options window
 #, machine
-	Customize MDM Download panels in browsers	Personalizar painéis de download do MDM nos navegadores
+	Customize IETDM Download panels in browsers	Personalizar painéis de download do IETDM nos navegadores
 #. text in the Options window
 #, machine
-	Customize MDM menu items in context menu of browsers	Personalizar itens de menu do MDM no menu de contexto dos navegadores
+	Customize IETDM menu items in context menu of browsers	Personalizar itens de menu do IETDM no menu de contexto dos navegadores
 #. text in countries.rs
 #. a country's name (where a download's server is)
 #, machine
@@ -1317,9 +1317,9 @@
 #, machine
 	Download complete	Download concluído
 #. text in the Options window
-#. Options, Downloads, under "Show download complete dialog": snoozed with "Until MDM restarts"
+#. Options, Downloads, under "Show download complete dialog": snoozed with "Until IETDM restarts"
 #, machine
-	Download complete is snoozed until MDM restarts	A conclusão do download está suspensa até o MDM ser reiniciado
+	Download complete is snoozed until IETDM restarts	A conclusão do download está suspensa até o IETDM ser reiniciado
 #. text in the Options window
 #. Options, Downloads, under "Show download complete dialog": {time} when the snooze ends, like "14:30"
 #. {time} = a time of day (keep the braces as they are)
@@ -1424,10 +1424,10 @@
 #, machine
 	Downloading and verifying yt-dlp...	Baixando e verificando yt-dlp...
 #. text in helpers.rs
-#. Video helpers: MDM's own yt-dlp is being downloaded
+#. Video helpers: IETDM's own yt-dlp is being downloaded
 #. the trailing ... means it is still going on: keep it
 #, machine
-	Downloading MDM's own copy...	Baixando cópia própria do MDM...
+	Downloading IETDM's own copy...	Baixando cópia própria do IETDM...
 #. text in the Help menu's windows (About, updates, shortcuts, Tell a friend)
 #. Check for updates, while Update now downloads; {percent} like "42%"
 #, machine
@@ -1470,7 +1470,7 @@
 	Drag the file into a folder or an app	Arraste o arquivo para uma pasta ou aplicativo
 #. message or event log entry in the main window
 #, machine
-	Dragged out of Download complete and moved to a place MDM couldn't learn	Arrastado para fora de Downloads concluídos e movido para um local que o MDM não conseguiu identificar
+	Dragged out of Download complete and moved to a place IETDM couldn't learn	Arrastado para fora de Downloads concluídos e movido para um local que o IETDM não conseguiu identificar
 #. message or event log entry in the main window
 #, machine
 	Dragged out of Download complete and moved to {folder}	Arrastado para fora de Downloads concluídos e movido para {folder}
@@ -1532,9 +1532,9 @@
 #, machine
 	Empty: all of them. On most sites the newest come first.	Vazio: todos eles. Na maioria dos sites, os mais novos vêm primeiro.
 #. text in crashui.rs
-#. crash report window button: end the frozen MDM and start it again
+#. crash report window button: end the frozen IETDM and start it again
 #, machine
-	End and restart MDM	Encerrar e reiniciar o MDM
+	End and restart IETDM	Encerrar e reiniciar o IETDM
 #. text in the Add torrent window
 #, machine
 	Enter a magnet link or choose a .torrent file	Insira um link magnet ou escolha um arquivo .torrent
@@ -1617,7 +1617,7 @@
 	Exit	Sair
 #. checkbox in a download's progress window; checkbox in the Scheduler window
 #, machine
-	Exit Mister Download Manager when done	Sair do Mister Download Manager quando terminar
+	Exit IET Download Manager when done	Sair do IET Download Manager quando terminar
 #. text in the Checksum window
 #, machine
 	Expected checksum (MD5, SHA-1, SHA-256, SHA-512 or CRC32):	Soma de verificação esperada (MD5, SHA-1, SHA-256, SHA-512 ou CRC32):
@@ -1832,7 +1832,7 @@
 #, machine
 	For example:  {address}	Por exemplo: {address}
 #. text in the Add torrent window
-#. Torrent settings, under the switch that makes MDM open magnet links and .torrent files (macOS, Linux)
+#. Torrent settings, under the switch that makes IETDM open magnet links and .torrent files (macOS, Linux)
 #, machine
 	For your account only. Another app set as the default stays first.	Apenas para sua conta. Outro aplicativo definido como padrão permanece primeiro.
 #. text in the Add torrent window
@@ -1842,7 +1842,7 @@
 #, machine
 	Force processes to terminate	Forçar o encerramento dos processos
 #. text in remote.rs
-#. remote control page (on a phone): menu command: unpair this phone or computer from MDM
+#. remote control page (on a phone): menu command: unpair this phone or computer from IETDM
 #, machine
 	Forget this device	Esquecer este dispositivo
 #. text in remote.rs
@@ -2053,11 +2053,11 @@
 #, machine
 	Help	Ajuda
 #. window title in helpers.rs
-#. window title: where MDM takes its helper programs (yt-dlp, ffmpeg, gallery-dl) from
+#. window title: where IETDM takes its helper programs (yt-dlp, ffmpeg, gallery-dl) from
 #, machine
 	Helpers	Auxiliares
 #. text in errors.rs; button in gallerydlg.rs; button in the Download video window
-#. button in Download video: where MDM takes yt-dlp and ffmpeg from
+#. button in Download video: where IETDM takes yt-dlp and ffmpeg from
 #. the trailing ... means it opens a window: keep it
 #, machine
 	Helpers...	Auxiliares...
@@ -2082,7 +2082,7 @@
 	Hide web pages	Ocultar páginas da web
 #. text in the Options window
 #, machine
-	Hold Alt while clicking a link to let the browser download it instead of Mister Download Manager.	Mantenha Alt pressionado ao clicar em um link para que o navegador o baixe em vez de Mister Download Manager.
+	Hold Alt while clicking a link to let the browser download it instead of IET Download Manager.	Mantenha Alt pressionado ao clicar em um link para que o navegador o baixe em vez de IET Download Manager.
 #. link (opens a web page) in the Help menu's windows (About, updates, shortcuts, Tell a friend)
 #, machine
 	Home page	Página inicial
@@ -2123,7 +2123,7 @@
 	Hungary	Hungria
 #. text in the Help menu's windows (About, updates, shortcuts, Tell a friend)
 #, machine
-	I download with Mister Download Manager: fast, free, and it looks like the download manager you already know. {link}	Eu baixo com o Mister Download Manager: rápido, gratuito e parece o gerenciador de downloads que você já conhece. {link}
+	I download with IET Download Manager: fast, free, and it looks like the download manager you already know. {link}	Eu baixo com o IET Download Manager: rápido, gratuito e parece o gerenciador de downloads que você já conhece. {link}
 #. text in countries.rs
 #. a country's name (where a download's server is)
 #, machine
@@ -2160,7 +2160,7 @@
 #, machine
 	In the categories: the selected category's menu	Nas categorias: menu da categoria selecionada
 #. text in the Options window
-#. Options → Accounts: the account's sign-in is in the system's keyring (Linux), which is locked now; MDM never unlocks it
+#. Options → Accounts: the account's sign-in is in the system's keyring (Linux), which is locked now; IETDM never unlocks it
 #, machine
 	in the locked keyring	no chaveiro bloqueado
 #. text in standard windows
@@ -2200,7 +2200,7 @@
 #, machine
 	Install it by hand	Instalar manualmente
 #. text in unix.rs
-#. Linux, after a missing library's name, on a distribution MDM doesn't know
+#. Linux, after a missing library's name, on a distribution IETDM doesn't know
 #, machine
 	Install what's missing from your distribution's packages.	Instale o que está faltando nos pacotes da sua distribuição.
 #. text in the Download video window
@@ -2259,7 +2259,7 @@
 #. text in extracting archives (a download's log, the Archive password window)
 #. why an archive wasn't extracted (after "Couldn't extract {name}: ")
 #, machine
-	it is not an archive MDM extracts	não é um arquivo que o MDM extrai
+	it is not an archive IETDM extracts	não é um arquivo que o IETDM extrai
 #. text in extracting archives (a download's log, the Archive password window)
 #. why an archive wasn't extracted (after "Couldn't extract {name}: ")
 #, machine
@@ -2280,7 +2280,7 @@
 #. text in the Batch download window
 #. \\n starts a new line: break lines where they fit the translation
 #, machine
-	It's possible to add a group of sequential file names like img001.jpg, img002.jpg, etc.,\nimg100.jpg to MDM download queue. Use the asterisk wildcard for the file name pattern.	É possível adicionar um grupo de nomes de arquivo sequenciais como img001.jpg, img002.jpg, etc.,\nimg100.jpg à fila de downloads do MDM. Use o asterisco curinga para o padrão de nome de arquivo.
+	It's possible to add a group of sequential file names like img001.jpg, img002.jpg, etc.,\nimg100.jpg to IETDM download queue. Use the asterisk wildcard for the file name pattern.	É possível adicionar um grupo de nomes de arquivo sequenciais como img001.jpg, img002.jpg, etc.,\nimg100.jpg à fila de downloads do IETDM. Use o asterisco curinga para o padrão de nome de arquivo.
 #. text in countries.rs
 #. a country's name (where a download's server is)
 #, machine
@@ -2338,7 +2338,7 @@
 #, machine
 	KBytes/sec	KB/s
 #. text in the Options window
-#. checkbox: closing keeps MDM running, in the notification area when available or else the taskbar, instead of quitting
+#. checkbox: closing keeps IETDM running, in the notification area when available or else the taskbar, instead of quitting
 #, machine
 	Keep running when closing the window	Manter em execução ao fechar a janela
 #. checkbox in the Add torrent window
@@ -2356,7 +2356,7 @@
 #, machine
 	Keyboard shortcuts	Atalhos de teclado
 #. window title in the Options window
-#. window title: the keys that force or prevent downloading with MDM
+#. window title: the keys that force or prevent downloading with IETDM
 #, machine
 	Keys	Teclas
 #. button in the Options window
@@ -2392,14 +2392,14 @@
 #, machine
 	Laos	Laos
 #. message or event log entry in the main window
-#. RSS: a feed bigger than MDM reads (5 MB)
+#. RSS: a feed bigger than IETDM reads (5 MB)
 #, machine
 	larger than a feed can be	maior do que um feed pode ser
 #. text in the Batch download window
 #, machine
 	Last file:	Último arquivo:
 #. text in the Options window
-#. column title: when the device last reached MDM
+#. column title: when the device last reached IETDM
 #, machine
 	Last seen	Última vez visto
 #. text in a download's Properties window
@@ -2417,7 +2417,7 @@
 	Latvia	Letônia
 #. text in the Options window
 #, machine
-	Launch Mister Download Manager on startup	Iniciar o Mister Download Manager na inicialização
+	Launch IET Download Manager on startup	Iniciar o IET Download Manager na inicialização
 #. text in countries.rs
 #. a country's name (where a download's server is)
 #, machine
@@ -2429,7 +2429,7 @@
 #. checkbox in the Options window
 #. Options → Remote check box (off by default)
 #, machine
-	Let phones and computers on the local network control MDM	Permitir que telefones e computadores na rede local controlem o MDM
+	Let phones and computers on the local network control IETDM	Permitir que telefones e computadores na rede local controlem o IETDM
 #. option (radio button) in the Batch download window
 #. the * in the address runs through letters
 #, machine
@@ -2478,7 +2478,7 @@
 #, machine
 	List the rest	Listar o restante
 #. text in the Options window
-#. Options → Remote: label before the choice of the address MDM listens on
+#. Options → Remote: label before the choice of the address IETDM listens on
 #, machine
 	Listen on:	Ouvir em:
 #. text in playlistdlg.rs
@@ -2662,32 +2662,32 @@
 #. text in the Options window
 #. Options → Remote → Pair a device: the remote control isn't listening (no network, port taken): the Remote page says why
 #, machine
-	MDM can't be reached on the network now: Options → Remote says why.	O MDM não pode ser acessado na rede agora: Opções → Remoto informa o motivo.
+	IETDM can't be reached on the network now: Options → Remote says why.	O IETDM não pode ser acessado na rede agora: Opções → Remoto informa o motivo.
 #. text in remote.rs
-#. remote control page (on a phone): the address typed isn't one MDM downloads (not http, https, ftp or magnet)
+#. remote control page (on a phone): the address typed isn't one IETDM downloads (not http, https, ftp or magnet)
 #, machine
-	MDM cannot download this address.	O MDM não pode baixar este endereço.
+	IETDM cannot download this address.	O IETDM não pode baixar este endereço.
 #. text in remote.rs
 #. remote control page (on a phone): adding a download failed
 #, machine
-	MDM could not add it.	O MDM não pôde adicioná-lo.
+	IETDM could not add it.	O IETDM não pôde adicioná-lo.
 #. text in remote.rs
 #. remote control page (on a phone): an action failed
 #, machine
-	MDM could not do it.	O MDM não pôde fazer isso.
+	IETDM could not do it.	O IETDM não pôde fazer isso.
 #. text in remote.rs
-#. remote control page (on a phone): MDM can't be reached while pairing
+#. remote control page (on a phone): IETDM can't be reached while pairing
 #, machine
-	MDM does not answer. Check that it is running and on the same network.	O MDM não responde. Verifique se ele está em execução e na mesma rede.
+	IETDM does not answer. Check that it is running and on the same network.	O IETDM não responde. Verifique se ele está em execução e na mesma rede.
 #. text in remote.rs
-#. remote control page (on a phone): MDM can't be reached now; the page keeps trying by itself
+#. remote control page (on a phone): IETDM can't be reached now; the page keeps trying by itself
 #. the trailing ... means it is still going on: keep it
 #, machine
-	MDM does not answer. Trying again...	O MDM não responde. Tentando novamente...
+	IETDM does not answer. Trying again...	O IETDM não responde. Tentando novamente...
 #. text in remote.rs
-#. remote control page (on a phone): no pairing code is shown in MDM; "Pair a device" is MDM's button
+#. remote control page (on a phone): no pairing code is shown in IETDM; "Pair a device" is IETDM's button
 #, machine
-	MDM shows no code now. Click Pair a device there first.	O MDM não mostra nenhum código agora. Clique em Emparelhar um dispositivo primeiro.
+	IETDM shows no code now. Click Pair a device there first.	O IETDM não mostra nenhum código agora. Clique em Emparelhar um dispositivo primeiro.
 #. text in whereis.rs
 #. how far a download's server is, by its round trip (60 to 150 ms)
 #, machine
@@ -2718,7 +2718,7 @@
 #, machine
 	Minimize	Minimizar
 #. text in the Options window
-#. checkbox: the Minimize button hides MDM's windows to the notification area (system tray) instead of the taskbar
+#. checkbox: the Minimize button hides IETDM's windows to the notification area (system tray) instead of the taskbar
 #, machine
 	Minimize to the notification area	Minimizar para a área de notificação
 #. text in rssdlg.rs; text in the Add torrent window
@@ -2732,54 +2732,54 @@
 	Missing	Faltando
 #. message or event log entry in the main window; window title in a dialog box; text in the Help menu's windows (About, updates, shortcuts, Tell a friend)
 #, machine
-	Mister Download Manager	Mister Download Manager
+	IET Download Manager	IET Download Manager
 #. text in unix.rs
 #. Linux, at start, on the terminal and in a message box: a library the window needs isn't installed; {libraries} = its file names (libxkbcommon-x11.so.0…), left as they are
 #, machine
-	Mister Download Manager can't open its window: this system lacks {libraries}.	Mister Download Manager não consegue abrir sua janela: este sistema não tem {libraries}.
+	IET Download Manager can't open its window: this system lacks {libraries}.	IET Download Manager não consegue abrir sua janela: este sistema não tem {libraries}.
 #. text in crashui.rs
-#. crash report window heading: MDM crashed and is gone
+#. crash report window heading: IETDM crashed and is gone
 #, machine
-	Mister Download Manager closed unexpectedly	Mister Download Manager fechou inesperadamente
+	IET Download Manager closed unexpectedly	IET Download Manager fechou inesperadamente
 #. window title in the Options window
 #, machine
-	Mister Download Manager Configuration	Configuração do Mister Download Manager
+	IET Download Manager Configuration	Configuração do IET Download Manager
 #. text in crashui.rs
 #, machine
-	Mister Download Manager crash report	Relatório de falha do Mister Download Manager
+	IET Download Manager crash report	Relatório de falha do IET Download Manager
 #. text in crashui.rs
-#. crash report window heading: an internal error, MDM still running
+#. crash report window heading: an internal error, IETDM still running
 #, machine
-	Mister Download Manager hit an internal error	Mister Download Manager encontrou um erro interno
+	IET Download Manager hit an internal error	IET Download Manager encontrou um erro interno
 #. text in wake.rs
 #. why the computer isn't going to sleep, in the system's list of programs that keep it awake; {queue} = the queue's name
 #. {queue} = a queue name such as "Main queue" (keep the braces as they are)
 #, machine
-	Mister Download Manager is running the queue "{queue}"	Mister Download Manager está executando a fila "{queue}"
+	IET Download Manager is running the queue "{queue}"	IET Download Manager está executando a fila "{queue}"
 #. text in crashui.rs
-#. crash report window heading: MDM's window doesn't answer (frozen)
+#. crash report window heading: IETDM's window doesn't answer (frozen)
 #, machine
-	Mister Download Manager stopped responding	Mister Download Manager parou de responder
+	IET Download Manager stopped responding	IET Download Manager parou de responder
 #. text in crashui.rs
 #, machine
-	Mister Download Manager stopped responding for a while	Mister Download Manager parou de responder por um tempo
+	IET Download Manager stopped responding for a while	IET Download Manager parou de responder por um tempo
 #. text in the Options window
 #. \\n starts a new line: break lines where they fit the translation
 #, machine
-	Mister Download Manager writes every connection straight into the final\nfile (a sparse part file next to it), so no temporary directory and no\nassembling step are needed.	O Mister Download Manager grava cada conexão diretamente no arquivo\nfinal (um arquivo de parte esparsa ao lado dele), então nenhum diretório\ntemporário e nenhuma etapa de montagem são necessários.
+	IET Download Manager writes every connection straight into the final\nfile (a sparse part file next to it), so no temporary directory and no\nassembling step are needed.	O IET Download Manager grava cada conexão diretamente no arquivo\nfinal (um arquivo de parte esparsa ao lado dele), então nenhum diretório\ntemporário e nenhuma etapa de montagem são necessários.
 #. text in the Help menu's windows (About, updates, shortcuts, Tell a friend)
 #. {version} = a version number (keep the braces as they are)
 #, machine
-	Mister Download Manager {version} is available (released {date}).	Mister Download Manager {version} está disponível (lançado em {date}).
+	IET Download Manager {version} is available (released {date}).	IET Download Manager {version} está disponível (lançado em {date}).
 #. text in helpers.rs
-#. Video helpers: {version} = the version of MDM's own copy
+#. Video helpers: {version} = the version of IETDM's own copy
 #. {version} = a version number (keep the braces as they are)
 #, machine
-	Mister Download Manager's own copy, version {version}	Cópia própria do Mister Download Manager, versão {version}
+	IET Download Manager's own copy, version {version}	Cópia própria do IET Download Manager, versão {version}
 #. text in unix.rs
 #. Linux, at start, on the terminal: the libraries an X11 window needs aren't installed, so the window opens through Wayland instead, where menus can't be placed under what was clicked; {libraries} = their file names, left as they are
 #, machine
-	Mister Download Manager's X11 window needs {libraries}, which this system lacks: it opens on Wayland instead, where its menus may open away from their titles.	A janela X11 de Mister Download Manager precisa de {libraries}, que não estão instaladas neste sistema: ela abre no Wayland, onde os menus podem aparecer longe dos títulos.
+	IET Download Manager's X11 window needs {libraries}, which this system lacks: it opens on Wayland instead, where its menus may open away from their titles.	A janela X11 de IET Download Manager precisa de {libraries}, que não estão instaladas neste sistema: ela abre no Wayland, onde os menus podem aparecer longe dos títulos.
 #. text in the Scheduler window
 #. Monday, as short as a calendar's column head (two letters in English)
 #, machine
@@ -2863,7 +2863,7 @@
 #, machine
 	Mozambique	Moçambique
 #. text in the Download video window
-#. why "Embed chapters" is greyed in Download video: the choice is a sound converted to MP3, Opus or FLAC, which MDM saves without chapters
+#. why "Embed chapters" is greyed in Download video: the choice is a sound converted to MP3, Opus or FLAC, which IETDM saves without chapters
 #, machine
 	MP3, Opus and FLAC files are saved without chapters	Arquivos MP3, Opus e FLAC são salvos sem capítulos
 #. text in errors.rs
@@ -2988,11 +2988,11 @@
 #, machine
 	No addresses yet	Nenhum endereço ainda
 #. text in extension.rs
-#. a check of Test browser integration (Linux, macOS): MDM found no browser it can connect to (one installed as a Flatpak isn't found)
+#. a check of Test browser integration (Linux, macOS): IETDM found no browser it can connect to (one installed as a Flatpak isn't found)
 #, machine
-	No browser MDM can connect to was found	Nenhum navegador ao qual o MDM possa se conectar foi encontrado
+	No browser IETDM can connect to was found	Nenhum navegador ao qual o IETDM possa se conectar foi encontrado
 #. text in extension.rs
-#. a check of Test browser integration: no browser's extension has reached MDM
+#. a check of Test browser integration: no browser's extension has reached IETDM
 #, machine
 	No browser's extension has connected yet	Nenhuma extensão de navegador se conectou ainda
 #. text in torrent downloads
@@ -3061,9 +3061,9 @@
 #, machine
 	No proxy/socks	Sem proxy/socks
 #. text in the Options window
-#. Options → Accounts: no system keyring/keychain answered (none runs, e.g. a desktop without one), so the sign-ins stay in MDM's settings folder, which only the user's account may read
+#. Options → Accounts: no system keyring/keychain answered (none runs, e.g. a desktop without one), so the sign-ins stay in IETDM's settings folder, which only the user's account may read
 #, machine
-	No system keyring answered, so sign-ins and passwords are kept in MDM's settings, which only you can read.	Nenhum chaveiro do sistema respondeu, então os logins e senhas são mantidos nas configurações do MDM, que só você pode ler.
+	No system keyring answered, so sign-ins and passwords are kept in IETDM's settings, which only you can read.	Nenhum chaveiro do sistema respondeu, então os logins e senhas são mantidos nas configurações do IETDM, que só você pode ler.
 #. message or event log entry in the main window
 #. event log entry: Add trackers changed nothing, the torrent had them all
 #, machine
@@ -3194,7 +3194,7 @@
 #. text in the Options window
 #. Options → Remote → Status: the remote control is off
 #, machine
-	Off: nothing on the network can reach MDM.	Desativado: nada na rede pode alcançar o MDM.
+	Off: nothing on the network can reach IETDM.	Desativado: nada na rede pode alcançar o IETDM.
 #. text in the Options window
 #, machine
 	Offer to download links copied to the clipboard	Oferecer para baixar links copiados para a área de transferência
@@ -3221,7 +3221,7 @@
 #, machine
 	On macOS, only an administrator can schedule a wake	No macOS, somente um administrador pode agendar uma ativação
 #. text in remote.rs
-#. remote control page (on a phone): how to pair; "Options", "Remote" and "Pair a device" are MDM's dialog, tab and button
+#. remote control page (on a phone): how to pair; "Options", "Remote" and "Pair a device" are IETDM's dialog, tab and button
 #, machine
 	On the computer, open Options, then Remote, and click Pair a device. Enter the code it shows.	No computador, abra Opções, depois Remoto e clique em Emparelhar um dispositivo. Insira o código que ele mostra.
 #. text in the Options window
@@ -3270,9 +3270,9 @@
 #. text in the Options window
 #. Options → Remote, at the bottom of the page
 #, machine
-	Only paired devices see or change anything. The first time, the phone's browser warns about MDM's own certificate: its fingerprint is the one above.	Apenas dispositivos emparelhados veem ou alteram algo. Na primeira vez, o navegador do telefone avisará sobre o certificado do MDM: sua impressão digital é a que está acima.
+	Only paired devices see or change anything. The first time, the phone's browser warns about IETDM's own certificate: its fingerprint is the one above.	Apenas dispositivos emparelhados veem ou alteram algo. Na primeira vez, o navegador do telefone avisará sobre o certificado do IETDM: sua impressão digital é a que está acima.
 #. text in playlistdlg.rs
-#. in Download video, a list longer than MDM lists: only its first {n} videos are shown
+#. in Download video, a list longer than IETDM lists: only its first {n} videos are shown
 #. {n} = a number (keep the braces as they are)
 #, machine
 	Only the first {n} videos are listed.	Apenas os primeiros {n} vídeos estão listados.
@@ -3297,10 +3297,10 @@
 	Open in browser	Abrir no navegador
 #. checkbox in the Add torrent window
 #, machine
-	Open magnet links and .torrent files with Mister Download Manager	Abrir links magnet e arquivos .torrent com o Mister Download Manager
+	Open magnet links and .torrent files with IET Download Manager	Abrir links magnet e arquivos .torrent com o IET Download Manager
 #. text in the tray icon's menu
 #, machine
-	Open Mister Download Manager	Abrir Mister Download Manager
+	Open IET Download Manager	Abrir IET Download Manager
 #. text in extension.rs
 #. step 2 of turning on the Safari extension; Cmd is the Command key
 #, machine
@@ -3356,7 +3356,7 @@
 #, machine
 	Page address	Endereço da página
 #. text in remote.rs
-#. remote control page (on a phone): button: pair this phone with MDM
+#. remote control page (on a phone): button: pair this phone with IETDM
 #, machine
 	Pair	Emparelhar
 #. window title in the Options window
@@ -3371,7 +3371,7 @@
 #. text in remote.rs
 #. remote control page (on a phone): title of the pairing screen
 #, machine
-	Pair with Mister Download Manager	Emparelhar com Mister Download Manager
+	Pair with IET Download Manager	Emparelhar com IET Download Manager
 #. text in the Options window
 #. column title: when the device was paired
 #, machine
@@ -3659,11 +3659,11 @@
 #, machine
 	Remember this path for "{category}" category	Lembrar este caminho para a categoria "{category}"
 #. text in the Options window
-#. tab title: control MDM from a phone or another computer on the local network
+#. tab title: control IETDM from a phone or another computer on the local network
 #, machine
 	Remote	Remoto
 #. text in the Options window
-#. Options page title: control MDM from a phone or another computer on the local network
+#. Options page title: control IETDM from a phone or another computer on the local network
 #, machine
 	Remote control	Controle remoto
 #. button in the Options window; text in remote.rs; button in rssdlg.rs
@@ -3693,9 +3693,9 @@
 #, machine
 	Replace asterisk to	Substituir asterisco por
 #. text in crashui.rs
-#. crash report window button: start MDM again
+#. crash report window button: start IETDM again
 #, machine
-	Restart MDM	Reiniciar o MDM
+	Restart IETDM	Reiniciar o IETDM
 #. button in the Options window; text in the Options window
 #, machine
 	Restore the built-in categories	Restaurar as categorias internas
@@ -3875,7 +3875,7 @@
 	Select or unselect the download with the dotted outline	Selecionar ou desmarcar o download com o contorno pontilhado
 #. group box title in the Options window
 #, machine
-	Select sounds for Mister Download Manager events	Selecionar sons para eventos do Mister Download Manager
+	Select sounds for IET Download Manager events	Selecionar sons para eventos do IET Download Manager
 #. what a keyboard shortcut does in the Help menu's windows (About, updates, shortcuts, Tell a friend)
 #, machine
 	Select the downloads in the box	Selecionar os downloads na caixa
@@ -3898,7 +3898,7 @@
 #, machine
 	Send this to a friend:	Enviar para um amigo:
 #. text in the Options window
-#. Options → Accounts: checkbox: magnet links and .torrent files go to the first account's service, which downloads them; MDM then downloads the files from it (no connections to peers)
+#. Options → Accounts: checkbox: magnet links and .torrent files go to the first account's service, which downloads them; IETDM then downloads the files from it (no connections to peers)
 #, machine
 	Send torrents and magnet links to the first account instead of to peers	Enviar torrents e links magnéticos para a primeira conta em vez de para pares
 #. text in countries.rs
@@ -3943,8 +3943,8 @@
 #, machine
 	Set file creation date as provided by the server	Definir a data de criação do arquivo conforme fornecido pelo servidor
 #. button in extension.rs; button in the Options window
-#. button in the browser extension's window: register MDM's helper with the browsers
-#. button in Test browser integration: register MDM's helper with the browsers
+#. button in the browser extension's window: register IETDM's helper with the browsers
+#. button in Test browser integration: register IETDM's helper with the browsers
 #, machine
 	Set it up	Configurar
 #. message or event log entry in the main window
@@ -4022,7 +4022,7 @@
 #, machine
 	Show download complete dialog	Mostrar caixa de diálogo de download concluído
 #. button in a dialog box
-#. button: shows these downloads in MDM's list, selected
+#. button: shows these downloads in IETDM's list, selected
 #, machine
 	Show in list	Mostrar na lista
 #. text in extension.rs
@@ -4100,7 +4100,7 @@
 	Sites Logins	Logins de Sites
 #. text in helpers.rs
 #, machine
-	Sites send their best quality as separate video and audio, and ffmpeg joins them. On this system MDM uses yours: install ffmpeg with your package manager.	Os sites enviam sua melhor qualidade como vídeo e áudio separados, e o ffmpeg os une. Neste sistema, o MDM usa o seu: instale o ffmpeg com seu gerenciador de pacotes.
+	Sites send their best quality as separate video and audio, and ffmpeg joins them. On this system IETDM uses yours: install ffmpeg with your package manager.	Os sites enviam sua melhor qualidade como vídeo e áudio separados, e o ffmpeg os une. Neste sistema, o IETDM usa o seu: instale o ffmpeg com seu gerenciador de pacotes.
 #. text in helpers.rs
 #, machine
 	Sites send their best quality as separate video and audio. ffmpeg puts them together into one file that plays anywhere.	Os sites enviam sua melhor qualidade como vídeo e áudio separados. O ffmpeg os junta em um único arquivo que pode ser reproduzido em qualquer lugar.
@@ -4219,7 +4219,7 @@
 	Start download at	Iniciar download em
 #. checkbox in the Scheduler window
 #, machine
-	Start download on Mister Download Manager startup	Iniciar download na inicialização do Mister Download Manager
+	Start download on IET Download Manager startup	Iniciar download na inicialização do IET Download Manager
 #. checkbox in the Options window
 #, machine
 	Start downloading immediately while displaying "Download File Info" dialog	Iniciar o download imediatamente ao exibir a caixa de diálogo "Informações do arquivo de download"
@@ -4250,11 +4250,11 @@
 #, machine
 	Started with gallery-dl {version}	Iniciado com gallery-dl {version}
 #. text in the Options window
-#. the same tooltip where no notification area (system tray) shows MDM's icon (some Linux desktops): its window starts minimized instead
+#. the same tooltip where no notification area (system tray) shows IETDM's icon (some Linux desktops): its window starts minimized instead
 #, machine
 	Started with the computer, it starts minimized: no notification area shows its icon here	Iniciado com o computador, ele inicia minimizado: nenhuma área de notificação mostra seu ícone aqui
 #. text in the Options window
-#. tooltip of "Launch Mister Download Manager on startup": started with the computer, MDM's window stays hidden, its icon in the notification area (system tray)
+#. tooltip of "Launch IET Download Manager on startup": started with the computer, IETDM's window stays hidden, its icon in the notification area (system tray)
 #, machine
 	Started with the computer, it waits in the notification area	Iniciado com o computador, ele aguarda na área de notificação
 #. message or event log entry in the main window
@@ -4362,7 +4362,7 @@
 	Sunday	Domingo
 #. link (opens a web page) in the Help menu's windows (About, updates, shortcuts, Tell a friend)
 #, machine
-	Support MDM on GitHub Sponsors	Apoiar o MDM no GitHub Sponsors
+	Support the original author on GitHub Sponsors	Support the original author on GitHub Sponsors
 #. text in countries.rs
 #. a country's name (where a download's server is)
 #, machine
@@ -4473,13 +4473,13 @@
 #, machine
 	The best qualities, MP3, Opus and FLAC need ffmpeg: install it with your system's package manager (or Homebrew).	As melhores qualidades, MP3, Opus e FLAC, precisam do ffmpeg: instale-o com o gerenciador de pacotes do seu sistema (ou Homebrew).
 #. text in the settings
-#. an error: the browser's VPN or proxy extension logs in to its proxy itself, and MDM can't; Options → Proxy / Socks → Network adapter is where an adapter can be chosen
+#. an error: the browser's VPN or proxy extension logs in to its proxy itself, and IETDM can't; Options → Proxy / Socks → Network adapter is where an adapter can be chosen
 #, machine
 	the browser's proxy (a VPN or proxy extension) asks for a login only that extension has: use the VPN's own app, or choose its network adapter in Options → Proxy / Socks	o proxy do navegador (uma VPN ou extensão de proxy) pede um login que só essa extensão tem: use o próprio aplicativo da VPN ou escolha o adaptador de rede dela em Opções → Proxy/Socks
 #. text in extension.rs
-#. a check of Test browser integration: the browsers find MDM's helper program
+#. a check of Test browser integration: the browsers find IETDM's helper program
 #, machine
-	The browsers can find Mister Download Manager	Os navegadores podem encontrar Mister Download Manager
+	The browsers can find IET Download Manager	Os navegadores podem encontrar IET Download Manager
 #. text in the Options window
 #. Options → Remote → Status: the settings were changed; they apply on OK
 #, machine
@@ -4506,7 +4506,7 @@
 #. text in the Scheduler window
 #. tooltip on the Scheduler's "Wake the computer to run this queue"
 #, machine
-	The computer is woken a minute before the start time and kept awake while the queue runs. Mister Download Manager has to be running (it can wait in the notification area).	O computador é ativado um minuto antes da hora de início e mantido ativo enquanto a fila é executada. Mister Download Manager precisa estar em execução (pode aguardar na área de notificação).
+	The computer is woken a minute before the start time and kept awake while the queue runs. IET Download Manager has to be running (it can wait in the notification area).	O computador é ativado um minuto antes da hora de início e mantido ativo enquanto a fila é executada. IET Download Manager precisa estar em execução (pode aguardar na área de notificação).
 #. text in the Scheduler window
 #. the Scheduler, under "Wake the computer to run this queue": when it will happen; {date} = e.g. 06/11/2026, {time} = e.g. 22:59:00
 #. {time} = a time of day (keep the braces as they are)
@@ -4561,10 +4561,10 @@
 #. message or event log entry in the main window
 #. {error} = an error message (keep the braces as they are)
 #, machine
-	The download list could not be saved: {error}. Changes are kept while MDM runs.	A lista de downloads não pôde ser salva: {error}. As alterações são mantidas enquanto o MDM está em execução.
+	The download list could not be saved: {error}. Changes are kept while IETDM runs.	A lista de downloads não pôde ser salva: {error}. As alterações são mantidas enquanto o IETDM está em execução.
 #. text in the Help menu's windows (About, updates, shortcuts, Tell a friend)
 #, machine
-	The download manager you already know, rebuilt to be faster. Free and open source under the GNU GPL, version 3 or later. Videos are found by yt-dlp; torrents run on librqbit.	O gerenciador de downloads que você já conhece, reconstruído para ser mais rápido. Gratuito e de código aberto sob a GNU GPL, versão 3 ou posterior. Os vídeos são encontrados por yt-dlp; os torrents são executados em librqbit.
+	Based on Mister Download Manager by Ahmed Nefzaoui, modified for IET. Free and open source under the GNU GPL, version 3 or later. Videos are found by yt-dlp; torrents run on librqbit.	Based on Mister Download Manager by Ahmed Nefzaoui, modified for IET. Free and open source under the GNU GPL, version 3 or later. Videos are found by yt-dlp; torrents run on librqbit.
 #. text in a dialog box
 #, machine
 	The download queue is done.	A fila de downloads foi concluída.
@@ -4637,7 +4637,7 @@
 #, machine
 	the FTP server answered {code} {reply}	o servidor FTP respondeu {code} {reply}
 #. text in extension.rs
-#. a check of Test browser integration: the browsers are set up, but the small helper program they start (misterdownloadmanager-nmhost) is gone
+#. a check of Test browser integration: the browsers are set up, but the small helper program they start (ietdownloadmanager-nmhost) is gone
 #, machine
 	The helper program the browsers start is missing	O programa auxiliar que os navegadores iniciam está ausente
 #. message or event log entry in the main window; text in the Options window
@@ -4696,7 +4696,7 @@
 #. text in a dialog box
 #. \\n starts a new line: break lines where they fit the translation
 #, machine
-	The selected download is not complete. Are you sure you want to delete\nit from Mister Download Manager list of downloads?	O download selecionado não está completo. Tem certeza de que deseja excluí-lo da lista de downloads do Mister Download Manager?
+	The selected download is not complete. Are you sure you want to delete\nit from IET Download Manager list of downloads?	O download selecionado não está completo. Tem certeza de que deseja excluí-lo da lista de downloads do IET Download Manager?
 #. text in errors.rs
 #, machine
 	the server answered {status}	o servidor respondeu {status}
@@ -4716,9 +4716,9 @@
 #, machine
 	the server sent an unexpected part of the file ({detail})	o servidor enviou uma parte inesperada do arquivo ({detail})
 #. text in errors.rs
-#. why a download failed (#701): a file host answered with its own web page (a countdown before the link, a captcha, a sign-in) where the file was expected. The browser gets past it; MDM's browser extension then hands the real file back to MDM
+#. why a download failed (#701): a file host answered with its own web page (a countdown before the link, a captcha, a sign-in) where the file was expected. The browser gets past it; IETDM's browser extension then hands the real file back to IETDM
 #, machine
-	the site sent a web page instead of the file (a waiting page, a captcha or a sign-in): open the link in your browser, finish there, and the download comes back to MDM	o site enviou uma página da web em vez do arquivo (uma página de espera, um captcha ou um login): abra o link no seu navegador, conclua lá e o download voltará para o MDM
+	the site sent a web page instead of the file (a waiting page, a captcha or a sign-in): open the link in your browser, finish there, and the download comes back to IETDM	o site enviou uma página da web em vez do arquivo (uma página de espera, um captcha ou um login): abra o link no seu navegador, conclua lá e o download voltará para o IETDM
 #. text in the Download video window
 #. the Download video window: the site asked for a sign-in although the browser's extension passed the page's cookies
 #, machine
@@ -4744,9 +4744,9 @@
 #, machine
 	The symbols couldn't be fetched: some lines of the report show addresses instead of names (the developers can still read them).	Não foi possível buscar os símbolos: algumas linhas do relatório mostram endereços em vez de nomes (os desenvolvedores ainda conseguem lê-los).
 #. text in the Options window
-#. Options → Accounts (Linux): the system keyring is locked (MDM never unlocks it: that would ask for its password), so the sign-ins stay in MDM's settings folder, which only the user's account may read
+#. Options → Accounts (Linux): the system keyring is locked (IETDM never unlocks it: that would ask for its password), so the sign-ins stay in IETDM's settings folder, which only the user's account may read
 #, machine
-	The system keyring is locked and MDM doesn't unlock it, so sign-ins and passwords are kept in MDM's settings, which only you can read.	O chaveiro do sistema está bloqueado e o MDM não o desbloqueia, então os logins e senhas são mantidos nas configurações do MDM, que só você pode ler.
+	The system keyring is locked and IETDM doesn't unlock it, so sign-ins and passwords are kept in IETDM's settings, which only you can read.	O chaveiro do sistema está bloqueado e o IETDM não o desbloqueia, então os logins e senhas são mantidos nas configurações do IETDM, que só você pode ler.
 #. text in the Options window
 #. Options → Connection → DNS: the operating system's own DNS (the default)
 #, machine
@@ -4778,7 +4778,7 @@
 #, machine
 	The web page from which this file was obtained:	A página da web de onde este arquivo foi obtido:
 #. message or event log entry in the main window
-#. the kind of file View → Theme → Add a theme file lists: MDM's themes (TOML, JSON), Base16 schemes (YAML) and pywal's colors.json
+#. the kind of file View → Theme → Add a theme file lists: IETDM's themes (TOML, JSON), Base16 schemes (YAML) and pywal's colors.json
 #, machine
 	Themes and colour schemes	Temas e esquemas de cores
 #. text in the Options window
@@ -4840,7 +4840,7 @@
 #, machine
 	This date has passed: the queue will not start	Esta data já passou: a fila não será iniciada
 #. text in remote.rs
-#. remote control page (on a phone): label of the box naming this phone (shown in MDM's list of paired devices)
+#. remote control page (on a phone): label of the box naming this phone (shown in IETDM's list of paired devices)
 #, machine
 	This device's name	Nome deste dispositivo
 #. message or event log entry in the main window
@@ -4957,7 +4957,7 @@
 #. message or event log entry in the main window
 #. event log: a torrent goes through the user's debrid account, not to peers; {service} its name ("Real-Debrid")
 #, machine
-	Through {service}: the service downloads the torrent, then MDM its files	Através de {service}: o serviço baixa o torrent e, em seguida, o MDM baixa os arquivos
+	Through {service}: the service downloads the torrent, then IETDM its files	Através de {service}: o serviço baixa o torrent e, em seguida, o IETDM baixa os arquivos
 #. text in the Scheduler window
 #, machine
 	Thursday	Quinta-feira
@@ -5103,7 +5103,7 @@
 #. text in extension.rs
 #. step 8 of turning on the Safari extension
 #, machine
-	Turn on "Mister Download Manager" and allow it on all websites.	Ativar “Mister Download Manager” e permitir em todos os sites.
+	Turn on "IET Download Manager" and allow it on all websites.	Ativar “IET Download Manager” e permitir em todos os sites.
 #. text in extension.rs
 #. step 4 of turning on the Safari extension; the quoted switch name is what Safari's settings show in this language: use Apple's own words for it, or keep the English name when unsure
 #, machine
@@ -5159,7 +5159,7 @@
 #. Options → Add an account: waiting while the user types the code at the service's page; {page} its address, {time} minutes:seconds left
 #. {time} = a time of day (keep the braces as they are)
 #, machine
-	Type this code at {page} and allow MDM; waiting for you (the code expires in {time}).	Digite este código em {page} e permita o MDM; aguardando você (o código expira em {time}).
+	Type this code at {page} and allow IETDM; waiting for you (the code expires in {time}).	Digite este código em {page} e permita o IETDM; aguardando você (o código expira em {time}).
 #. tooltip (why a control is greyed) in the Find window
 #. tooltip of the greyed Find button
 #, machine
@@ -5215,9 +5215,9 @@
 #, machine
 	unknown	desconhecido
 #. text in finish.rs
-#. Snooze menu of the Download complete window: show no Download complete window until MDM is started again
+#. Snooze menu of the Download complete window: show no Download complete window until IETDM is started again
 #, machine
-	Until MDM restarts	Até o MDM ser reiniciado
+	Until IETDM restarts	Até o IETDM ser reiniciado
 #. button in the Options window
 #. button (short): move the account up the list (accounts are asked in the list's order)
 #, machine
@@ -5259,9 +5259,9 @@
 #, machine
 	Use FTP in PASV mode	Usar FTP no modo PASV
 #. button in helpers.rs
-#. Video helpers: button: go back to the copy MDM downloads and checks itself
+#. Video helpers: button: go back to the copy IETDM downloads and checks itself
 #, machine
-	Use MDM's own copy	Usar a cópia própria do MDM
+	Use IETDM's own copy	Usar a cópia própria do IETDM
 #. text in the Batch download window
 #. why Batch download's OK is greyed
 #, machine
@@ -5464,9 +5464,9 @@
 #, machine
 	Windows checks the files marked this way: SmartScreen before a program first runs, Office's Protected View before a document opens. Unticked, or under Windows' policy "Do not preserve zone information in file attachments", no download is marked.	O Windows verifica os arquivos marcados dessa forma: o SmartScreen antes que um programa seja executado pela primeira vez, o Modo de Exibição Protegido do Office antes que um documento seja aberto. Se desmarcado, ou sob a política do Windows "Não preservar informações de zona em anexos de arquivo", nenhum download é marcado.
 #. text in the Options window
-#. Options → Accounts: Windows Credential Manager didn't answer, so the sign-ins stay in MDM's settings, encrypted so that only this Windows account can read them
+#. Options → Accounts: Windows Credential Manager didn't answer, so the sign-ins stay in IETDM's settings, encrypted so that only this Windows account can read them
 #, machine
-	Windows Credential Manager didn't answer, so sign-ins and passwords are kept in MDM's settings, encrypted for your Windows account.	O Gerenciador de Credenciais do Windows não respondeu, então os logins e senhas são mantidos nas configurações do MDM, criptografadas para sua conta do Windows.
+	Windows Credential Manager didn't answer, so sign-ins and passwords are kept in IETDM's settings, encrypted for your Windows account.	O Gerenciador de Credenciais do Windows não respondeu, então os logins e senhas são mantidos nas configurações do IETDM, criptografadas para sua conta do Windows.
 #. text in a dialog box
 #. why the computer could not be put to sleep (fills {error})
 #, machine
@@ -5498,7 +5498,7 @@
 #. text in remote.rs
 #. remote control page (on a phone): pairing failed and the code is void now
 #, machine
-	Wrong code. Show a new code in MDM and try again.	Código incorreto. Mostre um novo código no MDM e tente novamente.
+	Wrong code. Show a new code in IETDM and try again.	Código incorreto. Mostre um novo código no IETDM e tente novamente.
 #. text in remote.rs
 #. remote control page (on a phone): pairing failed; {n} = how many more codes may be tried
 #. {n} = a number (keep the braces as they are)
@@ -5530,9 +5530,9 @@
 #. text in the Help menu's windows (About, updates, shortcuts, Tell a friend)
 #. {version} = a version number (keep the braces as they are)
 #, machine
-	You have the latest version of Mister Download Manager ({version}).	Você tem a versão mais recente do Mister Download Manager ({version}).
+	You have the latest version of IET Download Manager ({version}).	Você tem a versão mais recente do IET Download Manager ({version}).
 #. text in the Help menu's windows (About, updates, shortcuts, Tell a friend)
-#. Check for updates, under the new version's line, when MDM was installed by the Linux system's package manager (pacman, ...), which MDM can't update itself
+#. Check for updates, under the new version's line, when IETDM was installed by the Linux system's package manager (pacman, ...), which IETDM can't update itself
 #. {version} = a version number (keep the braces as they are)
 #, machine
 	You have version {version}, from your system's package manager: update it there.	Você tem a versão {version}, do gerenciador de pacotes do seu sistema: atualize-o por lá.
@@ -5546,7 +5546,7 @@
 	Your browser	Seu navegador
 #. text in the Options window
 #, machine
-	Your default browser isn't one MDM knows: a current Chrome's User-Agent	Seu navegador padrão não é um dos que o MDM reconhece: um User-Agent de uma versão recente do Chrome
+	Your default browser isn't one IETDM knows: a current Chrome's User-Agent	Seu navegador padrão não é um dos que o IETDM reconhece: um User-Agent de uma versão recente do Chrome
 #. text in the Options window
 #. tooltip; {browser} is a browser and its version, e.g. "Brave 157"
 #, machine
@@ -5560,10 +5560,10 @@
 #, machine
 	your Google account has no access to this file, or its owner turned off downloading	sua conta do Google não tem acesso a este arquivo, ou o proprietário desativou o download
 #. text in helpers.rs
-#. Video helpers: the person's own gallery-dl is too old and not used; {version} = its version, {oldest} = the oldest MDM can use
+#. Video helpers: the person's own gallery-dl is too old and not used; {version} = its version, {oldest} = the oldest IETDM can use
 #. {version} = a version number (keep the braces as they are)
 #, machine
-	Your own program ({version}) is too old: MDM needs {oldest} or newer	Seu programa ({version}) é muito antigo: o MDM precisa da versão {oldest} ou mais recente
+	Your own program ({version}) is too old: IETDM needs {oldest} or newer	Seu programa ({version}) é muito antigo: o IETDM precisa da versão {oldest} ou mais recente
 #. text in helpers.rs
 #. Video helpers: {path} = the program the person chose, {version} = its version
 #. {version} = a version number (keep the braces as they are)
@@ -5591,11 +5591,11 @@
 #, machine
 	yt-dlp couldn't read {browser}'s cookies: {error}	O yt-dlp não conseguiu ler os cookies do {browser}: {error}
 #. text in a download's progress window
-#. progress window, a video's line: the helper program yt-dlp gave no address MDM's own downloader could use
+#. progress window, a video's line: the helper program yt-dlp gave no address IETDM's own downloader could use
 #, machine
 	yt-dlp downloads it itself	O yt-dlp faz o download por conta própria
 #. text in a download's progress window
-#. progress window, a video's line: MDM's own downloader can't take a live broadcast, so the helper program yt-dlp records it
+#. progress window, a video's line: IETDM's own downloader can't take a live broadcast, so the helper program yt-dlp records it
 #, machine
 	yt-dlp downloads it itself: a live stream	O yt-dlp faz o download por conta própria: uma transmissão ao vivo
 #. text in a download's progress window
@@ -5607,7 +5607,7 @@
 #, machine
 	yt-dlp downloads it itself: protected (DRM)	O yt-dlp faz o download por conta própria: conteúdo protegido (DRM)
 #. text in a download's progress window
-#. progress window, a video's line: {protocol} = a streaming protocol's short name (rtmp, rtsp, mms); MDM's own downloader doesn't speak it, so the helper program yt-dlp downloads it
+#. progress window, a video's line: {protocol} = a streaming protocol's short name (rtmp, rtsp, mms); IETDM's own downloader doesn't speak it, so the helper program yt-dlp downloads it
 #, machine
 	yt-dlp downloads it itself: {protocol}	O yt-dlp faz o download por conta própria: {protocol}
 #. text in the Download video window
@@ -5682,7 +5682,7 @@
 #. text in the Options window
 #. Options → Remote → Pair a device: done; {device} = the name it was given
 #, machine
-	{device} is paired. It can control MDM now.	{device} está emparelhado. Ele pode controlar o MDM agora.
+	{device} is paired. It can control IETDM now.	{device} está emparelhado. Ele pode controlar o IETDM agora.
 #. text in remote.rs
 #. remote control page (on a phone): progress; {done} and {size} are sizes ("1.2 MB of 7.5 MB")
 #. {size} = a file size such as "4.2 MB" (keep the braces as they are)
@@ -5718,7 +5718,7 @@
 	{file} is too large to be a list of addresses ({size}). Import reads text files, web pages and .ef2 exports of up to {limit}.	{file} é muito grande para ser uma lista de endereços ({size}). A importação lê arquivos de texto, páginas da web e exportações .ef2 de até {limit}.
 #. text in a dialog box
 #, machine
-	{file} was moved elsewhere by dragging it out of Download complete, and MDM couldn't learn where. Look for it where you dropped it.	{file} foi movido para outro local ao ser arrastado para fora de Download concluído, e o MDM não conseguiu identificar para onde. Procure-o onde você o soltou.
+	{file} was moved elsewhere by dragging it out of Download complete, and IETDM couldn't learn where. Look for it where you dropped it.	{file} foi movido para outro local ao ser arrastado para fora de Download concluído, e o IETDM não conseguiu identificar para onde. Procure-o onde você o soltou.
 #. text in the Checksum window
 #. {algorithm} = a checksum algorithm such as "SHA-256" (keep the braces as they are)
 #, machine
@@ -5804,7 +5804,7 @@
 #. in the "7-Zip needed" window: {name} is the archive's file name; 7-Zip is a program's name
 #. {name} = a file name (keep the braces as they are)
 #, machine
-	{name} is a 7z or RAR archive. MDM extracts those with 7-Zip, which isn't installed.	{name} é um arquivo 7z ou RAR. O MDM extrai esses arquivos com o 7-Zip, que não está instalado.
+	{name} is a 7z or RAR archive. IETDM extracts those with 7-Zip, which isn't installed.	{name} é um arquivo 7z ou RAR. O IETDM extrai esses arquivos com o 7-Zip, que não está instalado.
 #. text in extracting archives (a download's log, the Archive password window)
 #. in Archive password: {name} is the archive's file name
 #. {name} = a file name (keep the braces as they are)
@@ -5816,10 +5816,10 @@
 #, machine
 	{name} isn't offered as {how}.	{name} não é oferecido como {how}.
 #. text in errors.rs
-#. error: a program chosen as a helper is too old; {name} = gallery-dl, {version} = its version, {oldest} = the oldest one MDM can use
+#. error: a program chosen as a helper is too old; {name} = gallery-dl, {version} = its version, {oldest} = the oldest one IETDM can use
 #. {name} = a file name; {version} = a version number (keep the braces as they are)
 #, machine
-	{name} {version} is too old: MDM needs {oldest} or newer	{name} {version} é muito antigo: o MDM precisa da versão {oldest} ou mais recente
+	{name} {version} is too old: IETDM needs {oldest} or newer	{name} {version} é muito antigo: o IETDM precisa da versão {oldest} ou mais recente
 #. text in a dialog box
 #. one failed download in the summary of a group of downloads: {name} its file name, {error} why it failed
 #. {name} = a file name; {error} = an error message (keep the braces as they are)
@@ -5840,7 +5840,7 @@
 #, machine
 	{n} of {total} selected	{n} de {total} selecionados
 #. text in the download list (sizes, speeds, status)
-#. a torrent's status while the user's debrid service downloads it, before MDM gets its files; {service} the service ("Real-Debrid"), {percent} how far it is ("45%")
+#. a torrent's status while the user's debrid service downloads it, before IETDM gets its files; {service} the service ("Real-Debrid"), {percent} how far it is ("45%")
 #, machine
 	{percent} at {service}	{percent} em {service}
 #. text in errors.rs
@@ -5851,9 +5851,9 @@
 #, machine
 	{problem}. {advice}	{problem}. {advice}
 #. text in errors.rs
-#. a debrid service's error: too many requests; MDM waits and retries
+#. a debrid service's error: too many requests; IETDM waits and retries
 #, machine
-	{service} asks to slow down; MDM will try again in a minute	{service} pediu para reduzir a velocidade; o MDM tentará novamente em um minuto
+	{service} asks to slow down; IETDM will try again in a minute	{service} pediu para reduzir a velocidade; o IETDM tentará novamente em um minuto
 #. text in errors.rs
 #. a debrid service's error: it wants the user to allow this computer (it sent an email)
 #, machine
@@ -5863,7 +5863,7 @@
 	{service} can't get this torrent: nobody shares it, or its link can't be read	{service} não consegue obter este torrent: ninguém o compartilha ou não é possível ler o link
 #. text in errors.rs
 #, machine
-	{service} can't reach this file host right now; MDM will try again later	{service} não consegue acessar este host de arquivos agora; o MDM tentará novamente mais tarde
+	{service} can't reach this file host right now; IETDM will try again later	{service} não consegue acessar este host de arquivos agora; o IETDM tentará novamente mais tarde
 #. text in errors.rs
 #. a debrid service's error: it isn't answering
 #, machine
@@ -5898,7 +5898,7 @@
 	{service}: this needs a premium account	{service}: isso requer uma conta premium
 #. text in errors.rs
 #, machine
-	{service}: too many downloads at once through your account; MDM will try again	{service}: muitos downloads ao mesmo tempo através da sua conta; o MDM tentará novamente
+	{service}: too many downloads at once through your account; IETDM will try again	{service}: muitos downloads ao mesmo tempo através da sua conta; o IETDM tentará novamente
 #. text in errors.rs
 #. a debrid service's error: the account's limit (traffic) for this host is used up
 #, machine
@@ -5938,7 +5938,7 @@
 #, machine
 	{title}: already in the list	{title}: já está na lista
 #. message or event log entry in the main window
-#. RSS feeds window, under the rules: not added, because files of its names are already in the folder (MDM never writes into them unasked)
+#. RSS feeds window, under the rules: not added, because files of its names are already in the folder (IETDM never writes into them unasked)
 #, machine
 	{title}: not added: files of its names are already in {folder}	{title}: não adicionado: arquivos com os mesmos nomes já estão na pasta {folder}
 #. message or event log entry in the main window
@@ -6008,13 +6008,13 @@ column	Transfer rate	Taxa de transferência
 #, machine
 column	Upload speed	Velocidade de envio
 #. text in the browser extension
-#. in the menu under the download button over a video: the page is a list of videos (a playlist), whose videos are chosen in the app's window; keep the name Mister Download Manager as it is
+#. in the menu under the download button over a video: the page is a list of videos (a playlist), whose videos are chosen in the app's window; keep the name IET Download Manager as it is
 #, machine
-extension	A list of videos: choose them in Mister Download Manager	Uma lista de vídeos: escolha-os no Mister Download Manager
+extension	A list of videos: choose them in IET Download Manager	Uma lista de vídeos: escolha-os no IET Download Manager
 #. text in the browser extension
-#. on the download button (green) over a video after the app added and started the download; a quality may follow ('· 1080p') and a 'Show' button; MDM is the app's short name, keep it; short
+#. on the download button (green) over a video after the app added and started the download; a quality may follow ('· 1080p') and a 'Show' button; IETDM is the app's short name, keep it; short
 #, machine
-extension	Added to MDM	Adicionado ao MDM
+extension	Added to IETDM	Adicionado ao IETDM
 #. text in the browser extension
 #. shown briefly on the download button over a video after a quality was picked: the download was added to the app's download queue, to start later
 #, machine
@@ -6025,9 +6025,9 @@ extension	Added to the queue	Adicionado à fila
 #, machine
 extension	All qualities and subtitles...	Todas as qualidades e legendas...
 #. text in the browser extension
-#. choice under Send downloads to: an MDM running on another computer of the network, such as a home server; keep the name Mister Download Manager as it is
+#. choice under Send downloads to: an IETDM running on another computer of the network, such as a home server; keep the name IET Download Manager as it is
 #, machine
-extension	Another Mister Download Manager (a server)	Outro Mister Download Manager (um servidor)
+extension	Another IET Download Manager (a server)	Outro IET Download Manager (um servidor)
 #. text in the browser extension
 #. tab above the list of qualities in the menu under the download button over a video: the choices that are sound only (MP3, Opus and the like); short, one word
 #, machine
@@ -6037,11 +6037,11 @@ extension	Audio	Áudio
 #, machine
 extension	best	melhor
 #. text in the browser extension
-#. the name this browser gets in the other MDM's list of paired devices
+#. the name this browser gets in the other IETDM's list of paired devices
 #, machine
 extension	Browser extension	Extensão do navegador
 #. text in the browser extension
-#. menu command of the download button over a video: opens its settings in Mister Download Manager
+#. menu command of the download button over a video: opens its settings in IET Download Manager
 #. the trailing ... means it is still going on: keep it
 #, machine
 extension	Button settings...	Configurações do botão...
@@ -6054,14 +6054,14 @@ extension	can't be saved	não pode ser salvo
 #, machine
 extension	Can't tell which video this is: open its own page and try there	Não dá para saber qual é este vídeo: abra a página dele e tente lá
 #. text in the browser extension
-#. the toolbar button's status when the browser reaches the app; keep the name Mister Download Manager as it is
+#. the toolbar button's status when the browser reaches the app; keep the name IET Download Manager as it is
 #, machine
-extension	Connected to Mister Download Manager	Conectado a Mister Download Manager
+extension	Connected to IET Download Manager	Conectado a IET Download Manager
 #. text in the browser extension
-#. the toolbar button's status when the browser reaches the app, with the app's version number; keep the name Mister Download Manager as it is
+#. the toolbar button's status when the browser reaches the app, with the app's version number; keep the name IET Download Manager as it is
 #. {version} = a version number (keep the braces as they are)
 #, machine
-extension	Connected to Mister Download Manager {version}	Conectado a Mister Download Manager {version}
+extension	Connected to IET Download Manager {version}	Conectado a IET Download Manager {version}
 #. text in the browser extension
 #. in the menu under the download button over a video: finding the video's qualities failed; the app's own explanation follows on the next line
 #, machine
@@ -6071,17 +6071,17 @@ extension	Could not look it up	Não foi possível buscar
 #, machine
 extension	Download	Baixar
 #. text in the browser extension
-#. command in the browser's right-click menu on a page: download the links of the whole page; keep the name Mister Download Manager as it is
+#. command in the browser's right-click menu on a page: download the links of the whole page; keep the name IET Download Manager as it is
 #, machine
-extension	Download all links with Mister Download Manager	Baixar todos os links com Mister Download Manager
+extension	Download all links with IET Download Manager	Baixar todos os links com IET Download Manager
 #. text in the browser extension
 #. first line of the list under the download button over a video: downloads the best quality at once; the quality, its file type and size follow on the same line; short
 #, machine
 extension	Download best	Baixar melhor
 #. text in the browser extension
-#. command in the browser's right-click menu on selected text: download the links in the selection; keep the name Mister Download Manager as it is
+#. command in the browser's right-click menu on selected text: download the links in the selection; keep the name IET Download Manager as it is
 #, machine
-extension	Download selected links with Mister Download Manager	Baixar links selecionados com Mister Download Manager
+extension	Download selected links with IET Download Manager	Baixar links selecionados com IET Download Manager
 #. text in the browser extension
 #. first line of the tooltip of the download button over a video while the app is still finding its qualities
 #, machine
@@ -6091,9 +6091,9 @@ extension	Download the best quality	Baixar a melhor qualidade
 #, machine
 extension	Download video	Baixar vídeo
 #. text in the browser extension
-#. command in the browser's right-click menu on a link, picture, video or sound; keep the name Mister Download Manager as it is
+#. command in the browser's right-click menu on a link, picture, video or sound; keep the name IET Download Manager as it is
 #, machine
-extension	Download with Mister Download Manager	Baixar com Mister Download Manager
+extension	Download with IET Download Manager	Baixar com IET Download Manager
 #. text in the browser extension
 #. first line of the tooltip of the download button over a video: what one click downloads; $what$ is a quality, a file type and a size, e.g. '1080p MP4 · 412 MB'
 #, machine
@@ -6104,7 +6104,7 @@ extension	Download {what}	Baixar {what}
 #, machine
 extension	Downloads from {site} stay with the browser	Os downloads de {site} continuam no navegador
 #. text in the browser extension
-#. the toolbar button's status while downloads go to another MDM
+#. the toolbar button's status while downloads go to another IETDM
 #, machine
 extension	Downloads go to {address}	Os downloads vão para {address}
 #. text in the browser extension
@@ -6116,13 +6116,13 @@ extension	Drag the dots to move it along the edge	Arraste os pontos para mover o
 #, machine
 extension	Enter its https:// address.	Insira o endereço https://.
 #. text in the browser extension
-#. button on the download button over a video when the app didn't answer: opens the app's download page; MDM is the app's short name, keep it; very short
+#. button on the download button over a video when the app didn't answer: opens the app's download page; IETDM is the app's short name, keep it; very short
 #, machine
-extension	Get MDM	Obter MDM
+extension	Get IETDM	Obter IETDM
 #. text in the browser extension
-#. the extension's description in the browser's list of extensions; keep the name Mister Download Manager as it is
+#. the extension's description in the browser's list of extensions; keep the name IET Download Manager as it is
 #, machine
-extension	Hands downloads from the browser to Mister Download Manager.	Entrega os downloads do navegador para o Mister Download Manager.
+extension	Hands downloads from the browser to IET Download Manager.	Entrega os downloads do navegador para o IET Download Manager.
 #. text in the browser extension
 #. link in the toolbar button's popup to the help page
 #, machine
@@ -6144,7 +6144,7 @@ extension	How to fix it	Como corrigir
 #, machine
 extension	It didn't work. Try again.	Não funcionou. Tente novamente.
 #. text in the browser extension
-#. pairing failed: the other MDM shows no pairing code; Pair a device is its button
+#. pairing failed: the other IETDM shows no pairing code; Pair a device is its button
 #, machine
 extension	It shows no code now: click Pair a device there first.	Não mostra nenhum código agora: clique primeiro em Emparelhar um dispositivo lá.
 #. text in the browser extension
@@ -6181,49 +6181,49 @@ extension	Looking up the qualities…	Buscando as qualidades…
 #, machine
 extension	Looking up took too long	A busca demorou demais
 #. text in the browser extension
-#. on the download button (red) over a video when the app isn't installed or didn't start; 'Get MDM' and 'Retry' buttons follow; MDM is the app's short name, keep it; short
+#. on the download button (red) over a video when the app isn't installed or didn't start; 'Get IETDM' and 'Retry' buttons follow; IETDM is the app's short name, keep it; short
 #, machine
-extension	MDM didn't answer	MDM não respondeu
+extension	IETDM didn't answer	IETDM não respondeu
 #. text in the browser extension
 #. heading in the toolbar button's popup over the list of the videos, sounds and streams the current web page has loaded
 #, machine
 extension	Media on this page	Mídia nesta página
 #. text in the browser extension
-#. the extension's name in the browser's list of extensions and on its toolbar button; keep the name Mister Download Manager as it is
+#. the extension's name in the browser's list of extensions and on its toolbar button; keep the name IET Download Manager as it is
 #, machine
-extension	Mister Download Manager	Mister Download Manager
+extension	IET Download Manager	IET Download Manager
 #. text in the browser extension
-#. status when the app was started for a download but didn't answer in time; keep the name Mister Download Manager as it is
+#. status when the app was started for a download but didn't answer in time; keep the name IET Download Manager as it is
 #, machine
-extension	Mister Download Manager didn't start in time	Mister Download Manager não iniciou a tempo
+extension	IET Download Manager didn't start in time	IET Download Manager não iniciou a tempo
 #. text in the browser extension
-#. status when the app refuses this copy of the extension (another copy is installed, or it came from another store); keep the name Mister Download Manager as it is
+#. status when the app refuses this copy of the extension (another copy is installed, or it came from another store); keep the name IET Download Manager as it is
 #, machine
-extension	Mister Download Manager doesn't accept this copy of the extension	Mister Download Manager não aceita esta cópia da extensão
+extension	IET Download Manager doesn't accept this copy of the extension	IET Download Manager não aceita esta cópia da extensão
 #. text in the browser extension
-#. in the menu under the download button over a video: the app is already looking up other videos and can't look this one up now; keep the name Mister Download Manager as it is
+#. in the menu under the download button over a video: the app is already looking up other videos and can't look this one up now; keep the name IET Download Manager as it is
 #, machine
-extension	Mister Download Manager is busy with other videos	O Mister Download Manager está ocupado com outros vídeos
+extension	IET Download Manager is busy with other videos	O IET Download Manager está ocupado com outros vídeos
 #. text in the browser extension
-#. shown briefly on the download button when the app could not be reached; keep the name Mister Download Manager as it is
+#. shown briefly on the download button when the app could not be reached; keep the name IET Download Manager as it is
 #, machine
-extension	Mister Download Manager isn't installed or didn't start	Mister Download Manager não está instalado ou não iniciou
+extension	IET Download Manager isn't installed or didn't start	IET Download Manager não está instalado ou não iniciou
 #. text in the browser extension
-#. status when the browser can't find the app's connection; keep the name Mister Download Manager as it is
+#. status when the browser can't find the app's connection; keep the name IET Download Manager as it is
 #, machine
-extension	Mister Download Manager isn't installed, or its browser integration isn't set up	Mister Download Manager não está instalado ou sua integração com o navegador não está configurada
+extension	IET Download Manager isn't installed, or its browser integration isn't set up	IET Download Manager não está instalado ou sua integração com o navegador não está configurada
 #. text in the browser extension
-#. in the menu under the download button over a video: the app needs the yt-dlp tool (a program's name, keep it as it is) to find this video's qualities, and it isn't installed; keep the name Mister Download Manager as it is
+#. in the menu under the download button over a video: the app needs the yt-dlp tool (a program's name, keep it as it is) to find this video's qualities, and it isn't installed; keep the name IET Download Manager as it is
 #, machine
-extension	Mister Download Manager needs yt-dlp for this video	O Mister Download Manager precisa do yt-dlp para este vídeo
+extension	IET Download Manager needs yt-dlp for this video	O IET Download Manager precisa do yt-dlp para este vídeo
 #. text in the browser extension
-#. tooltip of the switch Send downloads through this browser's proxy or VPN extension; keep the name Mister Download Manager as it is
+#. tooltip of the switch Send downloads through this browser's proxy or VPN extension; keep the name IET Download Manager as it is
 #, machine
-extension	Mister Download Manager then downloads through the same proxy as this browser. The browser asks you once to allow it; turning this off takes that back.	O Mister Download Manager baixa usando o mesmo proxy deste navegador. O navegador pedirá uma vez para permitir; desativar isso reverte a permissão.
+extension	IET Download Manager then downloads through the same proxy as this browser. The browser asks you once to allow it; turning this off takes that back.	O IET Download Manager baixa usando o mesmo proxy deste navegador. O navegador pedirá uma vez para permitir; desativar isso reverte a permissão.
 #. text in the browser extension
-#. tooltip of the switch Send downloads through this browser's proxy or VPN extension in Chrome, Edge and the other Chromium browsers (they ask for no permission at the switch); keep the name Mister Download Manager as it is
+#. tooltip of the switch Send downloads through this browser's proxy or VPN extension in Chrome, Edge and the other Chromium browsers (they ask for no permission at the switch); keep the name IET Download Manager as it is
 #, machine
-extension	Mister Download Manager then downloads through the same proxy as this browser. While this is off, the extension doesn't read the browser's proxy.	O Mister Download Manager baixa por meio do mesmo proxy que este navegador. Quando desativado, a extensão não lê o proxy do navegador.
+extension	IET Download Manager then downloads through the same proxy as this browser. While this is off, the extension doesn't read the browser's proxy.	O IET Download Manager baixa por meio do mesmo proxy que este navegador. Quando desativado, a extensão não lê o proxy do navegador.
 #. text in the browser extension
 #. the small arrow next to the Download video button that opens its menu (read aloud by screen readers)
 #, machine
@@ -6247,7 +6247,7 @@ extension	No video or sound found on this page yet. Play it, then open this agai
 #, machine
 extension	No video to download here	Nenhum vídeo para baixar aqui
 #. text in the browser extension
-#. pairing failed: the other MDM didn't answer
+#. pairing failed: the other IETDM didn't answer
 #, machine
 extension	Not reached. Open its address once in this browser and accept its certificate, then try again.	Não alcançado. Abra o endereço uma vez neste navegador e aceite o certificado, depois tente novamente.
 #. text in the browser extension
@@ -6255,17 +6255,17 @@ extension	Not reached. Open its address once in this browser and accept its cert
 #, machine
 extension	Off on this site	Desativado neste site
 #. text in the browser extension
-#. button: open the other MDM's address in a tab (to accept its certificate once)
+#. button: open the other IETDM's address in a tab (to accept its certificate once)
 #, machine
 extension	Open it	Abrir
 #. text in the browser extension
-#. help under the pairing boxes; Options, Remote and Pair a device are the app's window, tab and button; keep misterdownloadmanager-cli pair as it is
+#. help under the pairing boxes; Options, Remote and Pair a device are the app's window, tab and button; keep ietdownloadmanager-cli pair as it is
 #, machine
-extension	Open its address once and accept its certificate, then enter a code from its Options, Remote, Pair a device (or misterdownloadmanager-cli pair).	Abra o endereço uma vez e aceite o certificado, depois insira um código de suas Opções, Remoto, Emparelhar um dispositivo (ou misterdownloadmanager-cli pair).
+extension	Open its address once and accept its certificate, then enter a code from its Options, Remote, Pair a device (or ietdownloadmanager-cli pair).	Abra o endereço uma vez e aceite o certificado, depois insira um código de suas Opções, Remoto, Emparelhar um dispositivo (ou ietdownloadmanager-cli pair).
 #. text in the browser extension
-#. button in the toolbar button's popup; keep the name Mister Download Manager as it is
+#. button in the toolbar button's popup; keep the name IET Download Manager as it is
 #, machine
-extension	Open Mister Download Manager	Abrir Mister Download Manager
+extension	Open IET Download Manager	Abrir IET Download Manager
 #. text in the browser extension
 #. button on the download button over a video in a feed: opens the post the video belongs to in a new tab; verb; very short
 #, machine
@@ -6284,11 +6284,11 @@ extension	Options...	Opções...
 #, machine
 extension	original	original
 #. text in the browser extension
-#. button: pair this browser with the other MDM using the code
+#. button: pair this browser with the other IETDM using the code
 #, machine
 extension	Pair	Emparelhar
 #. text in the browser extension
-#. placeholder of the box for the 8-digit code the other MDM shows
+#. placeholder of the box for the 8-digit code the other IETDM shows
 #, machine
 extension	Pairing code	Código de emparelhamento
 #. text in the browser extension
@@ -6320,22 +6320,22 @@ extension	Send downloads through this browser's proxy or VPN extension	Enviar do
 #, machine
 extension	Send downloads to	Enviar downloads para
 #. text in the browser extension
-#. on the download button over a video right after it was clicked, while the download goes to the app; MDM is Mister Download Manager's short name, keep it as it is; short
+#. on the download button over a video right after it was clicked, while the download goes to the app; IETDM is IET Download Manager's short name, keep it as it is; short
 #. the trailing ... means it is still going on: keep it
 #, machine
-extension	Sending to MDM...	Enviando para o MDM...
+extension	Sending to IETDM...	Enviando para o IETDM...
 #. text in the browser extension
-#. shown briefly on the download button after it was clicked; keep the name Mister Download Manager as it is
+#. shown briefly on the download button after it was clicked; keep the name IET Download Manager as it is
 #, machine
-extension	Sent to Mister Download Manager	Enviado para Mister Download Manager
+extension	Sent to IET Download Manager	Enviado para IET Download Manager
 #. text in the browser extension
 #. button on the download button over a video after a download was added: shows that download in the app's window; verb; very short
 #, machine
 extension	Show	Mostrar
 #. text in the browser extension
-#. link at the foot of the toolbar button's popup to the creator's GitHub Sponsors page (MDM is free; this is an optional donation)
+#. link at the foot of the toolbar button's popup to the creator's GitHub Sponsors page (IETDM is free; this is an optional donation)
 #, machine
-extension	Support MDM	Apoiar o MDM
+extension	Support IETDM	Apoiar o IETDM
 #. text in the browser extension
 #. check box in the toolbar button's popup: on, downloads go to the app; off, the browser keeps them
 #, machine
@@ -6345,9 +6345,9 @@ extension	Take downloads from this browser	Assumir downloads deste navegador
 #, machine
 extension	The Chrome Web Store's rules keep this copy of the add-on away from this site's videos. Help says what you can do.	As regras da Chrome Web Store mantêm esta cópia da extensão longe dos vídeos deste site. A Ajuda explica o que você pode fazer.
 #. text in the browser extension
-#. status when the connection to the app broke off (often security software blocking it); keep the name Mister Download Manager as it is
+#. status when the connection to the app broke off (often security software blocking it); keep the name IET Download Manager as it is
 #, machine
-extension	The connection to Mister Download Manager failed	A conexão com Mister Download Manager falhou
+extension	The connection to IET Download Manager failed	A conexão com IET Download Manager falhou
 #. text in the browser extension
 #. why a download stayed with the browser: the user limited the extension's access to web sites in the browser, so it can't pass the sign-in on
 #, machine
@@ -6361,7 +6361,7 @@ extension	The last download was left to the browser.	O último download foi deix
 #, machine
 extension	This browser isn't ticked in Options → General.	Este navegador não está marcado em Opções → Geral.
 #. text in the browser extension
-#. choice under Send downloads to: the Mister Download Manager on this computer
+#. choice under Send downloads to: the IET Download Manager on this computer
 #, machine
 extension	This computer	Este computador
 #. text in the browser extension
@@ -6377,9 +6377,9 @@ extension	This page's player streams its video in pieces, so there's no file to 
 #, machine
 extension	Turn on	Ativar
 #. text in the browser extension
-#. status when the app is older than the extension; keep the name Mister Download Manager as it is
+#. status when the app is older than the extension; keep the name IET Download Manager as it is
 #, machine
-extension	Update Mister Download Manager to use everything this extension offers	Atualize o Mister Download Manager para usar tudo o que esta extensão oferece
+extension	Update IET Download Manager to use everything this extension offers	Atualize o IET Download Manager para usar tudo o que esta extensão oferece
 #. text in the browser extension
 #. why a download stayed with the browser: the app's setting 'Use advanced browser integration' is off; keep the setting's name as the app shows it
 #, machine
@@ -6503,7 +6503,7 @@ key	Up / Down	Seta para Cima / Seta para Baixo
 #. menu command in the main window
 #. & marks the keyboard shortcut letter: keep one & before a letter of the translation
 #, machine
-menu	&About Mister Download Manager	So&bre o Mister Download Manager
+menu	&About IET Download Manager	So&bre o IET Download Manager
 #. menu command in the main window
 #. & marks the keyboard shortcut letter: keep one & before a letter of the translation
 #, machine
@@ -6544,7 +6544,7 @@ menu	&Exit	&Sair
 #, machine
 menu	&Import	&Importar
 #. menu command in the main window
-#. View menu: submenu choosing how large MDM draws its windows and text (100 % to 200 %), as a browser's zoom
+#. View menu: submenu choosing how large IETDM draws its windows and text (100 % to 200 %), as a browser's zoom
 #. & marks the keyboard shortcut letter: keep one & before a letter of the translation
 #, machine
 menu	&Interface size	Tamanho da &interface
@@ -6671,9 +6671,9 @@ menu	Adwaita	Adwaita
 #, machine
 menu	Aero	Aero
 #. menu command in the main window
-#. View → Draw with: a greyed note under the choices; the choice takes effect when MDM is started again
+#. View → Draw with: a greyed note under the choices; the choice takes effect when IETDM is started again
 #, machine
-menu	Applies the next time MDM starts	Aplica na próxima vez que o MDM iniciar
+menu	Applies the next time IETDM starts	Aplica na próxima vez que o IETDM iniciar
 #. menu command in the main window
 #. View → Theme: a style theme's name (Mac OS X's look), a name: keep "Aqua" as written
 #, machine
@@ -6748,7 +6748,7 @@ menu	C&ustomize URL List...	C&ustomizar Lista de URL...
 #, machine
 menu	Check for &updates...	Verificar se há &atualizações...
 #. menu command in the main window
-#. View → Theme: MDM's own look, the default (IDM's layout, Windows 11's controls)
+#. View → Theme: IETDM's own look, the default (IDM's layout, Windows 11's controls)
 #, machine
 menu	Classic	Clássico
 #. menu command in the main window
@@ -6802,7 +6802,7 @@ menu	Download &video from a page...	Baixar &vídeo de uma página...
 #, machine
 menu	Download in order	Baixar em ordem
 #. menu command in the main window
-#. View menu: submenu choosing what draws MDM's windows: OpenGL, or Direct3D, Vulkan or Metal (graphics systems)
+#. View menu: submenu choosing what draws IETDM's windows: OpenGL, or Direct3D, Vulkan or Metal (graphics systems)
 #, machine
 menu	Draw with	Desenhar com
 #. menu command in the main window
@@ -6862,15 +6862,15 @@ menu	Hide drop target	Ocultar destino de arrastar
 #, machine
 menu	High contrast	Alto contraste
 #. menu command in the main window
-#. View → Draw with: a greyed note under "… didn't start here"; why: another error, written in MDM's log
+#. View → Draw with: a greyed note under "… didn't start here"; why: another error, written in IETDM's log
 #, machine
 menu	It couldn't start: the log says why	Não foi possível iniciar: o log diz o porquê
 #. menu command in the main window
-#. View → Draw with: a greyed note under "… didn't start here"; why: the window stayed empty, so MDM started again with OpenGL
+#. View → Draw with: a greyed note under "… didn't start here"; why: the window stayed empty, so IETDM started again with OpenGL
 #, machine
 menu	Its first frame didn't show within 10 seconds	Seu primeiro quadro não apareceu em 10 segundos
 #. menu command in the main window
-#. View → Draw with: a greyed note under "… didn't start here"; why: MDM crashed or was closed while starting with it
+#. View → Draw with: a greyed note under "… didn't start here"; why: IETDM crashed or was closed while starting with it
 #, machine
 menu	Its last start ended before its first frame	Sua última inicialização terminou antes do primeiro quadro
 #. menu command in the main window
@@ -6896,7 +6896,7 @@ menu	Metro	Metro
 #. menu command in the main window
 #. & marks the keyboard shortcut letter: keep one & before a letter of the translation
 #, machine
-menu	Mister Download Manager &Home Page	Página &Inicial do Mister Download Manager
+menu	IET Download Manager &Home Page	Página &Inicial do IET Download Manager
 #. menu command in the main window
 #, machine
 menu	Move/Rename (Ctrl-M)	Mover/Renomear (Ctrl+M)
@@ -6937,23 +6937,23 @@ menu	Open with...	Abrir com...
 #, machine
 menu	OpenGL	OpenGL
 #. menu command in the main window
-#. View → Draw with: a greyed note; why MDM no longer draws with OpenGL: it couldn't start on this computer
+#. View → Draw with: a greyed note; why IETDM no longer draws with OpenGL: it couldn't start on this computer
 #, machine
 menu	OpenGL didn't start here	O OpenGL não iniciou aqui
 #. menu command in the main window
-#. View → Draw with: a greyed note; why MDM no longer draws with OpenGL: its window froze inside the graphics card's driver while OpenGL drew
+#. View → Draw with: a greyed note; why IETDM no longer draws with OpenGL: its window froze inside the graphics card's driver while OpenGL drew
 #, machine
 menu	OpenGL froze inside the graphics driver here	O OpenGL travou no driver gráfico aqui
 #. menu command in the main window
-#. View → Draw with: a greyed note; this computer's OpenGL (its graphics driver) is too old, so MDM doesn't draw with it
+#. View → Draw with: a greyed note; this computer's OpenGL (its graphics driver) is too old, so IETDM doesn't draw with it
 #, machine
-menu	OpenGL here is too old to draw MDM	O OpenGL aqui é muito antigo para renderizar o MDM
+menu	OpenGL here is too old to draw IETDM	O OpenGL aqui é muito antigo para renderizar o IETDM
 #. menu command in the main window
-#. View → Draw with: a greyed note; why MDM no longer draws with OpenGL: its window stayed empty for 10 seconds, so MDM started again another way
+#. View → Draw with: a greyed note; why IETDM no longer draws with OpenGL: its window stayed empty for 10 seconds, so IETDM started again another way
 #, machine
 menu	OpenGL's first frame didn't show within 10 seconds	O primeiro quadro do OpenGL não apareceu em 10 segundos
 #. menu command in the main window
-#. View → Draw with: a greyed note; why MDM no longer draws with OpenGL: MDM crashed or was closed while starting with it
+#. View → Draw with: a greyed note; why IETDM no longer draws with OpenGL: IETDM crashed or was closed while starting with it
 #, machine
 menu	OpenGL's last start ended before its first frame	A última inicialização do OpenGL terminou antes do primeiro quadro
 #. menu command in the main window
@@ -7029,7 +7029,7 @@ menu	Select &all	Selecionar t&udo
 menu	Show &drop target	Mostrar &alvo de arrastar e soltar
 #. menu command in the main window
 #, machine
-menu	Show Mister Download Manager	Mostrar Mister Download Manager
+menu	Show IET Download Manager	Mostrar IET Download Manager
 #. menu command in the main window
 #. & marks the keyboard shortcut letter: keep one & before a letter of the translation
 #, machine
@@ -7051,7 +7051,7 @@ menu	Stop Download	Parar Download
 #. menu command in the main window
 #. & marks the keyboard shortcut letter: keep one & before a letter of the translation
 #, machine
-menu	Support &MDM	Apoiar &MDM
+menu	Support the &original author	Support the &original author
 #. menu command in the main window
 #. & marks the keyboard shortcut letter: keep one & before a letter of the translation
 #, machine
@@ -7061,7 +7061,7 @@ menu	Tell a &friend	Contar a um a&migo
 #, machine
 menu	The graphics card was lost twice in 10 minutes	A placa de vídeo parou de funcionar duas vezes em 10 minutos
 #. menu command in the main window
-#. View menu: submenu choosing MDM's look (colours, sizes, icons): Classic, Native…
+#. View menu: submenu choosing IETDM's look (colours, sizes, icons): Classic, Native…
 #, machine
 menu	Theme	Tema
 #. menu command in the main window

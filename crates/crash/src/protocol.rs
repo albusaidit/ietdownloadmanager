@@ -64,7 +64,7 @@ pub struct Freeze {
     pub main: bool,
     pub seconds: u64,
     /// How much the window thread ran while the frame went on (None: not measured, by an older
-    /// MDM or on macOS). It tells a loop from a wait from a computer too busy to run MDM.
+    /// IETDM or on macOS). It tells a loop from a wait from a computer too busy to run IETDM.
     #[serde(default)]
     pub busy: Option<Busy>,
     /// What the frame was doing when the watchdog saw it stop ("the tray icon"; empty: not
@@ -87,7 +87,7 @@ pub struct Busy {
     pub faults: Option<u64>,
 }
 
-/// What MDM had open and running (counts only: no addresses or file names).
+/// What IETDM had open and running (counts only: no addresses or file names).
 #[derive(Clone, Debug, Default, Serialize, Deserialize, PartialEq)]
 pub struct AppState {
     pub downloads: usize,

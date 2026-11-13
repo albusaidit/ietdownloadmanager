@@ -1,6 +1,6 @@
 [package]
 name = "mdm-app"
-description = "Mister Download Manager, desktop app (egui)"
+description = "IET Download Manager, desktop app (egui)"
 version.workspace = true
 edition.workspace = true
 rust-version.workspace = true
@@ -9,12 +9,12 @@ authors.workspace = true
 publish.workspace = true
 
 [[bin]]
-name = "misterdownloadmanager"
+name = "ietdownloadmanager"
 path = "src/main.rs"
 
 [features]
 default = ["browser-connection"]
-# The engine's browser-like connection (#668), for sites that refuse MDM's own as a program's.
+# The engine's browser-like connection (#668), for sites that refuse IETDM's own as a program's.
 # Built from BoringSSL's C sources: tools/dev/check-cross.ps1, which can't cross-compile those,
 # checks the workspace without it.
 browser-connection = ["mdm-engine/browser-connection"]
@@ -36,7 +36,7 @@ egui-winit.workspace = true
 egui_extras.workspace = true
 image.workspace = true
 craft-i18n.workspace = true
-# misterdownloadmanager-cli's commands: its launcher runs this program for them (main.rs).
+# ietdownloadmanager-cli's commands: its launcher runs this program for them (main.rs).
 mdm-cli.workspace = true
 mdm-engine.workspace = true
 mdm-extract.workspace = true
@@ -59,7 +59,7 @@ rfd = "0.17.2"
 qrcodegen = "1.8.0"
 # Line breaks between characters keep a letter and its marks together (Thai, Khmer, Indic).
 unicode-segmentation = "1.13.3"
-# The text MDM hands to the system: isolates made into marks by each letter's direction (#919).
+# The text IETDM hands to the system: isolates made into marks by each letter's direction (#919).
 unicode-bidi = "0.3.18"
 # Crash and freeze reports: the monitor, minidumps, symbolicated stacks, release logs.
 mdm-crash.workspace = true

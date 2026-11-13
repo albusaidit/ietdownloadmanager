@@ -1,6 +1,6 @@
 //! The remote control's certificate and its HTTPS listener. A self-signed certificate is made
 //! once (`remote/cert.der`, its key `remote/key.der`, readable by the user only) and kept: its
-//! fingerprint, shown in Options, is how a device can tell it talks to this MDM the first time
+//! fingerprint, shown in Options, is how a device can tell it talks to this IETDM the first time
 //! its browser warns about it, and the same certificate every time is what lets the browser
 //! remember that choice. It is made again only when it runs out (800 days, under the limit
 //! Apple's systems accept) or is deleted.
@@ -129,7 +129,7 @@ fn make(names: &[String]) -> Result<(Vec<u8>, Vec<u8>), String> {
     let mut params = CertificateParams::new(names.to_vec()).map_err(e)?;
     params
         .distinguished_name
-        .push(DnType::CommonName, "Mister Download Manager");
+        .push(DnType::CommonName, "IET Download Manager");
     params.extended_key_usages = vec![ExtendedKeyUsagePurpose::ServerAuth];
     let (y, m, d) = civil(today() - 1);
     params.not_before = rcgen::date_time_ymd(y, m, d);

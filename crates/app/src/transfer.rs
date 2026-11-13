@@ -2,7 +2,7 @@
 //! (`.ef2`), and downloads from either. IDM's import finds every web address in a file and shows
 //! them to check before they are added; so does ours (in Link grabber, grabber.rs). An `.ef2` file holds one block per
 //! download — `<`, the address, `referer: …` / `cookie: …` / `User-Agent: …` lines, `>` — so a
-//! list moves between IDM and MDM with its request context.
+//! list moves between IDM and IETDM with its request context.
 
 use crate::model::Item;
 use std::path::{Path, PathBuf};
@@ -270,7 +270,7 @@ impl Next {
 }
 
 /// Where the scheme before the "://" at `sep` starts: the letters right before it, or only
-/// their end when it is a scheme MDM downloads glued to a word (`Linkhttps://…`).
+/// their end when it is a scheme IETDM downloads glued to a word (`Linkhttps://…`).
 fn scheme_start(lower: &str, sep: usize) -> usize {
     let start = lower[..sep]
         .char_indices()
@@ -325,7 +325,7 @@ fn trim_address(cand: &str, before: Option<char>) -> &str {
     }
 }
 
-/// An http(s) or ftp(s) address MDM downloads, as the address bar writes it; `&amp;` read as
+/// An http(s) or ftp(s) address IETDM downloads, as the address bar writes it; `&amp;` read as
 /// `&` (an address copied out of a page's HTML).
 fn web_address(cand: &str) -> Option<String> {
     let cand = cand.replace("&amp;", "&");

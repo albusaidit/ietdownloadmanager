@@ -1,4 +1,4 @@
-//! The download list on disk: `%APPDATA%\misterdownloadmanager\downloads.json`, written with craft-atomic.
+//! The download list on disk: `%APPDATA%\ietdownloadmanager\downloads.json`, written with craft-atomic.
 //! Also holds the list's column layout (order, widths, visibility, sort).
 //!
 //! Generations: `downloads.json.bak` is the list before the last save; `.1.bak` and `.2.bak`
@@ -304,7 +304,7 @@ fn write(p: &Path, json: &[u8]) -> std::io::Result<()> {
 }
 
 /// Saves the list on a thread of its own. The write ends with a flush to the disk, which waited
-/// for every byte a big download had written meanwhile: on the window's thread it froze MDM for
+/// for every byte a big download had written meanwhile: on the window's thread it froze IETDM for
 /// seconds (a crash report caught it: "freeze in store::save"). The newest list waiting replaces
 /// an older one not yet written. Any file the window keeps saving goes the same way
 /// ([`Saver::writing`]): Windows holding every write on C: for a shadow copy held the window
@@ -390,7 +390,7 @@ impl Saver {
             .take()
     }
 
-    /// Wait until nothing is waiting or being written (MDM closing).
+    /// Wait until nothing is waiting or being written (IETDM closing).
     pub fn flush(&self) {
         let (lock, cv) = &*self.shared;
         let mut s = lock.lock().unwrap_or_else(|e| e.into_inner());
@@ -588,7 +588,7 @@ mod tests {
         let s = load_from(&p, empty()).settings;
         assert_eq!(s.auto_types, mdm_ipc::capture::DEFAULT_AUTO_TYPES);
         assert!(
-            mdm_ipc::capture::type_listed(&s.auto_types, "MDM-0.3.0.dmg")
+            mdm_ipc::capture::type_listed(&s.auto_types, "IETDM-0.3.0.dmg")
                 && mdm_ipc::capture::type_listed(&s.auto_types, "mdm_0.3.0_amd64.deb")
         );
         let edited = format!("{old} NZB");

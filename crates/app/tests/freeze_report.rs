@@ -1,4 +1,4 @@
-//! #202: a freeze while MDM handles a command must still be reported. Since #176 the incoming
+//! #202: a freeze while IETDM handles a command must still be reported. Since #176 the incoming
 //! commands and the clock run in the app's `logic`, which egui calls every frame (and alone while
 //! the main window is minimized); the freeze watchdog timed only `ui`, so a command that hung
 //! never opened the crash report window nor wrote a freeze report. The real app, off the screens
@@ -13,7 +13,7 @@ use std::path::{Path, PathBuf};
 use std::process::{Child, Command};
 use std::time::{Duration, Instant};
 
-const APP: &str = env!("CARGO_BIN_EXE_misterdownloadmanager");
+const APP: &str = env!("CARGO_BIN_EXE_ietdownloadmanager");
 
 /// The app's and its monitor's logs so far (every file of `logs/`).
 fn log(data: &Path) -> String {

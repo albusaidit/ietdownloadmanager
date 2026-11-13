@@ -1,12 +1,12 @@
 {
   "name": {
-    "message": "Mister Download Manager"
+    "message": "IET Download Manager"
   },
   "description": {
-    "message": "Předává stahování z prohlížeče do Mister Download Manager."
+    "message": "Předává stahování z prohlížeče do IET Download Manager."
   },
   "menu": {
-    "message": "Stáhnout pomocí Mister Download Manager"
+    "message": "Stáhnout pomocí IET Download Manager"
   },
   "video_download": {
     "message": "Stáhnout video"
@@ -30,19 +30,19 @@
     "message": "Nastavení tlačítka..."
   },
   "video_sent": {
-    "message": "Odesláno do Mister Download Manager"
+    "message": "Odesláno do IET Download Manager"
   },
   "menu_selected": {
-    "message": "Stáhnout vybrané odkazy pomocí Mister Download Manager"
+    "message": "Stáhnout vybrané odkazy pomocí IET Download Manager"
   },
   "menu_all": {
-    "message": "Stáhnout všechny odkazy pomocí Mister Download Manager"
+    "message": "Stáhnout všechny odkazy pomocí IET Download Manager"
   },
   "status_connected": {
-    "message": "Připojeno k Mister Download Manager"
+    "message": "Připojeno k IET Download Manager"
   },
   "status_connected_version": {
-    "message": "Připojeno k Mister Download Manager $version$",
+    "message": "Připojeno k IET Download Manager $version$",
     "placeholders": {
       "version": {
         "content": "$1",
@@ -54,22 +54,22 @@
     "message": "Pozastaveno: stahování zůstává v prohlížeči"
   },
   "status_not_installed": {
-    "message": "Aplikace Mister Download Manager není nainstalovaná nebo není nastavená její integrace s prohlížečem"
+    "message": "Aplikace IET Download Manager není nainstalovaná nebo není nastavená její integrace s prohlížečem"
   },
   "status_forbidden": {
-    "message": "Aplikace Mister Download Manager tuto kopii rozšíření nepřijímá"
+    "message": "Aplikace IET Download Manager tuto kopii rozšíření nepřijímá"
   },
   "status_not_running": {
-    "message": "Mister Download Manager se nespustil včas"
+    "message": "IET Download Manager se nespustil včas"
   },
   "status_host_failed": {
-    "message": "Připojení k Mister Download Manager selhalo"
+    "message": "Připojení k IET Download Manager selhalo"
   },
   "status_too_large": {
     "message": "Podrobnosti tohoto stahování byly příliš velké na předání"
   },
   "status_update_app": {
-    "message": "Aktualizujte Mister Download Manager, abyste mohli používat vše, co toto rozšíření nabízí"
+    "message": "Aktualizujte IET Download Manager, abyste mohli používat vše, co toto rozšíření nabízí"
   },
   "popup_take": {
     "message": "Přebírat stahování z tohoto prohlížeče"
@@ -78,10 +78,10 @@
     "message": "Předávat stahování přes proxy server nebo rozšíření VPN tohoto prohlížeče"
   },
   "popup_proxy_title": {
-    "message": "Aplikace Mister Download Manager pak stahuje přes stejný proxy server jako tento prohlížeč. Prohlížeč vás jednou požádá o povolení; vypnutím této možnosti toto povolení zrušíte."
+    "message": "Aplikace IET Download Manager pak stahuje přes stejný proxy server jako tento prohlížeč. Prohlížeč vás jednou požádá o povolení; vypnutím této možnosti toto povolení zrušíte."
   },
   "popup_proxy_title_chromium": {
-    "message": "Aplikace Mister Download Manager pak stahuje přes stejný proxy server jako tento prohlížeč. Pokud je tato možnost vypnutá, rozšíření proxy server prohlížeče nenačítá."
+    "message": "Aplikace IET Download Manager pak stahuje přes stejný proxy server jako tento prohlížeč. Pokud je tato možnost vypnutá, rozšíření proxy server prohlížeče nenačítá."
   },
   "popup_exclude_site": {
     "message": "Nikdy nepřebírat stahování z webu $site$",
@@ -102,7 +102,7 @@
     }
   },
   "popup_open": {
-    "message": "Otevřít Mister Download Manager"
+    "message": "Otevřít IET Download Manager"
   },
   "popup_options": {
     "message": "Možnosti..."
@@ -111,7 +111,7 @@
     "message": "Nápověda"
   },
   "popup_support": {
-    "message": "Podpořte MDM"
+    "message": "Podpořte IETDM"
   },
   "popup_fix": {
     "message": "Jak to opravit"
@@ -189,16 +189,16 @@
     "message": "Tady není žádné video ke stažení"
   },
   "video_playlist": {
-    "message": "Seznam videí: vyberte je v Mister Download Manager"
+    "message": "Seznam videí: vyberte je v IET Download Manager"
   },
   "video_no_ytdlp": {
-    "message": "Mister Download Manager potřebuje pro toto video yt-dlp"
+    "message": "IET Download Manager potřebuje pro toto video yt-dlp"
   },
   "video_too_long": {
     "message": "Vyhledávání trvalo příliš dlouho"
   },
   "video_busy": {
-    "message": "Mister Download Manager je zaneprázdněn jinými videi"
+    "message": "IET Download Manager je zaneprázdněn jinými videi"
   },
   "video_queued": {
     "message": "Přidáno do fronty"
@@ -222,7 +222,7 @@
     "message": "Tento počítač"
   },
   "popup_send_remote": {
-    "message": "Jiný Mister Download Manager (server)"
+    "message": "Jiný IET Download Manager (server)"
   },
   "popup_remote_code": {
     "message": "Párovací kód"
@@ -234,7 +234,7 @@
     "message": "Spárovat"
   },
   "popup_remote_help": {
-    "message": "Otevřete jeho adresu jednou a přijměte jeho certifikát, poté zadejte kód z jeho Možnosti, Vzdálené, Spárovat zařízení (nebo misterdownloadmanager-cli pair)."
+    "message": "Otevřete jeho adresu jednou a přijměte jeho certifikát, poté zadejte kód z jeho Možnosti, Vzdálené, Spárovat zařízení (nebo ietdownloadmanager-cli pair)."
   },
   "status_remote": {
     "message": "Stahování jde na $address$",
@@ -291,19 +291,19 @@
     "message": "Stáhnout nejlepší kvalitu"
   },
   "video_sending": {
-    "message": "Odesílání do MDM..."
+    "message": "Odesílání do IETDM..."
   },
   "video_added": {
-    "message": "Přidáno do MDM"
+    "message": "Přidáno do IETDM"
   },
   "video_show": {
     "message": "Zobrazit"
   },
   "video_no_answer": {
-    "message": "MDM neodpověděl"
+    "message": "IETDM neodpověděl"
   },
   "video_get_mdm": {
-    "message": "Získat MDM"
+    "message": "Získat IETDM"
   },
   "video_retry": {
     "message": "Zkusit znovu"
@@ -318,7 +318,7 @@
     "message": "Všechny kvality a titulky..."
   },
   "video_failed": {
-    "message": "Aplikace Mister Download Manager není nainstalovaná nebo se nespustila"
+    "message": "Aplikace IET Download Manager není nainstalovaná nebo se nespustila"
   },
   "video_download_best": {
     "message": "Stáhnout nejlepší"

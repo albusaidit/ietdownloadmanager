@@ -205,7 +205,7 @@ function fakeApi({
       onClicked: event("menu"),
     },
     // The browser's language: German here.
-    i18n: { getMessage: (key) => ({ menu: "Mit Mister Download Manager herunterladen" })[key] ?? "" },
+    i18n: { getMessage: (key) => ({ menu: "Mit IET Download Manager herunterladen" })[key] ?? "" },
   };
   if (safari) delete api.downloads;
   if (!firefox && !safari) api.declarativeNetRequest = { getSessionRules: async () => [], updateSessionRules: async (r) => calls.push(["dnr", r]) };
@@ -288,7 +288,7 @@ const ok = (what) => {
   const cookies = calls.find((c) => c[0] === "cookies");
   assert.deepEqual(cookies[1], { url: "https://x/a.zip", storeId: "firefox-container-2" });
   const native = calls.find((c) => c[0] === "native");
-  assert.equal(native[1], "com.misterdownloadmanager.host");
+  assert.equal(native[1], "com.ietdownloadmanager.host");
   const m = native[2];
   assert.deepEqual(
     [m.url, m.referrer, m.cookies, m.filename, m.size, m.mime, m.userAgent, m.v],
@@ -330,10 +330,10 @@ const ok = (what) => {
   await settle();
   assert.deepEqual(natives(calls), []);
   assert.deepEqual(steps(calls), []);
-  // Said, for MDM's log, under its own key and without an address.
+  // Said, for IETDM's log, under its own key and without an address.
   assert.deepEqual(notices(calls), [{ why: "file-type", name: "page.html", site: "x" }]);
   assert.ok(!calls.some((c) => c[0] === "native" && c[2].declined && "url" in c[2]));
-  ok("a type not listed stays with the browser, and MDM's log hears why");
+  ok("a type not listed stays with the browser, and IETDM's log hears why");
 }
 
 // Chrome: incognito downloads use the incognito store; the address asked for goes as the
@@ -387,7 +387,7 @@ const ok = (what) => {
 // DetermineFilename and DeterminerCallback): no valid suggestion goes as an empty name with no
 // conflict action, which counts as a name; a name the browser refuses is emptied after the
 // answer is counted, and only an empty name with "uniquify" is no name at all. The newest
-// extension's name wins (here MDM's, updated after Save In was installed).
+// extension's name wins (here IETDM's, updated after Save In was installed).
 {
   const answer = (s) => {
     const valid = s && typeof s === "object" && typeof s.filename === "string" && s.filename.length > 0;
@@ -419,7 +419,7 @@ const ok = (what) => {
     await settle();
     assert.notEqual(mdm, "none", `${what}: answered, the download doesn't wait`);
     const want = other ? other.filename : creator;
-    assert.equal(determined(creator, other ? [other, mdm] : [mdm]), want, `${what}: MDM's answer gives no name of its own`);
+    assert.equal(determined(creator, other ? [other, mdm] : [mdm]), want, `${what}: IETDM's answer gives no name of its own`);
   }
   // The model, checked: Chromium's own cases.
   assert.equal(determined("Pic/a.jpg", [undefined]), "", "suggest() empties the creator's name");
@@ -452,7 +452,7 @@ const ok = (what) => {
   ok("the app's file types decide, asked once");
 }
 
-// Mister Download Manager not installed (no host): everything stays with the browser, and the
+// IET Download Manager not installed (no host): everything stays with the browser, and the
 // toolbar button says something is wrong.
 {
   const { api, calls, listeners, store } = fakeApi({ firefox: false, host: false });
@@ -608,7 +608,7 @@ const ok = (what) => {
   ok("opened types: the session rule follows the app's list");
 }
 
-// Right-click → Download with Mister Download Manager: handed over as an explicit request, so
+// Right-click → Download with IET Download Manager: handed over as an explicit request, so
 // the host takes any link (an .html page here); a failure opens the help page's section.
 {
   const { api, calls, listeners } = fakeApi({ firefox: false });
@@ -785,7 +785,7 @@ const ok = (what) => {
 // The button's qualities: an app whose rules say it looks videos up (`videoLookup`, kept with the
 // status) gets the click as a lookup, never with `video` or a top-level `url` (an older host
 // refuses such a message and does nothing), with the cookies of what yt-dlp is given; its answer
-// goes back to the page as `lookup`. Without that (an older app, another MDM chosen, an answer
+// goes back to the page as `lookup`. Without that (an older app, another IETDM chosen, an answer
 // that isn't a lookup's) the page gets {fallback: true}: the click as it always was.
 {
   const ask = (listeners, m, sender) => new Promise((r) => listeners.message(m, sender, (x) => r(JSON.parse(JSON.stringify(x)))));
@@ -798,7 +798,7 @@ const ok = (what) => {
     await settle();
     assert.equal(store.status.videoLookup, true, "kept from the answer to rules");
     const r = await ask(listeners, { type: "video-lookup", src: "https://cdn.test/v/clip.mp4", title: "A story's film", url: "https://news.test/story", at: { x: 1, y: 1 } }, sender);
-    // `show`: the address MDM lists its download under, for the button's "Show" (#703).
+    // `show`: the address IETDM lists its download under, for the button's "Show" (#703).
     assert.deepEqual(r, { lookup: { state: "pending", token: "t1" }, show: "https://cdn.test/v/clip.mp4" });
     const m = natives(calls).find((x) => x.videoLookup);
     assert.deepEqual([m.video, m.url], [undefined, undefined], "no `video`, no top-level `url`");
@@ -824,7 +824,7 @@ const ok = (what) => {
     assert.deepEqual(await ask(listeners, { type: "video-lookup", src: "https://cdn.test/v/clip.mp4" }, sender), { fallback: true });
     assert.deepEqual(lookups(calls), []);
   }
-  // Another MDM chosen: none of the three goes to the host, nor to the other MDM.
+  // Another IETDM chosen: none of the three goes to the host, nor to the other IETDM.
   {
     const { api, calls, listeners, store } = fakeApi({ firefox: false, rules: { videoLookup: true }, lookup: () => ({ ok: true, lookup: { state: "pending", token: "t1" } }) });
     load(api, false);
@@ -835,9 +835,9 @@ const ok = (what) => {
       assert.deepEqual(await ask(listeners, m, sender), { fallback: true }, m.type);
     }
     assert.deepEqual(lookups(calls), []);
-    assert.deepEqual(fetched, [], "nothing to the other MDM");
+    assert.deepEqual(fetched, [], "nothing to the other IETDM");
   }
-  // The ability kept from before, an older host or app now (MDM went back a version): its answer
+  // The ability kept from before, an older host or app now (IETDM went back a version): its answer
   // has no `lookup`. Not kept as able, its rules asked again, the click as it was; the next click
   // sends no lookup at all. A refused message is no broken connection.
   {
@@ -914,8 +914,8 @@ const ok = (what) => {
     assert.equal(calls.filter((c) => c[0] === "dnr").length, rules, "the rule for PDFs and music untouched");
     assert.equal(store.status.videoLookup, true, "still able");
   }
-  // #703: the button's own actions. "Show" (MDM's window, the download selected), "Turn on" (the
-  // site off the list, at once here too), "Get MDM" and "Open post" (a tab next to this one; a post
+  // #703: the button's own actions. "Show" (IETDM's window, the download selected), "Turn on" (the
+  // site off the list, at once here too), "Get IETDM" and "Open post" (a tab next to this one; a post
   // only on this page's site), a plain file sent as a file. None of them has a top-level `url`.
   {
     const { api, calls, listeners } = fakeApi({ firefox: false, rules: { videoLookup: true } });
@@ -954,7 +954,7 @@ const ok = (what) => {
     await ask(listeners, { type: "video", url: "https://news.test/story", direct: true, src: "blob:https://news.test/x" }, from);
     assert.equal(natives(calls).filter((x) => x.video).at(-1).direct, undefined);
   }
-  ok("video button: qualities looked up by the app, picked in the page; else the window, as before; Show, Turn on, Get MDM, Open post, a plain file");
+  ok("video button: qualities looked up by the app, picked in the page; else the window, as before; Show, Turn on, Get IETDM, Open post, a plain file");
 }
 
 // #38: the media a tab loaded, as the popup lists them. A response is media by its type or its
@@ -1973,7 +1973,7 @@ function samplePage(html) {
   assert.deepEqual([f.result, f.asked.length], [null, 1]);
   // The background's other answers.
   assert.deepEqual((await follow(pending, [{ late: true }])).result, { state: "late" });
-  assert.deepEqual((await follow(pending, [{ fallback: true }])).result, { state: "use-window", token: "t1" }, "another MDM chosen meanwhile");
+  assert.deepEqual((await follow(pending, [{ fallback: true }])).result, { state: "use-window", token: "t1" }, "another IETDM chosen meanwhile");
   assert.deepEqual((await follow(pending, [{ ok: false }])).result, { state: "gone" });
   assert.equal((await follow(pending, [{ ok: false, gone: true }])).result, null, "the extension gone");
   f = await follow({ state: "pending" }, []);
@@ -2022,7 +2022,7 @@ function samplePage(html) {
   assert.deepEqual(act({ fallback: true }, true), { act: "window" });
   assert.equal(act({ ok: false, gone: true }, true), null);
   // #852: the app's word on what the look-up lacked, shown with the qualities: its text, and a
-  // link to MDM's own help page only (never another address a page could slip in).
+  // link to IETDM's own help page only (never another address a page could slip in).
   const { noticeOf } = make(["noticeOf"], "{ noticeOf }");
   const help = "https://misterdownloadmanager.com/de/help/video.html#javascript-runtime";
   const notice = { text: "YouTube needs a JavaScript runtime", link: "How to install one", url: help };
@@ -2173,7 +2173,7 @@ function samplePage(html) {
   load(api, false);
   await listeners.installed({ reason: "update" });
   const item = calls.find((c) => c[0] === "menu-item")[1];
-  assert.equal(item.title, "Mit Mister Download Manager herunterladen");
+  assert.equal(item.title, "Mit IET Download Manager herunterladen");
   const dir = new URL("../../extension/_locales/", import.meta.url);
   const english = JSON.parse(readFileSync(new URL("en/messages.json", dir), "utf8"));
   for (const locale of readdirSync(dir)) {
@@ -2635,7 +2635,7 @@ const ask = (listeners) => (m, sender) => new Promise((r) => listeners.message(m
   assert.deepEqual(natives(calls).map((m) => m.proxy), [undefined, undefined, undefined, undefined, "http://10.0.0.9:3128"]);
   ok("Firefox: loopback addresses skip its proxy settings' proxy, as Firefox itself does");
 }
-// A type the app doesn't take: the browser goes on (its dialog shows), MDM's log hears why once,
+// A type the app doesn't take: the browser goes on (its dialog shows), IETDM's log hears why once,
 // and the download after the dialog isn't paused or asked again.
 {
   const { api, calls, listeners } = fakeApi({ firefox: true });
@@ -2734,7 +2734,7 @@ const ask = (listeners) => (m, sender) => new Promise((r) => listeners.message(m
   ok("#208 Chromium: answers aren't held");
 }
 // #603: only a tokenized Colab runtime-proxy transfer stays with the browser. A normal
-// download linked from a Colab notebook is still offered to MDM.
+// download linked from a Colab notebook is still offered to IETDM.
 {
   const { api, calls, listeners } = fakeApi({ firefox: false });
   load(api, false);
@@ -2775,7 +2775,7 @@ const ask = (listeners) => (m, sender) => new Promise((r) => listeners.message(m
   );
   await settle();
   assert.equal(natives(calls).length, 1, "ordinary notebook links remain capturable");
-  ok("#603 Chromium: a GitHub file linked from Colab is still handed to MDM");
+  ok("#603 Chromium: a GitHub file linked from Colab is still handed to IETDM");
 }
 {
   const { api, calls, listeners } = fakeApi({ firefox: true });
@@ -2825,7 +2825,7 @@ const ask = (listeners) => (m, sender) => new Promise((r) => listeners.message(m
     () => {},
   );
   await settle();
-  assert.equal(natives(calls).length, 1, "a token on a non-proxy host must not bypass MDM");
+  assert.equal(natives(calls).length, 1, "a token on a non-proxy host must not bypass IETDM");
   ok("#603 Chromium: tokenized non-Colab URLs remain capturable");
 }
 {
@@ -2845,7 +2845,7 @@ const ask = (listeners) => (m, sender) => new Promise((r) => listeners.message(m
     () => {},
   );
   await settle();
-  assert.equal(natives(calls).length, 1, "a proxy host without its token must not bypass MDM");
+  assert.equal(natives(calls).length, 1, "a proxy host without its token must not bypass IETDM");
   ok("#603 Chromium: an un-tokenized Colab host remains capturable");
 }
 
@@ -2866,7 +2866,7 @@ const ask = (listeners) => (m, sender) => new Promise((r) => listeners.message(m
   assert.ok(en.popup_proxy && en.popup_proxy_title && en.popup_proxy_title_chromium, "the switch's texts");
   ok("manifests: proxy optional in Firefox, required in Chrome; the popup's switch in each");
 }
-// Another MDM (#157): the file types caught for it are the app's defaults, and every message
+// Another IETDM (#157): the file types caught for it are the app's defaults, and every message
 // the pairing can end with is there.
 {
   const capture = readFileSync(new URL("../../crates/ipc/src/capture.rs", import.meta.url), "utf8");
@@ -2878,7 +2878,7 @@ const ask = (listeners) => (m, sender) => new Promise((r) => listeners.message(m
     assert.ok(english[`remote_${why}`], `remote_${why}`);
   }
   assert.ok(english.status_remote, "status_remote");
-  ok("another MDM: the app's file types, every pairing message");
+  ok("another IETDM: the app's file types, every pairing message");
 }
 // Safari has no downloads API: the extension still starts, and a link page.js holds (a file type
 // Options lists) is offered to the app as a browser's download is; the app taking it is told to
@@ -2892,7 +2892,7 @@ const ask = (listeners) => (m, sender) => new Promise((r) => listeners.message(m
   const m = natives(calls)[0];
   assert.deepEqual([m.url, m.filename, m.referrer, m.cookies], ["https://x.test/files/a.zip", "a.zip", "https://page.test/dl", "sid=1"]);
   assert.ok(!("explicit" in m), "Options' rules apply, as for the browser's own downloads");
-  // Not a listed type: the click goes on, and MDM's log hears why.
+  // Not a listed type: the click goes on, and IETDM's log hears why.
   calls.length = 0;
   assert.deepEqual(await send({ type: "link", url: "https://x.test/page.html" }, sender), { taken: false });
   await settle();

@@ -43,7 +43,7 @@ async fn gallery_dl_names_the_server_and_the_failure() {
     assert_eq!(e.network().map(|n| n.1), Some(Fault::Refused), "{e}");
 }
 
-/// ffmpeg is installed by MDM on Windows only (elsewhere the system's is used).
+/// ffmpeg is installed by IETDM on Windows only (elsewhere the system's is used).
 #[cfg(windows)]
 #[tokio::test]
 async fn ffmpeg_names_the_server_and_the_failure() {

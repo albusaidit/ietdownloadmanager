@@ -1,3 +1,7 @@
+> **This checkout is IET Download Manager**, a GPL-3.0 fork of Mister Download Manager on branch
+> `iet-download-manager` (see NOTICE-IET.md). Keep the upstream copyright and credit; brand new
+> user-visible text "IET Download Manager"/"IETDM". Upstream PR rules (pr-shots, ROADMAP) don't apply.
+
 # Mister Download Manager (MDM) — agent guide
 
 Mister Download Manager (MDM) is a download manager for Windows in Rust (egui + storytold

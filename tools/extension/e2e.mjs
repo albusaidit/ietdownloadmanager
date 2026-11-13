@@ -2,7 +2,7 @@
 // headless with its own new profile and loads the extension (target/extension, from pack.ps1);
 // the native messaging host (target/release) hands what it sends to a separate Mister Download
 // Manager instance (its own data folder, MDM_DATA_DIR; off the screens, MDM_OFFSCREEN). Each case
-// checks what MDM received (the lab server's request log, the files in MDM's folders, its list
+// checks what IETDM received (the lab server's request log, the files in IETDM's folders, its list
 // through the automation API, its Download video window through UI Automation) and that the
 // browser kept nothing.
 //
@@ -33,23 +33,23 @@
 // the button, the Download video window; #695, #800), guarded (a stream another site's server
 // serves to its page's player only: looked up and downloaded with the Origin and Referer the
 // browser sent, #900),
-// qualities (the button's menu: a stream's qualities looked up by MDM, with their sizes; the one
-// picked downloads with its progress window only, MDM's main window hidden), page (the menu on a
+// qualities (the button's menu: a stream's qualities looked up by IETDM, with their sizes; the one
+// picked downloads with its progress window only, IETDM's main window hidden), page (the menu on a
 // real video page, E2E_VIDEO_PAGE, and the line E2E_VIDEO_PICK downloaded: off by default), video (shown,
 // clicked, dragged, kept; "never on the site" in the last browser; the button's clicks go through
 // its menu's "Open in…" to the Download video window, as in csp, hls, streams, sniffed and
 // inplace), panelOptions (the button follows Options in an open tab: off, on, the site listed;
 // #532), videoFocus (mouse idle/fullscreen and keyboard focus, #480), reconnect (a tab opened while
-// the host couldn't start gets the button once it can, no reload; then MDM started by a click, and
-// reached after it quits and starts again, #474), start (MDM not running: the host starts it),
-// remote (Send downloads to → Another MDM, #157: paired from the popup, a link downloaded by a
-// headless MDM; E2E_REMOTE_URL for one running elsewhere, such as the Docker image: remoteServer).
+// the host couldn't start gets the button once it can, no reload; then IETDM started by a click, and
+// reached after it quits and starts again, #474), start (IETDM not running: the host starts it),
+// remote (Send downloads to → Another IETDM, #157: paired from the popup, a link downloaded by a
+// headless IETDM; E2E_REMOTE_URL for one running elsewhere, such as the Docker image: remoteServer).
 //
 // Screenshots for a pull request (Chromium only): E2E_LANG=de (or ar, ...) starts the browser in that
 // language, so the extension shows its _locales text of it; with E2E_SHOTS=<folder> the `qualities`
 // case saves <lang>-looking.png, <lang>-video-tab.png and <lang>-audio-tab.png there (the player and
 // the menu), before the pick, and the `scripted` case <lang>-media-list.png (the popup's list) and
-// <lang>-video-window.png. Neither changes anything when unset. E2E_APP_LANG sets MDM's own language
+// <lang>-video-window.png. Neither changes anything when unset. E2E_APP_LANG sets IETDM's own language
 // (the words it sends the menu).
 //
 // Windows: the host is registered for the current user while it runs (nmhost --register, as the
@@ -428,7 +428,7 @@ async function chromium(bin, profile, dl, page, ready) {
     const inShadow = async (fn) => {
       const { root: doc } = await cdp.send("DOM.getDocument", { depth: -1, pierce: true }, sessionId);
       const find = (n) => {
-        if (n.nodeName === "MDM-VIDEO-BUTTON") return n;
+        if (n.nodeName === "IETDM-VIDEO-BUTTON") return n;
         for (const c of [...(n.children || []), ...(n.shadowRoots || []), ...(n.contentDocument ? [n.contentDocument] : [])]) {
           const f = find(c);
           if (f) return f;
@@ -568,7 +568,7 @@ async function firefox(bin, profile, dl, page, ready) {
       // An extension's host permissions are granted without asking (MV3 asks the user).
       pref("extensions.originControls.grantByDefault", true),
       // Alt+click saves the link, as in Chromium (Firefox's default ignores an Alt+click on a
-      // link: then nothing is downloaded at all, by the browser or MDM).
+      // link: then nothing is downloaded at all, by the browser or IETDM).
       pref("browser.altClickSave", true),
       // The extension's address, known in advance (its popup opened in a tab).
       pref("extensions.webextensions.uuids", JSON.stringify({ [FIREFOX_ID]: FIREFOX_UUID })),
@@ -781,7 +781,7 @@ async function firefox(bin, profile, dl, page, ready) {
   }
 }
 
-// ---- the test instance of Mister Download Manager ----------------------------------------------
+// ---- the test instance of IET Download Manager ----------------------------------------------
 
 let data = "";
 let downloads = "";
@@ -789,7 +789,7 @@ let downloads = "";
 let ytdlp = "";
 // The ffmpeg the qualities case needs (E2E_FFMPEG, else one on PATH).
 let ffmpeg = "";
-const appExe = exe("misterdownloadmanager");
+const appExe = exe("ietdownloadmanager");
 
 // One command to the instance over its channel (ipc.json), its one-line answer.
 function ipc(cmd, dir = data) {
@@ -839,7 +839,7 @@ function appProcesses() {
     [
       "-NoProfile",
       "-Command",
-      `Get-CimInstance Win32_Process -Filter "Name='misterdownloadmanager.exe'" | Where-Object { $_.ExecutablePath -eq '${p}' -and $_.CommandLine -notlike '*--headless*' } | ForEach-Object { "$($_.ProcessId) $($_.CommandLine -like '*--crash-monitor*')" }`,
+      `Get-CimInstance Win32_Process -Filter "Name='ietdownloadmanager.exe'" | Where-Object { $_.ExecutablePath -eq '${p}' -and $_.CommandLine -notlike '*--headless*' } | ForEach-Object { "$($_.ProcessId) $($_.CommandLine -like '*--crash-monitor*')" }`,
     ],
     { encoding: "utf8" },
   ).stdout;
@@ -873,25 +873,25 @@ async function stopApp() {
   }
 }
 
-// The download named `file` in MDM's `sub` folder (under the test's Downloads), complete in its
+// The download named `file` in IETDM's `sub` folder (under the test's Downloads), complete in its
 // list and on disk with `size` bytes; its list entry.
 async function arrived(file, size, sub = "Compressed", ms = 45000) {
   const want = path.join(downloads, sub, file);
   let last = null;
   try {
-    return await until(`${file} in Mister Download Manager`, ms, async () => {
+    return await until(`${file} in IET Download Manager`, ms, async () => {
       const item = (await mdmList().catch(() => [])).find((d) => d.file === file);
       last = item || last;
-      if (item && item.status === "Error") throw new Error(`${file}: MDM's download failed: ${item.error}`);
+      if (item && item.status === "Error") throw new Error(`${file}: IETDM's download failed: ${item.error}`);
       if (!item || item.status !== "Complete") return null;
       if (path.resolve(item.path) !== path.resolve(want)) throw new Error(`${file} saved as ${item.path}, not ${want}`);
       return fs.existsSync(want) && fs.statSync(want).size === size && item;
     });
   } catch (e) {
-    if (last && !/MDM's|saved as/.test(e.message)) e.message += ` (MDM: ${last.status} ${last.downloaded}/${last.size} ${last.path})`;
+    if (last && !/IETDM's|saved as/.test(e.message)) e.message += ` (IETDM: ${last.status} ${last.downloaded}/${last.size} ${last.path})`;
     if (!last) {
       const list = await mdmList().catch(() => []);
-      e.message += ` (MDM's latest: ${list.slice(-2).map((d) => `${d.file} ${d.status} ${d.path}`).join("; ") || "none"})`;
+      e.message += ` (IETDM's latest: ${list.slice(-2).map((d) => `${d.file} ${d.status} ${d.path}`).join("; ") || "none"})`;
     }
     throw e;
   }
@@ -905,11 +905,11 @@ async function requests(p) {
 const clearLog = () => fetch(`${LAB}/_log`, { method: "DELETE" });
 const brief = (e) => `${e.method} ${e.status} ${e.outcome} ${e.range || "-"}`;
 
-// ---- another Mister Download Manager (the remote case, #157) -------------------------------------
+// ---- another IET Download Manager (the remote case, #157) -------------------------------------
 
 // The server the remote case sends downloads to: E2E_REMOTE_URL names one already running (the
 // Docker image: E2E_REMOTE_PAIR is a command printing a pairing code, `docker exec mdm
-// misterdownloadmanager-cli pair`, and E2E_REMOTE_DOWNLOADS the folder its downloads land in, as
+// ietdownloadmanager-cli pair`, and E2E_REMOTE_DOWNLOADS the folder its downloads land in, as
 // seen from here); else target/release's app runs headless here, on 127.0.0.1, with its own data
 // and download folders under target/e2e.
 const REMOTE_PORT = 18463;
@@ -941,13 +941,13 @@ async function remoteServer() {
     return a.code;
   };
   remote = { url: `https://127.0.0.1:${REMOTE_PORT}/`, downloads, code, proc, data: rdata };
-  await until("the headless MDM", 20000, () => code().then(() => true, () => false));
+  await until("the headless IETDM", 20000, () => code().then(() => true, () => false));
   return remote;
 }
 async function stopRemote() {
   if (!remote || !remote.proc) return;
   await ipc({ exit: true }, remote.data).catch(() => {});
-  await until("the headless MDM to quit", 15000, () => remote.proc.exitCode !== null).catch(() => killTree(remote.proc));
+  await until("the headless IETDM to quit", 15000, () => remote.proc.exitCode !== null).catch(() => killTree(remote.proc));
 }
 // The file `name` of `size` bytes somewhere in `dir` (a category's folder): its path.
 function findFile(dir, name, size) {
@@ -1308,16 +1308,16 @@ async function videoButton(session, never) {
   near(b.r, v.r - 8, "button's right edge");
   near(b.t, v.t + 8, "button's top");
   // #703: a click on its main part downloads the video's own plain file at once (no look-up, no
-  // window), then says so in green, with "Show" (MDM's window, the download selected). An earlier
+  // window), then says so in green, with "Show" (IETDM's window, the download selected). An earlier
   // browser's download of it off the list first: a duplicate would be asked about.
   const earlier = (await mdmList()).filter((d) => d.url === `${LAB}/gen/1M/clip.mp4`).map((d) => d.id);
   if (earlier.length) await ipc({ action: "delete", ids: earlier });
   const before = new Set((await mdmList()).map((d) => d.id));
   await session.mouse(await mainPart(session, b), (b.t + b.b) / 2, "click");
-  const added = await until("the video's file in MDM's list", 15000, async () => (await mdmList()).find((d) => !before.has(d.id))).catch(async (e) => {
+  const added = await until("the video's file in IETDM's list", 15000, async () => (await mdmList()).find((d) => !before.has(d.id))).catch(async (e) => {
     throw new Error(`${e.message} (the button: ${JSON.stringify(await session.pill(PILL_STATE))})`);
   });
-  if (added.url !== `${LAB}/gen/1M/clip.mp4`) throw new Error(`MDM downloads ${added.url}`);
+  if (added.url !== `${LAB}/gen/1M/clip.mp4`) throw new Error(`IETDM downloads ${added.url}`);
   const sent = await until("the button's green state", 5000, async () => {
     const p = await session.pill(PILL_STATE);
     return p && p.state === "sent" ? p : null;
@@ -1326,7 +1326,7 @@ async function videoButton(session, never) {
   if (!show) throw new Error(`no "Show" on the button: ${JSON.stringify(sent)}`);
   if (appWindows(appPid()).includes(VIDEO_WINDOW)) throw new Error("the click opened the Download video window");
   await session.mouse(show.x, show.y, "click");
-  await until("MDM's main window, shown", 10000, () => appWindows(appPid()).some((x) => /^Mister Download Manager/.test(x)));
+  await until("IETDM's main window, shown", 10000, () => appWindows(appPid()).some((x) => /^IET Download Manager/.test(x)));
   await session.mouse(5, 5);
   await sleep(300);
   b = await hover(session, v);
@@ -1639,7 +1639,7 @@ async function clickLink(t, link) {
   await t.session.evaluate("document.getElementById('link').click()");
 }
 
-// The requests MDM made for `p`: all but the browser's own first one.
+// The requests IETDM made for `p`: all but the browser's own first one.
 async function mdmRequests(p) {
   const all = await requests(p);
   if (all.length < 2) throw new Error(`${p}: only the browser's request reached the server (${all.map(brief).join("; ")})`);
@@ -1647,7 +1647,7 @@ async function mdmRequests(p) {
 }
 
 // One file through the lab's host (lab.mdm.test, known to the test proxy only): how many of its
-// requests went through the proxy (the browser's own first; MDM's when it got the proxy).
+// requests went through the proxy (the browser's own first; IETDM's when it got the proxy).
 async function throughProxy(t, label, wantMdm) {
   proxyLog.length = 0;
   const file = `e2e-proxy-${t.name}-${label}.xz`;
@@ -1659,7 +1659,7 @@ async function throughProxy(t, label, wantMdm) {
 }
 
 // With the switch on and a proxy set: an ordinary .zip link on the lab's own address (127.0.0.1,
-// which the browser itself never sends to a proxy) still reaches MDM. How many of its requests
+// which the browser itself never sends to a proxy) still reaches IETDM. How many of its requests
 // went through the proxy.
 async function plainWhileProxied(t) {
   proxyLog.length = 0;
@@ -1677,7 +1677,7 @@ function vpnExtension() {
   fs.mkdirSync(dir, { recursive: true });
   fs.writeFileSync(
     path.join(dir, "manifest.json"),
-    JSON.stringify({ manifest_version: 3, name: "MDM e2e stand-in VPN", version: "1.0", permissions: ["proxy"] }),
+    JSON.stringify({ manifest_version: 3, name: "IETDM e2e stand-in VPN", version: "1.0", permissions: ["proxy"] }),
   );
   // Its page, driven over DevTools by e2e.mjs.
   fs.writeFileSync(path.join(dir, "page.html"), "<!doctype html><title>stand-in VPN</title>");
@@ -1691,7 +1691,7 @@ function folderExtension() {
   fs.mkdirSync(dir, { recursive: true });
   fs.writeFileSync(
     path.join(dir, "manifest.json"),
-    JSON.stringify({ manifest_version: 3, name: "MDM e2e stand-in Save In", version: "1.0", permissions: ["downloads"], host_permissions: ["<all_urls>"] }),
+    JSON.stringify({ manifest_version: 3, name: "IETDM e2e stand-in Save In", version: "1.0", permissions: ["downloads"], host_permissions: ["<all_urls>"] }),
   );
   fs.writeFileSync(path.join(dir, "page.html"), "<!doctype html><title>stand-in Save In</title>");
   return dir;
@@ -1706,7 +1706,7 @@ function firefoxVpnExtension() {
     path.join(dir, "manifest.json"),
     JSON.stringify({
       manifest_version: 2,
-      name: "MDM e2e stand-in VPN",
+      name: "IETDM e2e stand-in VPN",
       version: "1.0",
       permissions: ["proxy", "<all_urls>"],
       background: { scripts: ["background.js"] },
@@ -1723,8 +1723,8 @@ function firefoxVpnExtension() {
 // #42 in Chrome and the other Chromium browsers: "proxy" is required there (Chrome can't make it
 // optional), and the popup's switch is the extension's own setting, off as installed. A stand-in
 // VPN extension sets the browser's proxy: a fixed server, then a PAC script (inline, then by its
-// address). Off, MDM gets nothing of it (only the browser's request goes through the proxy); on,
-// MDM downloads through the same proxy. Also: what Chrome warns about on install and update is
+// address). Off, IETDM gets nothing of it (only the browser's request goes through the proxy); on,
+// IETDM downloads through the same proxy. Also: what Chrome warns about on install and update is
 // the same with and without "proxy" (Chrome counts it as access to every site, which the
 // extension already has), so the update doesn't switch the extension off to ask.
 async function proxyInChromium(t) {
@@ -1734,7 +1734,7 @@ async function proxyInChromium(t) {
     await s.inExtension(`(async () => {
       const m = chrome.runtime.getManifest();
       // As a manifest on its own: its name in plain text, no locale folder to read.
-      const plain = (perms, hosts = m.host_permissions) => JSON.stringify({ manifest_version: 3, name: "MDM", version: m.version, permissions: perms, host_permissions: hosts });
+      const plain = (perms, hosts = m.host_permissions) => JSON.stringify({ manifest_version: 3, name: "IETDM", version: m.version, permissions: perms, host_permissions: hosts });
       const warn = (...a) => new Promise((r) => chrome.management.getPermissionWarningsByManifest(plain(...a), r));
       const without = m.permissions.filter((p) => p !== "proxy");
       return JSON.stringify({ api: typeof chrome.proxy, perms: m.permissions, optional: m.optional_permissions || [], with: await warn(m.permissions), without: await warn(without), alone: await warn(["proxy"], []) });
@@ -1776,7 +1776,7 @@ async function proxyInChromium(t) {
     await until("the switch on", 5000, async () => (await popup.evaluate("chrome.storage.local.get('proxyOn').then((v) => v.proxyOn === true)")));
     const on = await throughProxy(t, "on", true);
     if (on < 2) throw new Error(`on: only ${on} request(s) through the proxy`);
-    done.push(`on, a fixed server: ${on} requests through it (the browser's, then MDM's)`);
+    done.push(`on, a fixed server: ${on} requests through it (the browser's, then IETDM's)`);
     const local = await plainWhileProxied(t);
     if (local) throw new Error(`on: ${local} request(s) for 127.0.0.1 through the proxy (Chromium sends none there)`);
     done.push("on: an ordinary link on 127.0.0.1 taken, straight (the proxy bypassed, as the browser does)");
@@ -1815,8 +1815,8 @@ async function proxyInChromium(t) {
 }
 
 const CASES = {
-  // #578: a download another extension starts in a folder of its own, of a type MDM doesn't
-  // take, lands in that folder. Chromium only (Firefox has no onDeterminingFilename): MDM's
+  // #578: a download another extension starts in a folder of its own, of a type IETDM doesn't
+  // take, lands in that folder. Chromium only (Firefox has no onDeterminingFilename): IETDM's
   // listener answers for every download, and an answer that names nothing must not empty the
   // other extension's name.
   async folders(t) {
@@ -1839,16 +1839,16 @@ const CASES = {
         throw new Error(`the browser saved it as ${JSON.stringify(where())} (want ${path.join(sub, file)})`);
       }
       const mdm = (await mdmList().catch(() => [])).filter((d) => d.file === file);
-      if (mdm.length) throw new Error(`MDM took it too: ${JSON.stringify(mdm)}`);
+      if (mdm.length) throw new Error(`IETDM took it too: ${JSON.stringify(mdm)}`);
       const got = (await requests(`/gen/64K/${file}`)).map(brief);
       for (const f of fs.readdirSync(t.dl)) fs.rmSync(path.join(t.dl, f), { force: true, recursive: true });
-      return `download ${id} saved in ${path.join(sub, file)}, MDM left it (the lab's log: ${got.join("; ")})`;
+      return `download ${id} saved in ${path.join(sub, file)}, IETDM left it (the lab's log: ${got.join("; ")})`;
     } finally {
       await page.close();
     }
   },
   // #42: the browser behind a proxy (a VPN or proxy extension's). The file's host (lab.mdm.test) is
-  // known to that proxy only, so MDM can download it only through the same proxy, which the
+  // known to that proxy only, so IETDM can download it only through the same proxy, which the
   // extension hands over with the download, once the user switched that on: the popup's switch
   // asks for the optional "proxy" permission (Firefox). Chrome can't make it optional, so its
   // extension has it from the install and the switch is its own setting (proxyInChromium).
@@ -1864,7 +1864,7 @@ const CASES = {
     const popupUrl = `${s.base}popup.html`;
     const granted = async (popup) => popup.evaluate("browser.permissions.contains({ permissions: ['proxy'] })");
     // One file through the lab's host: how many of its requests went through the proxy (the
-    // browser's own first; MDM's when it got the proxy) after `wait` ms.
+    // browser's own first; IETDM's when it got the proxy) after `wait` ms.
     const fetchFile = async (label, wantMdm) => {
       proxyLog.length = 0;
       const file = `e2e-proxy-${t.name}-${label}.xz`;
@@ -1909,21 +1909,21 @@ const CASES = {
         if (no !== 1) throw new Error(`refused: ${no} requests through the proxy`);
         done.push(`refused at the prompt (${ids.join(", ")}): off, the browser's request only`);
 
-        // Granted: the switch on, MDM downloads through the same proxy.
+        // Granted: the switch on, IETDM downloads through the same proxy.
         await pref("extensions.webextOptionalPermissionPrompts", false);
         await popup.click("#proxy");
         await until("the permission granted", 10000, () => granted(popup));
         await until("the switch on", 5000, () => popup.evaluate("document.getElementById('proxy').checked"));
         const on = await fetchFile("on", true);
         if (on < 2) throw new Error(`granted: only ${on} request(s) through the proxy`);
-        done.push(`granted: ${on} requests through the browser's proxy (the browser's, then MDM's)`);
-        // An ordinary link on 127.0.0.1 is still taken (Firefox itself never proxies it; MDM
+        done.push(`granted: ${on} requests through the browser's proxy (the browser's, then IETDM's)`);
+        // An ordinary link on 127.0.0.1 is still taken (Firefox itself never proxies it; IETDM
         // may, the test proxy passes it on: said, not failed).
         const local = await plainWhileProxied(t);
         done.push(`granted: an ordinary link on 127.0.0.1 taken (${local} of its requests through the proxy)`);
 
         // Granted, the proxy set per request by a VPN extension (proxy.onRequest, as Firefox's
-        // proxy and VPN add-ons do) rather than in the browser's settings: MDM gets that one too.
+        // proxy and VPN add-ons do) rather than in the browser's settings: IETDM gets that one too.
         await pref("network.proxy.type", 0);
         // A failure here is said at the end, after the other steps.
         const vpn = await s.install(firefoxVpnExtension());
@@ -1963,7 +1963,7 @@ const CASES = {
     }
   },
 
-  // A .zip link, throttled (the browser's download is held while MDM is asked: Firefox pauses it)
+  // A .zip link, throttled (the browser's download is held while IETDM is asked: Firefox pauses it)
   // and at full speed.
   async link(t) {
     const done = [];
@@ -2002,7 +2002,7 @@ const CASES = {
       // The browser's own request (the first) was stopped before it had the file.
       const [own] = (await requests(`/gen/2M/${file}`)).filter((e) => e.method === "GET");
       if (!own || own.bytes_sent >= size) throw new Error(`the browser downloaded the file itself: ${own ? brief(own) : "no request"}`);
-      return `no dialog, MDM has it, the browser's request stopped after ${own.bytes_sent} bytes`;
+      return `no dialog, IETDM has it, the browser's request stopped after ${own.bytes_sent} bytes`;
     } finally {
       await s.inBrowser(`(Services.prefs.setBoolPref(${always}, ${was === true}), "set")`).catch(() => {});
     }
@@ -2018,10 +2018,10 @@ const CASES = {
     await arrived(file, 1 << 20);
     const mdm = await mdmRequests(`/gen/1M/${file}`);
     for (const e of mdm) {
-      if (!/(^|;\s*)sid=1(;|$)/.test(e.cookie || "")) throw new Error(`MDM's request without the cookie: ${brief(e)} cookie=${e.cookie}`);
-      if (!(e.referer || "").startsWith(prefix)) throw new Error(`MDM's request without the referrer: ${brief(e)} referer=${e.referer}`);
-      if (e.user_agent !== t.ua) throw new Error(`MDM's User-Agent ${e.user_agent} is not the browser's ${t.ua}`);
-      if (e.status >= 400) throw new Error(`MDM's request refused: ${brief(e)}`);
+      if (!/(^|;\s*)sid=1(;|$)/.test(e.cookie || "")) throw new Error(`IETDM's request without the cookie: ${brief(e)} cookie=${e.cookie}`);
+      if (!(e.referer || "").startsWith(prefix)) throw new Error(`IETDM's request without the referrer: ${brief(e)} referer=${e.referer}`);
+      if (e.user_agent !== t.ua) throw new Error(`IETDM's User-Agent ${e.user_agent} is not the browser's ${t.ua}`);
+      if (e.status >= 400) throw new Error(`IETDM's request refused: ${brief(e)}`);
     }
     await keptNothing(t.dl);
     return `${mdm.length} request(s) with sid=1, the page as referrer, the browser's User-Agent`;
@@ -2047,32 +2047,32 @@ const CASES = {
     return `${plain}, ${star}, ${raw}`;
   },
 
-  // A redirect: MDM keeps the address clicked (it asks it again to renew the link).
+  // A redirect: IETDM keeps the address clicked (it asks it again to renew the link).
   async redirect(t) {
     const file = `e2e-r-${t.name}.zip`;
     const link = `/redirect?to=${encodeURIComponent(`/gen/2M/${file}`)}`;
     await clickLink(t, link);
     const item = await arrived(file, 2 << 20);
-    if (item.url !== LAB + link) throw new Error(`MDM's address is ${item.url}, not the one clicked (${LAB + link})`);
+    if (item.url !== LAB + link) throw new Error(`IETDM's address is ${item.url}, not the one clicked (${LAB + link})`);
     await mdmRequests(`/gen/2M/${file}`);
     await keptNothing(t.dl);
     return "the address clicked kept, the file from its target";
   },
 
-  // A page that goes to the file by script (#374): MDM gets the file's address, not the page's.
+  // A page that goes to the file by script (#374): IETDM gets the file's address, not the page's.
   async leadon(t) {
     const file = `e2e-leadon-${t.name}.zip`;
     const page = `/leadon?to=${encodeURIComponent(`/gen/2M/${file}`)}`;
     await t.session.navigate(`${LAB}${page}`);
     const item = await arrived(file, 2 << 20);
-    if (item.url !== `${LAB}/gen/2M/${file}`) throw new Error(`MDM's address is ${item.url}, not the file's`);
+    if (item.url !== `${LAB}/gen/2M/${file}`) throw new Error(`IETDM's address is ${item.url}, not the file's`);
     const asked = await requests(page.split("?")[0]);
     if (asked.length !== 1) throw new Error(`the page was asked ${asked.length} times (only the browser's expected)`);
     await keptNothing(t.dl);
     return "the file's address, the page asked by the browser only";
   },
 
-  // A form's download: MDM posts it again with the form's body; one answered 303 too.
+  // A form's download: IETDM posts it again with the form's body; one answered 303 too.
   async form(t) {
     const name = `e2e-form-${t.name}.zip`;
     await t.session.navigate(`${LAB}/formpage?size=1M&name=${encodeURIComponent(name)}`);
@@ -2080,9 +2080,9 @@ const CASES = {
     await arrived(name, 1 << 20);
     const posts = await mdmRequests(`/form/1M/${name}`);
     for (const e of posts) {
-      if (e.method !== "POST") throw new Error(`MDM didn't post the form again: ${brief(e)}`);
-      if (!/(^|&)token=abc(&|$)/.test(e.req_body_head || "")) throw new Error(`MDM's post without token=abc: ${e.req_body_head}`);
-      if (e.status >= 400) throw new Error(`MDM's post refused: ${brief(e)}`);
+      if (e.method !== "POST") throw new Error(`IETDM didn't post the form again: ${brief(e)}`);
+      if (!/(^|&)token=abc(&|$)/.test(e.req_body_head || "")) throw new Error(`IETDM's post without token=abc: ${e.req_body_head}`);
+      if (e.status >= 400) throw new Error(`IETDM's post refused: ${brief(e)}`);
     }
     await keptNothing(t.dl);
     // Posted, answered "303 See Other" with the file's address.
@@ -2095,7 +2095,7 @@ const CASES = {
     return `posted again with token=abc (${posts.length} request(s)); 303: ${seen.map((e) => `${e.method} ${e.path.split("/")[1]} ${e.status}`).join(", ")}`;
   },
 
-  // Alt+click: the browser keeps the download, MDM gets nothing.
+  // Alt+click: the browser keeps the download, IETDM gets nothing.
   async alt(t) {
     const file = `e2e-alt-${t.name}.zip`;
     const p = `/gen/1M/${file}`;
@@ -2111,19 +2111,19 @@ const CASES = {
     } catch (e) {
       const item = (await mdmList()).find((d) => d.file === file);
       const tab = await t.session.evaluate("location.href").catch((x) => x.message);
-      e.message += ` (MDM: ${item ? `${item.status} ${item.path}` : "nothing"}; the tab: ${tab}; requests: ${(await requests(p)).map(brief).join("; ") || "none"}; the browser's folder: ${fs.readdirSync(t.dl).join(", ") || "empty"})`;
+      e.message += ` (IETDM: ${item ? `${item.status} ${item.path}` : "nothing"}; the tab: ${tab}; requests: ${(await requests(p)).map(brief).join("; ") || "none"}; the browser's folder: ${fs.readdirSync(t.dl).join(", ") || "empty"})`;
       throw e;
     }
     await sleep(1500);
     const item = (await mdmList()).find((d) => d.file === file);
-    if (item) throw new Error(`MDM got it too: ${item.status} ${item.path}`);
+    if (item) throw new Error(`IETDM got it too: ${item.status} ${item.path}`);
     const all = await requests(p);
     if (all.length !== 1) throw new Error(`${all.length} requests for it (only the browser's expected): ${all.map(brief).join("; ")}`);
     fs.rmSync(kept);
-    return "the browser's own download, MDM untouched";
+    return "the browser's own download, IETDM untouched";
   },
 
-  // Files the browser would show or play, made downloads, MDM's (Chromium 128+, Firefox): typed
+  // Files the browser would show or play, made downloads, IETDM's (Chromium 128+, Firefox): typed
   // into the address bar, the tab stays on its page. A PDF sent with "Content-Disposition:
   // inline; filename=..." (as many servers do), one sent without it, an MP3 sent inline.
   async opened(t) {
@@ -2419,7 +2419,7 @@ const CASES = {
     return `sent ${address.replace(LAB, "")}`;
   },
 
-  // #155: an HLS or DASH player (playing from a blob:) handed to MDM, by the button over it, the
+  // #155: an HLS or DASH player (playing from a blob:) handed to IETDM, by the button over it, the
   // right-click menu and the toolbar button's media list: yt-dlp gets the stream's manifest, with
   // the cookie and the page as referrer, and reads it. Needs a yt-dlp (E2E_YTDLP, else one on
   // PATH): the test instance uses it as the person's own copy (Helpers).
@@ -2460,7 +2460,7 @@ const CASES = {
       // The right-click menu on the player (Firefox: its menu can be driven headless).
       if (t.session.menu) {
         done.push(await named(`${kind} menu`, () => streamLookedUp(async () => {
-          const r = await t.session.menu((v.l + v.r) / 2, (v.t + v.b) / 2, "Download with Mister Download Manager");
+          const r = await t.session.menu((v.l + v.r) / 2, (v.t + v.b) / 2, "Download with IET Download Manager");
           if (!String(r).startsWith("chosen")) throw new Error(`the right-click menu: ${r}`);
           if (process.env.E2E_DEBUG) console.error("menu:", r);
         }, manifest, page, cookie)));
@@ -2543,7 +2543,7 @@ const CASES = {
   // #38: the toolbar button's list of what the tab loaded. A page plays a video file (behind a
   // cookie and hotlink protection), a sound, an HLS stream, a DASH stream and a DRM-protected
   // one; the popup (its page, in a tab of its own) lists the five, each stream once with its
-  // qualities, the protected one without a Download button. The file downloads in MDM with the
+  // qualities, the protected one without a Download button. The file downloads in IETDM with the
   // page's cookies and referrer; each stream opens the Download video window for its manifest.
   async media(t) {
     await t.session.navigate(`${LAB}/cookie?set=msid=7`);
@@ -2585,7 +2585,7 @@ const CASES = {
       const click = (name) =>
         popup.evaluate(`(() => { const li = [...document.querySelectorAll("#media-list li")].find((x) => x.querySelector(".name").textContent === ${JSON.stringify(name)});
           li.querySelector("button").click(); return true; })()`);
-      // The file: MDM downloads it with the page's cookie and referrer and the browser's UA.
+      // The file: IETDM downloads it with the page's cookie and referrer and the browser's UA.
       await click(file);
       await arrived(file, 1 << 20, "Video");
       const mdm = (await requests(`/gen/1M/${file}`)).filter((e) => e.user_agent === t.ua && e.status < 400);
@@ -2593,7 +2593,7 @@ const CASES = {
       if (theirs.length) throw new Error(`refused: ${theirs.map(brief).join("; ")}`);
       if (!mdm.length) throw new Error("no request for the file");
       const said = await until("the popup's word", 5000, () => popup.evaluate(`document.getElementById("media-said").textContent`));
-      if (!/Sent to Mister Download Manager/.test(said)) throw new Error(`the popup said "${said}"`);
+      if (!/Sent to IET Download Manager/.test(said)) throw new Error(`the popup said "${said}"`);
       // Each stream: the Download video window, for its manifest.
       const pid = appPid();
       const opened = [];
@@ -2618,7 +2618,7 @@ const CASES = {
   // #695, #800: a video a server's program sends (/remote_control.php, /stream.php as video/mp4,
   // no Content-Disposition), on a page titled "Lab lecture: week N". The toolbar button's list
   // names it after the page with its type ("Lab lecture week 1.mp4 · MP4", never
-  // "remote_control.php · PHP"), and MDM saves it so from there; the button over its player (a
+  // "remote_control.php · PHP"), and IETDM saves it so from there; the button over its player (a
   // plain file) saves "Lab lecture week 2.mp4"; with yt-dlp, the Download video window lists a
   // `stream.php?file=` video as MP4 and saves an .mp4 (yt-dlp refused a .php). E2E_SHOTS:
   // <lang>-media-list.png (the popup's list) and <lang>-video-window.png (that window, Windows).
@@ -2704,9 +2704,9 @@ const CASES = {
     return `sent ${address.replace(LAB, "")}`;
   },
 
-  // The button's qualities' menu on a stream's player: the click has MDM look the stream up
+  // The button's qualities' menu on a stream's player: the click has IETDM look the stream up
   // (yt-dlp), the menu lists its qualities with their sizes (estimated from the variants' bitrate
-  // and the stream's length), and the one picked downloads with only its progress window: MDM,
+  // and the stream's length), and the one picked downloads with only its progress window: IETDM,
   // started in the notification area (as with the session), keeps its main window hidden, and no
   // Download video window opens. Needs a yt-dlp, as streams does, and an ffmpeg: the lab's stream
   // has its sound apart (EXT-X-MEDIA), and without ffmpeg to put them together only the sound is
@@ -2721,7 +2721,7 @@ const CASES = {
     try {
       await until("the test instance, in the notification area", 20000, () => mdmList().then(() => true, () => false));
       const pid = appPid();
-      const main = (titles) => titles.filter((x) => /^Mister Download Manager \d/.test(x));
+      const main = (titles) => titles.filter((x) => /^IET Download Manager \d/.test(x));
       const progress = (titles) => titles.find((x) => /^\d+% /.test(x));
       const at = appWindows(pid);
       if (main(at).length) throw new Error(`started in the notification area, its main window shows (${at.join(", ")})`);
@@ -2754,7 +2754,7 @@ const CASES = {
         return t.session.shot(path.join(shots, `${lang}-${name}.png`), box);
       };
       let shotLooking = false;
-      // The menu, looking, then the qualities MDM found.
+      // The menu, looking, then the qualities IETDM found.
       let looked = false;
       const m = await until("the qualities in the menu", 60000, async () => {
         if (appWindows(pid).includes(VIDEO_WINDOW)) throw new Error("the arrow opened the Download video window, not the menu");
@@ -2795,9 +2795,9 @@ const CASES = {
       if (!row) throw new Error(`no 360p in the Video tab: ${JSON.stringify(pictures.rows.map((r) => r.name))}`);
       const picked = Date.now();
       await t.session.mouse(row.x, row.y, "click");
-      // MDM downloads the stream's manifest, with only the download's progress window.
-      const item = await until("the quality picked, in MDM's list", 15000, async () => (await mdmList()).find((d) => !before.has(d.id)));
-      if (item.url !== `${LAB}/hls/master.m3u8`) throw new Error(`MDM downloads ${item.url}, not the stream's manifest`);
+      // IETDM downloads the stream's manifest, with only the download's progress window.
+      const item = await until("the quality picked, in IETDM's list", 15000, async () => (await mdmList()).find((d) => !before.has(d.id)));
+      if (item.url !== `${LAB}/hls/master.m3u8`) throw new Error(`IETDM downloads ${item.url}, not the stream's manifest`);
       const opened = await until("the download's progress window", 15000, () => progress(appWindows(pid)));
       const startMs = Date.now() - picked;
       if (await t.session.picks()) throw new Error("the menu stayed open after the pick");
@@ -2812,7 +2812,7 @@ const CASES = {
       if (!b2) throw new Error("no button for the second click");
       const beforeBest = new Set((await mdmList()).map((d) => d.id));
       await t.session.mouse(await mainPart(t.session, b2), (b2.t + b2.b) / 2, "click");
-      const best = await until("the best quality, in MDM's list", 60000, async () => (await mdmList()).find((d) => !beforeBest.has(d.id)));
+      const best = await until("the best quality, in IETDM's list", 60000, async () => (await mdmList()).find((d) => !beforeBest.has(d.id)));
       const green = await until("the button's green state", 10000, async () => {
         const p = await t.session.pill(PILL_STATE);
         return p && p.state === "sent" ? p : null;
@@ -2822,7 +2822,7 @@ const CASES = {
       const list = (rs) => rs.map((r) => `${r.name}${r.size ? ` ${r.size}` : ""}`).join(", ");
       return `chip "${chipped.chip}"; the click: ${best.file} (${green.text} · Show); ${looked ? "looking, then " : ""}VIDEO ${pictures.rows.length} (${list(pictures.rows)}), AUDIO ${sounds.rows.length} (${list(sounds.rows)}); "${row.name}" picked: ${item.file} (${item.status}) with its progress window "${opened}" only, the main window hidden; click to rows ${rowsMs} ms, pick to first progress ${startMs} ms`;
     } finally {
-      // The next case starts MDM as usual.
+      // The next case starts IETDM as usual.
       await stopApp();
     }
   },
@@ -2831,7 +2831,7 @@ const CASES = {
   // request, its playlists' and each segment's, must carry that page's Origin and a Referer on it
   // (the lab's /hlsg/, as a site's video server checks; 403 otherwise). The page is the lab's on
   // localhost, the stream on 127.0.0.1. The button's look-up finds its qualities, and one picked
-  // in its menu downloads through MDM's engine to its end, every request of MDM's with what the
+  // in its menu downloads through IETDM's engine to its end, every request of IETDM's with what the
   // browser sent (E2E_GUARDED_SHOT: a screenshot of the button's menu then, for a PR's body).
   async guarded(t) {
     if (!ytdlp) throw new Skip("no yt-dlp (E2E_YTDLP or PATH)");
@@ -2865,7 +2865,7 @@ const CASES = {
     }).catch(async () => {
       throw new Error(`no quality found (the button: ${last && last.state} "${last && last.text}"); the stream's server refused: ${(await refused()).join(", ") || "nothing"}`);
     });
-    // Its menu: the sound's "original" line, one stream, downloaded by MDM's engine to its end
+    // Its menu: the sound's "original" line, one stream, downloaded by IETDM's engine to its end
     // (no merge: the lab's tracks carry sound only, which yt-dlp's merge with some ffmpeg
     // builds refuses, whatever the request).
     await clickArrow(t.session);
@@ -2880,13 +2880,13 @@ const CASES = {
     const row = m.rows.find((r) => r.kind === "audio" && /original/i.test(r.name));
     if (!row) throw new Error(`no original sound in the menu: ${JSON.stringify(m.rows.map((r) => r.name))}`);
     await t.session.mouse(row.x, row.y, "click");
-    const item = await until("the stream, in MDM's list", 60000, async () => (await mdmList()).find((d) => !before.has(d.id)));
+    const item = await until("the stream, in IETDM's list", 60000, async () => (await mdmList()).find((d) => !before.has(d.id)));
     const done = await until("the download's end", 120000, async () => {
       const d = (await mdmList()).find((x) => x.id === item.id);
       if (d && d.status === "Error") throw new Error(`the download failed: ${d.error}; refused: ${(await refused()).join(", ")}`);
       return d && d.status === "Complete" ? d : null;
     });
-    // Every request of MDM's (yt-dlp's look-up and the engine's playlists and segments): 200,
+    // Every request of IETDM's (yt-dlp's look-up and the engine's playlists and segments): 200,
     // with the page's Origin and Referer.
     const asked = await mdm();
     const segments = asked.filter((x) => x.path.endsWith(".ts"));
@@ -2896,7 +2896,7 @@ const CASES = {
     if (lacking.length) throw new Error(`without the page's Origin and Referer: ${lacking.map((x) => `${x.path} (${x.origin}, ${x.referer})`).join(", ")}`);
     if (segments.length < 3) throw new Error(`only ${segments.length} segments asked for: ${asked.map((x) => x.path).join(", ")}`);
     await t.session.mouse(5, 5);
-    return `chip "${pill.chip}"; "${row.name}" picked: ${done.file} (${fs.statSync(done.path).size} bytes); MDM's ${asked.length} requests (${asked.length - segments.length} playlists, ${segments.length} segments) all 200 with Origin ${page} and its Referer`;
+    return `chip "${pill.chip}"; "${row.name}" picked: ${done.file} (${fs.statSync(done.path).size} bytes); IETDM's ${asked.length} requests (${asked.length - segments.length} playlists, ${segments.length} segments) all 200 with Origin ${page} and its Referer`;
   },
 
   // E2E_VIDEO_PAGE=<a video's page>: the button's qualities' menu on a real site (a pull
@@ -2949,7 +2949,7 @@ const CASES = {
       if (shots) await snap("page-pick", now);
       const before = new Set((await mdmList()).map((d) => d.id));
       await t.session.mouse(seen.x, seen.y, "click");
-      const item = await until("the line picked, in MDM's list", 30000, async () => (await mdmList()).find((d) => !before.has(d.id)));
+      const item = await until("the line picked, in IETDM's list", 30000, async () => (await mdmList()).find((d) => !before.has(d.id)));
       const done = await until("the download's end", 20 * 60000, async () => {
         const d = (await mdmList()).find((x) => x.id === item.id);
         if (d && d.status === "Error") throw new Error(`the download failed: ${d.error}`);
@@ -2984,14 +2984,14 @@ const CASES = {
     return videoButton(t.session, t.last);
   },
 
-  // #474: a tab opened while the browser can't reach MDM's host (MDM being installed or updated,
+  // #474: a tab opened while the browser can't reach IETDM's host (IETDM being installed or updated,
   // the host failing to start) gets the video button within seconds once the host is back, with
-  // no reload; its click then starts MDM, and after MDM quits and starts again under the open
+  // no reload; its click then starts IETDM, and after IETDM quits and starts again under the open
   // tab a click still reaches it. The host's program is moved away while the page loads (the
   // browser can't start it), then put back.
   async reconnect(t) {
     const s = t.session;
-    const nmhost = exe("misterdownloadmanager-nmhost");
+    const nmhost = exe("ietdownloadmanager-nmhost");
     const away = `${nmhost}.e2e-away`;
     const page = `${LAB}/page?video=${encodeURIComponent("/gen/1M/clip.mp4")}`;
     const clip = `${LAB}/gen/1M/clip.mp4`;
@@ -3028,34 +3028,34 @@ const CASES = {
       await sleep(PANEL_KEPT_MS);
       if (!(await hover(s, v))) throw new Error("the host back: no button in the open tab without a reload");
       done.push("host back: the button in the open tab, no reload");
-      // MDM isn't running: the click starts it, which takes the video. (Its earlier copy of the
+      // IETDM isn't running: the click starts it, which takes the video. (Its earlier copy of the
       // file first off its list: a duplicate would be asked about.)
       await startApp();
       const earlier = (await mdmList()).filter((d) => d.url === clip).map((d) => d.id);
       if (earlier.length) await ipc({ action: "delete", ids: earlier });
       await stopApp();
-      await click(v, "MDM not running");
-      const first = await until("the video's file in MDM's list (MDM started by the host)", 45000, async () =>
+      await click(v, "IETDM not running");
+      const first = await until("the video's file in IETDM's list (IETDM started by the host)", 45000, async () =>
         (await mdmList().catch(() => [])).find((d) => d.url === clip),
       );
       if (ourApps().length !== 1) throw new Error(`${ourApps().length} instances run after the click`);
       const said = await status();
-      if (said && said !== "update-app") throw new Error(`MDM reached, the toolbar button still says ${said}`);
-      done.push(`click: MDM started, ${first.file} in its list, the toolbar button connected`);
-      // MDM quits and starts again under the open tab: the next click reaches the new one.
+      if (said && said !== "update-app") throw new Error(`IETDM reached, the toolbar button still says ${said}`);
+      done.push(`click: IETDM started, ${first.file} in its list, the toolbar button connected`);
+      // IETDM quits and starts again under the open tab: the next click reaches the new one.
       await ipc({ action: "delete", ids: [first.id] });
       await stopApp();
       await startApp();
       const before = new Set((await mdmList()).map((d) => d.id));
-      // The first click's green "Added to MDM" over (6 s): a click on it isn't a new one.
+      // The first click's green "Added to IETDM" over (6 s): a click on it isn't a new one.
       await s.mouse(5, 5);
       await until("the first click's state over", 10000, async () => (await s.pill(PILL_STATE).catch(() => null))?.state !== "sent");
-      await click(v, "MDM started again");
-      const again = await until("the video's file in the restarted MDM's list", 15000, async () => (await mdmList()).find((d) => !before.has(d.id))).catch(async (e) => {
+      await click(v, "IETDM started again");
+      const again = await until("the video's file in the restarted IETDM's list", 15000, async () => (await mdmList()).find((d) => !before.has(d.id))).catch(async (e) => {
         throw new Error(`${e.message} (the button: ${JSON.stringify(await s.pill(PILL_STATE))})`);
       });
-      if (again.url !== clip) throw new Error(`MDM downloads ${again.url}`);
-      done.push(`MDM quit and started again: the next click reached it (${again.file})`);
+      if (again.url !== clip) throw new Error(`IETDM downloads ${again.url}`);
+      done.push(`IETDM quit and started again: the next click reached it (${again.file})`);
     } finally {
       if (fs.existsSync(away)) fs.renameSync(away, nmhost);
       await s.mouse(5, 5);
@@ -3063,7 +3063,7 @@ const CASES = {
     return done.join("; ");
   },
 
-  // MDM not running: the host starts it (off the screens, with the test's data folder: both
+  // IETDM not running: the host starts it (off the screens, with the test's data folder: both
   // reach it through the browser's environment) and hands the download over.
   async start(t) {
     await stopApp();
@@ -3080,9 +3080,9 @@ const CASES = {
     return `started by the host (pid ${pids[0]})${WIN ? ", off the screens" : ""}, stopped`;
   },
 
-  // #157: Send downloads to → Another Mister Download Manager. The popup pairs with a server (its
+  // #157: Send downloads to → Another IET Download Manager. The popup pairs with a server (its
   // address and a code); a link clicked then downloads there, into the server's folders, the
-  // browser's cookies not sent: neither the browser nor this computer's MDM keeps it. The popup
+  // browser's cookies not sent: neither the browser nor this computer's IETDM keeps it. The popup
   // goes back to This computer at the end.
   async remote(t) {
     const r = await remoteServer();
@@ -3092,7 +3092,7 @@ const CASES = {
     try {
       await until("the popup", 10000, () => popup.evaluate(`document.readyState === "complete" && Boolean(document.getElementById("to-remote"))`).catch(() => false));
       await sleep(300);
-      // Another MDM chosen: its address and code boxes show (the popup's script may still be
+      // Another IETDM chosen: its address and code boxes show (the popup's script may still be
       // starting: chosen again until they do).
       await until("the address and code boxes", 10000, () =>
         popup.evaluate(`(document.getElementById("remote-form").hidden && document.getElementById("to-remote").click(), !document.getElementById("remote-form").hidden)`),
@@ -3124,7 +3124,7 @@ const CASES = {
       const theirs = (await requests(`/gen/1M/${file}`)).filter((e) => e.user_agent !== t.ua);
       if (!theirs.length) throw new Error("no request from the server");
       if (theirs.some((e) => (e.cookie || "").length)) throw new Error(`a cookie went to the server's download: ${theirs.map((e) => e.cookie).join("; ")}`);
-      if ((await mdmList().catch(() => [])).some((d) => d.file === file)) throw new Error("this computer's MDM got it too");
+      if ((await mdmList().catch(() => [])).some((d) => d.file === file)) throw new Error("this computer's IETDM got it too");
       await keptNothing(t.dl);
       return `paired (${said}); ${file} downloaded by the server into ${path.relative(r.downloads, at)} (${theirs.length} request(s), no cookie), not by this computer`;
     } finally {
@@ -3144,7 +3144,7 @@ const KNOWN_BUGS = {};
 // The registry keys `nmhost --register` and `--unregister` touch (crates/nmhost REGISTRY_KEYS,
 // FIREFOX_KEY, CHROME_EXTERNAL_KEY): each browser's host entry and Chrome's external extension,
 // per user and for everyone (the latter only read: an installed copy's). [key, 32-bit view].
-const HOST = "com.misterdownloadmanager.host";
+const HOST = "com.ietdownloadmanager.host";
 const REG_KEYS = ["HKCU", "HKLM"].flatMap((root) => [
   ...[
     "Software\\Google\\Chrome\\NativeMessagingHosts",
@@ -3270,7 +3270,7 @@ function testHost(name, browsers, nmhost) {
   const write = (kind, more) => {
     const file = path.join(work, "host", `${name}.${kind}.json`);
     fs.mkdirSync(path.dirname(file), { recursive: true });
-    fs.writeFileSync(file, JSON.stringify({ name, description: "Mister Download Manager (test)", path: nmhost, type: "stdio", ...more }, null, 2));
+    fs.writeFileSync(file, JSON.stringify({ name, description: "IET Download Manager (test)", path: nmhost, type: "stdio", ...more }, null, 2));
     manifests[kind] = file;
   };
   if (kinds.has("chromium")) {
@@ -3332,7 +3332,7 @@ async function run() {
     idmRunning = /IDMan\.exe/i.test(idm);
     if (idmRunning && process.env.E2E_IDM_OK !== "1") throw new Error("Internet Download Manager is running: quit it first (it takes the browsers' downloads), or set E2E_IDM_OK=1 if it leaves 127.0.0.1 alone");
   }
-  for (const p of [appExe, exe("misterdownloadmanager-nmhost"), exe("labserver")]) {
+  for (const p of [appExe, exe("ietdownloadmanager-nmhost"), exe("labserver")]) {
     if (!fs.existsSync(p)) throw new Error(`build it first: ${p}`);
   }
   const t0 = Date.now();
@@ -3353,7 +3353,7 @@ async function run() {
       items: [],
       version: 2,
       settings: {
-        // E2E_APP_LANG: MDM's own language for a pull request's pictures (what the app sends
+        // E2E_APP_LANG: IETDM's own language for a pull request's pictures (what the app sends
         // the menu, #852, is in it), English otherwise.
         language: process.env.E2E_APP_LANG || "en",
         language_asked: true,
@@ -3395,7 +3395,7 @@ async function run() {
   before = new Set(appProcesses().map(([pid]) => pid));
   const server = spawn(exe("labserver"), ["--bind", `127.0.0.1:${PORT}`], { stdio: "ignore", windowsHide: true });
   const proxy = startProxy();
-  const nmhost = exe("misterdownloadmanager-nmhost");
+  const nmhost = exe("ietdownloadmanager-nmhost");
   const results = [];
   let regBefore = null;
   let regCheck = null;
@@ -3408,14 +3408,14 @@ async function run() {
   let testLeft = [];
   try {
     await until("the lab server", 10000, () => fetch(`${LAB}/`).then((r) => r.ok, () => false));
-    // An installed Mister Download Manager's registration is never replaced or removed.
+    // An installed IET Download Manager's registration is never replaced or removed.
     // Linux and macOS: its manifests (files) are put back byte for byte at the end, so a lab
     // machine's (E2E_REPLACE_HOST=1) may be replaced while the run lasts. E2E_HOST_NAME never
     // touches the real name (testHost), so it runs beside an installed copy.
-    const key = "HKCU\\Software\\Google\\Chrome\\NativeMessagingHosts\\com.misterdownloadmanager.host";
+    const key = "HKCU\\Software\\Google\\Chrome\\NativeMessagingHosts\\com.ietdownloadmanager.host";
     const installed = WIN ? spawnSync("reg", ["query", key], { stdio: "ignore" }).status === 0 : regSnapshot().some((m) => m.bytes) && process.env.E2E_REPLACE_HOST !== "1";
     if (installed && !process.env.E2E_HOST_NAME) {
-      throw new Error("Mister Download Manager's host is already registered (an installed copy): not touching it (E2E_HOST_NAME runs beside it)");
+      throw new Error("IET Download Manager's host is already registered (an installed copy): not touching it (E2E_HOST_NAME runs beside it)");
     }
     regBefore = regSnapshot(path.join(work, "registry", "before"));
     if (process.env.E2E_HOST_NAME) {
@@ -3432,7 +3432,7 @@ async function run() {
       const bin = candidates.find((p) => fs.existsSync(p));
       // A Snap (Ubuntu's Firefox) reads its profile only from its own folder, and starts the host
       // through the desktop portal, without the browser's environment (MDM_DATA_DIR): the host
-      // would reach this computer's own MDM, not the test instance, so only the remote case runs.
+      // would reach this computer's own IETDM, not the test instance, so only the remote case runs.
       const snap = Boolean(bin) && bin.startsWith("/snap/");
       const profile = snap ? path.join(process.env.HOME, "snap", name, "common", "mdm-e2e-profile") : path.join(work, `profile-${name}`);
       const dl = path.join(work, `browser-${name}`);
@@ -3476,7 +3476,7 @@ async function run() {
         const asks = session.inBrowser
           ? `, asks for new types: ${await session.inBrowser(`Services.prefs.getBoolPref("browser.download.always_ask_before_handling_new_types", false)`)}`
           : "";
-        results.push([name, "browser", "ok", `${kind} ${session.major} (to MDM: ${seenAs}), extension ${session.extension}${asks}`, Date.now() - started]);
+        results.push([name, "browser", "ok", `${kind} ${session.major} (to IETDM: ${seenAs}), extension ${session.extension}${asks}`, Date.now() - started]);
         for (const [label, fn] of Object.entries(CASES)) {
           if (only.length && !only.includes(label)) continue;
           const at = Date.now();

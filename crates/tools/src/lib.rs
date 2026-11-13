@@ -32,9 +32,9 @@ use sha2::{Digest, Sha256};
 
 /// yt-dlp's release signing key, from its repository (`public.key`).
 const YTDLP_KEY: &str = include_str!("../keys/yt-dlp.asc");
-/// Mister Download Manager's release signing key (Ed25519, fingerprint
+/// IET Download Manager's release signing key (Ed25519, fingerprint
 /// 5826D399249DE856EA087D802E293C28E8A69D74): release.yml signs each release's SHA256SUMS.txt
-/// with it (the MDM_RELEASE_KEY secret), and MDM updates itself only from a list it signed.
+/// with it (the MDM_RELEASE_KEY secret), and IETDM updates itself only from a list it signed.
 const MDM_KEY: &str = include_str!("../keys/mdm-release.asc");
 /// Where releases come from.
 const RELEASES: &str = "https://api.github.com/repos/yt-dlp/yt-dlp/releases/latest";
@@ -56,14 +56,14 @@ pub enum Error {
     /// A program chosen as yt-dlp or ffmpeg (`chosen`) didn't answer as one.
     #[error("this program isn't {0}")]
     NotTheProgram(&'static str),
-    /// A program chosen as a helper is a release MDM can't drive (#236: gallery-dl before 1.20).
+    /// A program chosen as a helper is a release IETDM can't drive (#236: gallery-dl before 1.20).
     #[error("{name} {version} is too old: it needs {oldest} or newer")]
     TooOld {
         name: &'static str,
         version: String,
         oldest: &'static str,
     },
-    /// MDM's engine could not download it from `host` (#816: which server, and why).
+    /// IETDM's engine could not download it from `host` (#816: which server, and why).
     #[error("{host}: {error}")]
     Download {
         host: String,
@@ -90,7 +90,7 @@ impl Error {
     }
 }
 
-/// A client for MDM's own requests to `url`'s server (a release list, its checksums): through
+/// A client for IETDM's own requests to `url`'s server (a release list, its checksums): through
 /// `net`'s proxy (Options → Proxy / Socks), DNS and network adapter, as the engine's downloads
 /// go (#816: the release list went past the proxy the download itself took).
 pub(crate) fn client(net: &mdm_engine::Options, url: &str) -> Result<reqwest::Client, Error> {
@@ -193,11 +193,11 @@ pub(crate) async fn signed_list(
     Ok(String::from_utf8_lossy(&sums).into_owned())
 }
 
-/// MDM's own name, sent when it fetches its helpers and its updates.
-pub const USER_AGENT: &str = concat!("MisterDownloadManager/", env!("CARGO_PKG_VERSION"));
+/// IETDM's own name, sent when it fetches its helpers and its updates.
+pub const USER_AGENT: &str = concat!("IETDownloadManager/", env!("CARGO_PKG_VERSION"));
 
-/// How MDM downloads its helpers and its updates: through its own engine (several connections,
-/// resumable), as MDM itself, through `proxy` (Options → Proxy / Socks).
+/// How IETDM downloads its helpers and its updates: through its own engine (several connections,
+/// resumable), as IETDM itself, through `proxy` (Options → Proxy / Socks).
 pub fn net(proxy: mdm_engine::Proxy) -> mdm_engine::Options {
     mdm_engine::Options {
         user_agent: USER_AGENT.to_owned(),
@@ -207,7 +207,7 @@ pub fn net(proxy: mdm_engine::Proxy) -> mdm_engine::Options {
     }
 }
 
-/// Download `url` into `path` with MDM's own engine (`net`: its connections, the user's proxy),
+/// Download `url` into `path` with IETDM's own engine (`net`: its connections, the user's proxy),
 /// counting into `progress`, and accept it only when its SHA-256 is `expected` (the engine checks
 /// it, and so do we, on the finished file). An earlier attempt cut off is resumed from where it
 /// stopped. A file that doesn't match is removed.
@@ -278,7 +278,7 @@ pub fn sum_for(sums: &str, name: &str) -> Option<[u8; 32]> {
     })
 }
 
-/// The yt-dlp to use: the person's own (`chosen`), else MDM's install in `dir`
+/// The yt-dlp to use: the person's own (`chosen`), else IETDM's install in `dir`
 /// (`dir/yt-dlp/current.json`), if any and still there; on Linux and macOS, else the system's.
 pub fn installed(dir: &Path) -> Option<Installed> {
     let own = chosen::chosen(dir, chosen::Helper::YtDlp).or_else(|| own_ytdlp(dir));
@@ -323,9 +323,9 @@ pub fn refreshable(dir: &Path) -> bool {
 }
 
 /// Install the latest yt-dlp release into `dir` unless the installed one is as new, the program
-/// downloaded with MDM's engine (`net`), counted into `progress`. Returns what is installed
-/// afterwards. A system copy doesn't count as installed here: this is the way to get MDM's own
-/// instead (Helpers), and MDM's own then wins ([`installed`]).
+/// downloaded with IETDM's engine (`net`), counted into `progress`. Returns what is installed
+/// afterwards. A system copy doesn't count as installed here: this is the way to get IETDM's own
+/// instead (Helpers), and IETDM's own then wins ([`installed`]).
 pub async fn install_latest(
     dir: &Path,
     net: &mdm_engine::Options,

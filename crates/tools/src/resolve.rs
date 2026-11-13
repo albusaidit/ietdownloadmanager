@@ -170,7 +170,7 @@ pub(crate) fn unnamed_tracks(codes: impl IntoIterator<Item = String>) -> Vec<Tra
 
 /// The size of `duration` seconds at `tbr` kbit/s (kbit/s × 125 = bytes/s), as yt-dlp's
 /// `filesize_from_tbr` reckons it: the same operations in the same order, so a stream's variants
-/// come out the same whether yt-dlp listed them or MDM read the stream itself
+/// come out the same whether yt-dlp listed them or IETDM read the stream itself
 /// (`crate::manifest`).
 pub(crate) fn estimate(duration: f64, tbr: f64) -> u64 {
     (duration * tbr * 125.0) as u64
@@ -230,7 +230,7 @@ pub fn named_after_address(title: &str, page: &str) -> bool {
 /// yt-dlp's `-J` answer with the real type of a file a server's program sends (#695): yt-dlp
 /// takes a plain file's extension from its address (`stream.php?file=x.mp4` → `php`), lists it
 /// so ("PHP") and then refuses to save it ("The extracted extension (php) is unusual and will
-/// be skipped for safety reasons"). Such a format's extension is the one MDM names the file with
+/// be skipped for safety reasons"). Such a format's extension is the one IETDM names the file with
 /// (`mdm_engine::naming`): its address's `file=` value's, else the server's type, which yt-dlp
 /// gives a plain file as its format id (`video/mp4` → `mp4`). The answer is given as it came
 /// when nothing in it is such a format, or it isn't JSON.
@@ -542,7 +542,7 @@ pub const MP3: &str = "mp3:";
 pub const MP3_RATES: [u32; 4] = [320, 256, 192, 128];
 
 /// yt-dlp's `--audio-quality` for an MP3 choice's `<kbps>` (`MP3`): `0` (the best variable
-/// bitrate) or a bitrate MDM offers, written exactly (`192`, not `+192` or `0192`); none for
+/// bitrate) or a bitrate IETDM offers, written exactly (`192`, not `+192` or `0192`); none for
 /// anything else.
 pub fn mp3_quality(selector: &str) -> Option<String> {
     let kbps = selector.strip_prefix(MP3)?;

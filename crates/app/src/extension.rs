@@ -127,7 +127,7 @@ impl Extension {
             ctx,
             "extension",
             // i18n: title of the window that offers the browser extension
-            "Add Mister Download Manager to your browser",
+            "Add IET Download Manager to your browser",
             [W, h + extra],
             false,
             winui::BG(),
@@ -225,7 +225,7 @@ impl Extension {
                     o.y + y + 16.0,
                     &format!(
                         "\u{2714} {}",
-                        // i18n: in the browser extension's window, beside a browser whose extension reached MDM
+                        // i18n: in the browser extension's window, beside a browser whose extension reached IETDM
                         crate::i18n::t("Connected")
                     ),
                     winui::SUCCESS(),
@@ -275,7 +275,7 @@ impl Extension {
                 o.x + 18.0,
                 o.y + y,
                 crate::i18n::t(
-                    "Browser integration isn't set up on this computer, so no browser can reach Mister Download Manager yet.",
+                    "Browser integration isn't set up on this computer, so no browser can reach IET Download Manager yet.",
                 ),
                 winui::ERROR(),
                 o.x + fix_x - 10.0,
@@ -284,7 +284,7 @@ impl Extension {
             let fix = winui::button(
                 ui,
                 r(o, fix_x, y - 4.0, fix_w, 25.0),
-                // i18n: button in the browser extension's window: register MDM's helper with the browsers
+                // i18n: button in the browser extension's window: register IETDM's helper with the browsers
                 "Set it up",
                 ButtonKind::Accent,
                 false,
@@ -331,7 +331,7 @@ impl Extension {
             crate::help::open_page(mdm_ipc::extension::GUIDE_DOC);
         }
         // As wide as their labels in this language (#192), Don't ask again only while no
-        // extension has reached MDM.
+        // extension has reached IETDM.
         let row: Vec<(&str, f32)> = if self.connected {
             vec![("Close", 90.0)]
         } else {
@@ -495,7 +495,7 @@ const STEPS: [&str; 8] = [
     // i18n: step 7 of turning on the Safari extension; the quoted tab name is what Safari's settings show in this language: use Apple's own word for it, or keep the English name when unsure
     "Switch to the \"Extensions\" tab (the puzzle piece).",
     // i18n: step 8 of turning on the Safari extension
-    "Turn on \"Mister Download Manager\" and allow it on all websites.",
+    "Turn on \"IET Download Manager\" and allow it on all websites.",
 ];
 
 /// The browsers whose extension reached the app, by Options' names.
@@ -513,7 +513,7 @@ pub enum Registration {
     Ready,
     /// A browser's folder (or the registry) has no manifest.
     Missing,
-    /// No browser MDM knows was found to register with (Linux and macOS find them by their
+    /// No browser IETDM knows was found to register with (Linux and macOS find them by their
     /// folders; Windows registers for every browser at once).
     #[cfg_attr(windows, allow(dead_code))]
     NoBrowser,
@@ -535,7 +535,7 @@ pub fn registered() -> bool {
     registration() == Registration::Ready
 }
 
-/// Why the last registration failed, in the system's words (Linux and macOS, where MDM
+/// Why the last registration failed, in the system's words (Linux and macOS, where IETDM
 /// registers itself at each start).
 fn register_error() -> Option<String> {
     #[cfg(windows)]
@@ -570,7 +570,7 @@ pub fn set_up(ctx: &egui::Context) {
             if let Ok(exe) = std::env::current_exe() {
                 crate::launch::run_within(
                     std::process::Command::new(
-                        exe.with_file_name("misterdownloadmanager-nmhost.exe"),
+                        exe.with_file_name("ietdownloadmanager-nmhost.exe"),
                     )
                     .arg("--register"),
                     SET_UP_LIMIT,
@@ -625,21 +625,21 @@ pub fn checks(settings: &crate::settings::Settings) -> Vec<Check> {
     out.push(match &registration {
         Registration::Ready | Registration::Missing => check(
             registration == Registration::Ready,
-            // i18n: a check of Test browser integration: the browsers find MDM's helper program
-            "The browsers can find Mister Download Manager",
+            // i18n: a check of Test browser integration: the browsers find IETDM's helper program
+            "The browsers can find IET Download Manager",
             Some("not-installed"),
         ),
         Registration::NoBrowser => check(
             false,
-            // i18n: a check of Test browser integration (Linux, macOS): MDM found no browser it can connect to (one installed as a Flatpak isn't found)
-            "No browser MDM can connect to was found",
+            // i18n: a check of Test browser integration (Linux, macOS): IETDM found no browser it can connect to (one installed as a Flatpak isn't found)
+            "No browser IETDM can connect to was found",
             Some("not-installed"),
         ),
         Registration::HelperMissing(path) => {
             tracing::warn!("browser integration: {} is missing", path.display());
             check(
                 false,
-                // i18n: a check of Test browser integration: the browsers are set up, but the small helper program they start (misterdownloadmanager-nmhost) is gone
+                // i18n: a check of Test browser integration: the browsers are set up, but the small helper program they start (ietdownloadmanager-nmhost) is gone
                 "The helper program the browsers start is missing",
                 Some("not-installed"),
             )
@@ -662,7 +662,7 @@ pub fn checks(settings: &crate::settings::Settings) -> Vec<Check> {
     if seen.is_empty() {
         out.push(check(
             false,
-            // i18n: a check of Test browser integration: no browser's extension has reached MDM
+            // i18n: a check of Test browser integration: no browser's extension has reached IETDM
             "No browser's extension has connected yet",
             None,
         ));

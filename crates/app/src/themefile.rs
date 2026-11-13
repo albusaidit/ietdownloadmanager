@@ -22,7 +22,7 @@
 //! ```
 //!
 //! Unknown keys and values that can't be read are skipped and reported as warnings, so a file
-//! written for a newer MDM still loads; a file that isn't TOML or JSON is an error.
+//! written for a newer IETDM still loads; a file that isn't TOML or JSON is an error.
 //!
 //! A Base16 scheme (`.yaml`, `.yml`) and pywal's `colors.json` are themes too: `crate::schemes`
 //! reads them into the same value tree, on the classic look. pywal's own file, where `wal`
@@ -136,7 +136,7 @@ fn folder_file(dir: &Path) -> Option<PathBuf> {
         .find(|p| p.is_file())
 }
 
-/// The file kinds a theme can be: MDM's own (TOML, JSON, pywal's JSON too) and Base16's YAML.
+/// The file kinds a theme can be: IETDM's own (TOML, JSON, pywal's JSON too) and Base16's YAML.
 const EXTENSIONS: [&str; 4] = ["toml", "json", "yaml", "yml"];
 
 /// A theme file's id: its name without its extension ([`EXTENSIONS`]); None for any other file.
@@ -297,7 +297,7 @@ fn load_in(
         } else {
             loaded
                 .warnings
-                .push("icons: no icon MDM knows in the folder".into());
+                .push("icons: no icon IETDM knows in the folder".into());
         }
     }
     Ok(loaded)
@@ -337,7 +337,7 @@ fn read_value(path: &Path, text: &str) -> Result<(Value, Vec<String>), String> {
 /// has that name; the same file already there is used as it is. The copy must load (with the
 /// themes it inherits, beside it), or it is taken out again. Returns the theme's id.
 pub fn add(source: &Path) -> Result<String, String> {
-    let folder = dir().ok_or("MDM has no data folder")?;
+    let folder = dir().ok_or("IETDM has no data folder")?;
     add_in(&folder, source)
 }
 

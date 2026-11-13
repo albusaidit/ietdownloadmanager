@@ -1,12 +1,12 @@
 {
   "name": {
-    "message": "Mister Download Manager"
+    "message": "IET Download Manager"
   },
   "description": {
-    "message": "Przekazuje pobieranie z przeglądarki do Mister Download Manager."
+    "message": "Przekazuje pobieranie z przeglądarki do IET Download Manager."
   },
   "menu": {
-    "message": "Pobierz za pomocą Mister Download Manager"
+    "message": "Pobierz za pomocą IET Download Manager"
   },
   "video_download": {
     "message": "Pobierz wideo"
@@ -30,19 +30,19 @@
     "message": "Ustawienia przycisku..."
   },
   "video_sent": {
-    "message": "Wysłano do Mister Download Manager"
+    "message": "Wysłano do IET Download Manager"
   },
   "menu_selected": {
-    "message": "Pobierz wybrane łącza za pomocą Mister Download Manager"
+    "message": "Pobierz wybrane łącza za pomocą IET Download Manager"
   },
   "menu_all": {
-    "message": "Pobierz wszystkie łącza za pomocą Mister Download Manager"
+    "message": "Pobierz wszystkie łącza za pomocą IET Download Manager"
   },
   "status_connected": {
-    "message": "Połączono z Mister Download Manager"
+    "message": "Połączono z IET Download Manager"
   },
   "status_connected_version": {
-    "message": "Połączono z Mister Download Manager $version$",
+    "message": "Połączono z IET Download Manager $version$",
     "placeholders": {
       "version": {
         "content": "$1",
@@ -54,22 +54,22 @@
     "message": "Wstrzymano: pobieranie pozostaje w przeglądarce"
   },
   "status_not_installed": {
-    "message": "Mister Download Manager nie jest zainstalowany lub jego integracja z przeglądarką nie jest skonfigurowana"
+    "message": "IET Download Manager nie jest zainstalowany lub jego integracja z przeglądarką nie jest skonfigurowana"
   },
   "status_forbidden": {
-    "message": "Mister Download Manager nie akceptuje tej kopii rozszerzenia"
+    "message": "IET Download Manager nie akceptuje tej kopii rozszerzenia"
   },
   "status_not_running": {
-    "message": "Mister Download Manager nie uruchomił się na czas"
+    "message": "IET Download Manager nie uruchomił się na czas"
   },
   "status_host_failed": {
-    "message": "Połączenie z Mister Download Manager nie powiodło się"
+    "message": "Połączenie z IET Download Manager nie powiodło się"
   },
   "status_too_large": {
     "message": "Szczegóły tego pobierania były zbyt duże, aby je przekazać"
   },
   "status_update_app": {
-    "message": "Zaktualizuj Mister Download Manager, aby korzystać ze wszystkich funkcji oferowanych przez to rozszerzenie"
+    "message": "Zaktualizuj IET Download Manager, aby korzystać ze wszystkich funkcji oferowanych przez to rozszerzenie"
   },
   "popup_take": {
     "message": "Pobieraj pliki z tej przeglądarki"
@@ -78,10 +78,10 @@
     "message": "Wysyłaj pobieranie przez serwer proxy lub rozszerzenie VPN tej przeglądarki"
   },
   "popup_proxy_title": {
-    "message": "Wtedy Mister Download Manager pobiera pliki przez ten sam serwer proxy, co przeglądarka. Przeglądarka raz poprosi o zezwolenie; wyłączenie tej opcji cofa to zezwolenie."
+    "message": "Wtedy IET Download Manager pobiera pliki przez ten sam serwer proxy, co przeglądarka. Przeglądarka raz poprosi o zezwolenie; wyłączenie tej opcji cofa to zezwolenie."
   },
   "popup_proxy_title_chromium": {
-    "message": "Mister Download Manager pobiera wtedy pliki przez ten sam serwer proxy co przeglądarka. Gdy ta opcja jest wyłączona, rozszerzenie nie odczytuje serwera proxy przeglądarki."
+    "message": "IET Download Manager pobiera wtedy pliki przez ten sam serwer proxy co przeglądarka. Gdy ta opcja jest wyłączona, rozszerzenie nie odczytuje serwera proxy przeglądarki."
   },
   "popup_exclude_site": {
     "message": "Nigdy nie pobieraj plików z $site$",
@@ -102,7 +102,7 @@
     }
   },
   "popup_open": {
-    "message": "Otwórz Mister Download Manager"
+    "message": "Otwórz IET Download Manager"
   },
   "popup_options": {
     "message": "Opcje..."
@@ -111,7 +111,7 @@
     "message": "Pomoc"
   },
   "popup_support": {
-    "message": "Wesprzyj MDM"
+    "message": "Wesprzyj IETDM"
   },
   "popup_fix": {
     "message": "Jak to naprawić"
@@ -189,16 +189,16 @@
     "message": "Brak wideo do pobrania w tym miejscu"
   },
   "video_playlist": {
-    "message": "Lista wideo: wybierz je w Mister Download Manager"
+    "message": "Lista wideo: wybierz je w IET Download Manager"
   },
   "video_no_ytdlp": {
-    "message": "Mister Download Manager potrzebuje yt-dlp dla tego wideo"
+    "message": "IET Download Manager potrzebuje yt-dlp dla tego wideo"
   },
   "video_too_long": {
     "message": "Wyszukiwanie trwało zbyt długo"
   },
   "video_busy": {
-    "message": "Mister Download Manager jest zajęty innymi wideo"
+    "message": "IET Download Manager jest zajęty innymi wideo"
   },
   "video_queued": {
     "message": "Dodano do kolejki"
@@ -222,7 +222,7 @@
     "message": "Ten komputer"
   },
   "popup_send_remote": {
-    "message": "Inny Mister Download Manager (serwer)"
+    "message": "Inny IET Download Manager (serwer)"
   },
   "popup_remote_code": {
     "message": "Kod parowania"
@@ -234,7 +234,7 @@
     "message": "Paruj"
   },
   "popup_remote_help": {
-    "message": "Otwórz jego adres raz i zaakceptuj certyfikat, a następnie wprowadź kod z jego Opcji, Zdalne, Paruj urządzenie (lub misterdownloadmanager-cli pair)."
+    "message": "Otwórz jego adres raz i zaakceptuj certyfikat, a następnie wprowadź kod z jego Opcji, Zdalne, Paruj urządzenie (lub ietdownloadmanager-cli pair)."
   },
   "status_remote": {
     "message": "Pobieranie do $address$",
@@ -291,19 +291,19 @@
     "message": "Pobierz najlepszą jakość"
   },
   "video_sending": {
-    "message": "Wysyłanie do MDM..."
+    "message": "Wysyłanie do IETDM..."
   },
   "video_added": {
-    "message": "Dodano do MDM"
+    "message": "Dodano do IETDM"
   },
   "video_show": {
     "message": "Pokaż"
   },
   "video_no_answer": {
-    "message": "MDM nie odpowiada"
+    "message": "IETDM nie odpowiada"
   },
   "video_get_mdm": {
-    "message": "Pobierz MDM"
+    "message": "Pobierz IETDM"
   },
   "video_retry": {
     "message": "Ponów"
@@ -318,7 +318,7 @@
     "message": "Wszystkie jakości i napisy..."
   },
   "video_failed": {
-    "message": "Mister Download Manager nie jest zainstalowany lub nie uruchomił się"
+    "message": "IET Download Manager nie jest zainstalowany lub nie uruchomił się"
   },
   "video_download_best": {
     "message": "Pobierz najlepszą jakość"

@@ -1,6 +1,6 @@
 //! The first start's offer of the video helpers (user request 2026-11-01): yt-dlp finds a page's
 //! video, ffmpeg joins its picture and sound. Both are asked for once, explained, and downloaded
-//! on Yes (through MDM's own engine, checked against their publishers' signed checksums: see
+//! on Yes (through IETDM's own engine, checked against their publishers' signed checksums: see
 //! mdm_tools); Not now leaves them to Tasks → Download video from a page, which offers them again.
 
 use std::sync::Arc;
@@ -39,7 +39,7 @@ pub struct Helpers {
 }
 
 /// Whether to offer the helpers at this start: never asked, and one of them is missing (ffmpeg
-/// counts only where MDM installs it; elsewhere the system's is used).
+/// counts only where IETDM installs it; elsewhere the system's is used).
 pub fn worth_asking() -> bool {
     let Some(dir) = mdm_tools::tools_dir() else {
         return false;
@@ -66,7 +66,7 @@ impl Helpers {
         if mdm_tools::installed(&dir).is_none() {
             list.push("yt-dlp");
         }
-        // ffmpeg: MDM's own on Windows; elsewhere the system's.
+        // ffmpeg: IETDM's own on Windows; elsewhere the system's.
         if cfg!(windows) && mdm_tools::ffmpeg::installed(&dir).is_none() {
             list.push("ffmpeg");
         }
@@ -169,7 +169,7 @@ impl Helpers {
         let p = ui.painter().clone();
         let (ink, muted) = (winui::TEXT(), winui::MUTED());
         let w = 520.0;
-        // The banner: MDM's own logo, what this is for, in one line, and why now.
+        // The banner: IETDM's own logo, what this is for, in one line, and why now.
         let extra = winui::banner(
             ui,
             &p,
@@ -212,7 +212,7 @@ impl Helpers {
                     .to_owned()
                 } else {
                     crate::i18n::t(
-                        "Sites send their best quality as separate video and audio, and ffmpeg joins them. On this system MDM uses yours: install ffmpeg with your package manager.",
+                        "Sites send their best quality as separate video and audio, and ffmpeg joins them. On this system IETDM uses yours: install ffmpeg with your package manager.",
                     )
                     .to_owned()
                 },
@@ -222,7 +222,7 @@ impl Helpers {
                 // i18n: a promise in the helpers window: the helpers are free, official and checked
                 "Free, official and checked",
                 crate::i18n::t(
-                    "Both are open source. MDM gets them from their official releases with its own downloader and checks each file's signature before it runs. About 100 MB, once.",
+                    "Both are open source. IETDM gets them from their official releases with its own downloader and checks each file's signature before it runs. About 100 MB, once.",
                 )
                 .to_owned(),
             ),
@@ -466,12 +466,12 @@ impl Helpers {
     }
 }
 
-// ---- Video helpers: MDM's own copies or the person's (#51) ------------------------------------
+// ---- Video helpers: IETDM's own copies or the person's (#51) ------------------------------------
 
 use mdm_tools::chosen::Helper;
 
 /// Helpers (Download video from a page or a gallery → Helpers...): for yt-dlp, ffmpeg and
-/// gallery-dl (#58), where MDM takes it from (its own copy, or a program of the person's), and the
+/// gallery-dl (#58), where IETDM takes it from (its own copy, or a program of the person's), and the
 /// way to choose another: one copy of each for every program that uses them (#51).
 pub struct Programs {
     dir: Option<std::path::PathBuf>,
@@ -479,7 +479,7 @@ pub struct Programs {
     found: [Option<mdm_tools::Installed>; 3],
     /// A chosen program being checked (`--version`), and what it answered.
     checking: Option<(Helper, Answer)>,
-    /// MDM's own yt-dlp or gallery-dl being downloaded in place of the system's (#452, #571),
+    /// IETDM's own yt-dlp or gallery-dl being downloaded in place of the system's (#452, #571),
     /// and how that went.
     installing: Option<(Helper, Answer)>,
     error: Option<String>,
@@ -514,7 +514,7 @@ impl Programs {
         ];
     }
 
-    /// MDM's own yt-dlp or gallery-dl in place of the system's (#452, #571): downloaded and
+    /// IETDM's own yt-dlp or gallery-dl in place of the system's (#452, #571): downloaded and
     /// checked as usual, from then on the one used (`mdm_tools::installed`,
     /// `mdm_tools::gallery::installed`). It goes on if the window is closed.
     fn install_own(
@@ -579,7 +579,7 @@ impl Programs {
         window(
             ctx,
             "video-helpers",
-            // i18n: window title: where MDM takes its helper programs (yt-dlp, ffmpeg, gallery-dl) from
+            // i18n: window title: where IETDM takes its helper programs (yt-dlp, ffmpeg, gallery-dl) from
             "Helpers",
             [500.0, 292.0],
             false,
@@ -612,8 +612,8 @@ impl Programs {
                 .filter(|c| h == Helper::GalleryDl && mdm_tools::gallery::too_old(&c.version));
             let checking = self.checking.as_ref().is_some_and(|(c, _)| *c == h);
             let downloading = self.installing.as_ref().is_some_and(|(i, _)| *i == h);
-            // The system's yt-dlp or gallery-dl may be old: MDM's own copy can replace it (#452,
-            // #571), where MDM has one for this system (gallery-dl: none on macOS).
+            // The system's yt-dlp or gallery-dl may be old: IETDM's own copy can replace it (#452,
+            // #571), where IETDM has one for this system (gallery-dl: none on macOS).
             let replaceable = match h {
                 Helper::YtDlp => true,
                 Helper::GalleryDl => mdm_tools::gallery::asset().is_some(),
@@ -622,17 +622,17 @@ impl Programs {
             let system = replaceable && found.is_some_and(mdm_tools::Installed::is_system);
             let status = match (too_old, found) {
                 _ if downloading => {
-                    // i18n: Video helpers: MDM's own yt-dlp is being downloaded
-                    crate::i18n::t("Downloading MDM's own copy...").to_owned()
+                    // i18n: Video helpers: IETDM's own yt-dlp is being downloaded
+                    crate::i18n::t("Downloading IETDM's own copy...").to_owned()
                 }
                 _ if checking => {
                     // i18n: Video helpers: a program just chosen is being checked
                     crate::i18n::t("Checking the program...").to_owned()
                 }
                 (Some(old), _) => crate::i18n::fmt(
-                    // i18n: Video helpers: the person's own gallery-dl is too old and not used; {version} = its version, {oldest} = the oldest MDM can use
+                    // i18n: Video helpers: the person's own gallery-dl is too old and not used; {version} = its version, {oldest} = the oldest IETDM can use
                     crate::i18n::t(
-                        "Your own program ({version}) is too old: MDM needs {oldest} or newer",
+                        "Your own program ({version}) is too old: IETDM needs {oldest} or newer",
                     ),
                     &[
                         ("version", &old.version),
@@ -653,8 +653,8 @@ impl Programs {
                     &[("path", &crate::i18n::ltr(&i.exe.display().to_string()))],
                 ),
                 (None, Some(i)) => crate::i18n::fmt(
-                    // i18n: Video helpers: {version} = the version of MDM's own copy
-                    crate::i18n::t("Mister Download Manager's own copy, version {version}"),
+                    // i18n: Video helpers: {version} = the version of IETDM's own copy
+                    crate::i18n::t("IET Download Manager's own copy, version {version}"),
                     &[("version", &i.version)],
                 ),
                 // i18n: Video helpers: no copy of this helper yet
@@ -676,7 +676,7 @@ impl Programs {
                 &p,
                 &[
                     ("Use another program...", 14.0, 180.0),
-                    ("Use MDM's own copy", 202.0, 180.0),
+                    ("Use IETDM's own copy", 202.0, 180.0),
                 ],
                 8.0,
                 486.0,
@@ -709,8 +709,8 @@ impl Programs {
             if winui::button(
                 ui,
                 r(o, own_at.0, y - o.y + 46.0, own_at.1, 21.0),
-                // i18n: Video helpers: button: go back to the copy MDM downloads and checks itself
-                "Use MDM's own copy",
+                // i18n: Video helpers: button: go back to the copy IETDM downloads and checks itself
+                "Use IETDM's own copy",
                 if (mine || system) && !busy {
                     ButtonKind::Normal
                 } else {

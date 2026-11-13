@@ -1,14 +1,14 @@
-//! Crash and freeze reports, the app's side (mdm-crash has the rest). At start MDM launches its
-//! monitor (itself with `--crash-monitor`), which writes a minidump when MDM:
+//! Crash and freeze reports, the app's side (mdm-crash has the rest). At start IETDM launches its
+//! monitor (itself with `--crash-monitor`), which writes a minidump when IETDM:
 //! - crashes natively (win32.rs / unix.rs catch it through crash-handler),
 //! - panics (the hook here sends the message, then asks for the dump),
 //! - or freezes: a watchdog thread sees a frame of the window run past [`FREEZE_AFTER`] and asks
-//!   for a dump of every thread while MDM is still stuck (a deadlock, an endless loop). A frame
+//!   for a dump of every thread while IETDM is still stuck (a deadlock, an endless loop). A frame
 //!   is two timed stretches: the app's logic (commands and the clock, which egui runs alone while
 //!   the main window is minimized) and its UI. The waits between frames aren't timed.
 //!
 //! The monitor then shows the report window (crashui.rs). Without a monitor (it couldn't start)
-//! MDM runs on, and a panic still leaves a text report.
+//! IETDM runs on, and a panic still leaves a text report.
 
 use std::cell::RefCell;
 use std::collections::BTreeSet;
@@ -24,10 +24,10 @@ use mdm_crash::protocol::{AppState, Busy, Freeze, Panic, Session};
 pub const FREEZE_AFTER: Duration = Duration::from_secs(8);
 
 /// The first minute after the computer wakes is the computer's: its disk, its network and its
-/// screen come back, and MDM's memory, given back while it waited in the notification area
+/// screen come back, and IETDM's memory, given back while it waited in the notification area
 /// (#72), is read back in. Two windows hidden there didn't answer for 16 and 23 s right after a
 /// wake, and the separate monitor process couldn't even take their dump until the same moment
-/// (#574, #613): most likely the computer wasn't running MDM yet. A frame stalled then is
+/// (#574, #613): most likely the computer wasn't running IETDM yet. A frame stalled then is
 /// logged, and reported only if it is still stuck [`FREEZE_AFTER`] past this.
 const WAKE_GRACE: Duration = Duration::from_secs(60);
 
@@ -63,7 +63,7 @@ fn now_ms() -> u64 {
 }
 
 /// Start the monitor and catch crashes, panics and freezes. Called on the window thread, after
-/// this process became MDM's instance.
+/// this process became IETDM's instance.
 pub fn start(data: &Path, session: Session) {
     let _ = EPOCH.set(Instant::now());
     #[cfg(windows)]
@@ -116,7 +116,7 @@ fn dump_now() -> bool {
 }
 
 /// A panic: its message and Rust's backtrace to the monitor, then a dump; then the default hook
-/// (the message on stderr) and the panic goes on (on the window thread it ends MDM).
+/// (the message on stderr) and the panic goes on (on the window thread it ends IETDM).
 fn hook_panics() {
     let default = std::panic::take_hook();
     std::panic::set_hook(Box::new(move |info| {
@@ -314,7 +314,7 @@ pub fn window(id: &str) {
     });
 }
 
-/// What MDM has open and running, for the report (sent when it changes).
+/// What IETDM has open and running, for the report (sent when it changes).
 pub fn state(downloads: usize, running: usize, queues: usize, scale: f32) {
     let Some(r) = REPORTER.get() else { return };
     let windows = WINDOWS.with(|w| w.borrow().1.iter().cloned().collect());
@@ -327,16 +327,16 @@ pub fn state(downloads: usize, running: usize, queues: usize, scale: f32) {
     });
 }
 
-/// MDM has started closing normally: what panics on the runtime's own threads now (a task's
+/// IETDM has started closing normally: what panics on the runtime's own threads now (a task's
 /// timer once the runtime is shutting down, #422) is the runtime going away, not a problem.
 static CLOSING: AtomicBool = AtomicBool::new(false);
 
-/// Is this panic worth a report? Not one on a runtime worker while MDM is closing (#422).
+/// Is this panic worth a report? Not one on a runtime worker while IETDM is closing (#422).
 fn panic_reported(closing: bool, thread: &str) -> bool {
     !(closing && thread.starts_with("tokio"))
 }
 
-/// MDM is closing normally: the monitor leaves without a report.
+/// IETDM is closing normally: the monitor leaves without a report.
 pub fn clean_exit() {
     CLOSING.store(true, Ordering::Release);
     if let Some(r) = REPORTER.get() {
@@ -383,7 +383,7 @@ fn watchdog() {
     let freeze_after = FREEZE_AFTER.as_millis() as u64;
     let grace = WAKE_GRACE.as_millis() as u64;
     let (mut last, mut last_wall) = (now_ms(), wall_ms());
-    // When the computer last woke (ms), if it slept since MDM started.
+    // When the computer last woke (ms), if it slept since IETDM started.
     let mut woke: Option<u64> = None;
     let mut reported_frame = 0u64;
     // The frame whose stall just after a wake was logged.
@@ -521,7 +521,7 @@ pub fn session(language: &str, dark: bool) -> Session {
     }
 }
 
-/// MDM_CRASH_TEST=1 lets `/show crash-test:<what>` crash MDM on purpose (the crash reports'
+/// MDM_CRASH_TEST=1 lets `/show crash-test:<what>` crash IETDM on purpose (the crash reports'
 /// own end-to-end check): panic, crash (an access violation / SIGSEGV), freeze (a deadlock on
 /// the window thread), spin (the window thread busy for 12 s, then it answers again), abort.
 pub fn test(what: &str) {
@@ -577,7 +577,7 @@ mod watchdog_tests {
     }
 
     /// #574, #613: a window hidden in the notification area didn't answer for 16 and 23 s right
-    /// after the computer woke. Not a freeze of MDM's during the minute after a wake; still one
+    /// after the computer woke. Not a freeze of IETDM's during the minute after a wake; still one
     /// past it, and at any other time.
     #[test]
     fn the_minute_after_a_wake_is_the_computers() {
@@ -612,7 +612,7 @@ mod watchdog_tests {
 
 #[cfg(test)]
 mod closing_tests {
-    /// #422: a Tokio task panicking while MDM closes is no crash; the window thread's would be.
+    /// #422: a Tokio task panicking while IETDM closes is no crash; the window thread's would be.
     #[test]
     fn a_runtime_panic_while_closing_is_not_reported() {
         use super::panic_reported;

@@ -126,7 +126,7 @@ async fn every_link_form_downloads_the_file() {
     }
 }
 
-/// Drive's hosts are asked with a browser's agent (PR #67), every other site with MDM's automatic
+/// Drive's hosts are asked with a browser's agent (PR #67), every other site with IETDM's automatic
 /// one (the default browser's, #668), and an agent handed over by the browser wins.
 #[tokio::test]
 async fn drive_is_asked_with_a_browsers_agent() {

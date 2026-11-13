@@ -1,6 +1,6 @@
 {
-  "name": "Mister Download Manager",
-  "short_name": "MDM",
+  "name": "IET Download Manager",
+  "short_name": "IETDM",
   "start_url": "./",
   "scope": "./",
   "display": "standalone",

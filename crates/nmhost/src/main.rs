@@ -1,7 +1,7 @@
-//! Mister Download Manager's browser native messaging host (Chrome, Edge, Brave, Firefox).
+//! IET Download Manager's browser native messaging host (Chrome, Edge, Brave, Firefox).
 //!
 //! - Started by the browser: reads native messages (u32 LE length + JSON) from stdin, hands each
-//!   download to the running Mister Download Manager over mdm-ipc (starting Mister Download Manager if needed), answers
+//!   download to the running IET Download Manager over mdm-ipc (starting IET Download Manager if needed), answers
 //!   `{"ok": …}`. A download Options says to leave to the browser (file type, excluded site or
 //!   address, browser, integration off: `mdm_ipc::capture`) is answered `{"ok": false}` without
 //!   starting anything, and the extension lets the browser have it. `{"rules": true}` asks for
@@ -19,7 +19,7 @@
 //!   (`mdm_ipc::api::VideoLookupAnswer`), never with a `why`; none of them starts the app
 //!   (`use-window`: the button's click then opens the Download video window as before). A
 //!   question waits here while the look-up runs, up to 1.5 s ([`POLL_WAIT`]).
-//! - `misterdownloadmanager-nmhost --register` / `--unregister`: writes / removes the host
+//! - `ietdownloadmanager-nmhost --register` / `--unregister`: writes / removes the host
 //!   manifests (Chromium's names the extension's origin, Firefox's its add-on ID). Windows: beside
 //!   this exe, with the per-user (HKCU) registry entries the browsers look up; with `--all-users`
 //!   (the installer, installing for everyone, elevated) under HKLM instead. Linux and macOS: in
@@ -27,11 +27,11 @@
 //!   installer step), or the system-wide ones with `--all-users`. A browser that reads a
 //!   system-wide manifest naming this same program (the .deb's or .rpm's) gets none in the home
 //!   folder: the package manager removes the package's with it (#266).
-//! - `misterdownloadmanager-nmhost --safari` (macOS): the same host for Safari, started by the
+//! - `ietdownloadmanager-nmhost --safari` (macOS): the same host for Safari, started by the
 //!   app's Safari extension (tools/safari), which passes each message on; nothing to register.
-//! - `misterdownloadmanager-nmhost --package-manifests <root>` (Linux, the .deb and .rpm build):
+//! - `ietdownloadmanager-nmhost --package-manifests <root>` (Linux, the .deb and .rpm build):
 //!   writes the system-wide manifests under `<root>`, naming the packaged helper
-//!   (`/usr/bin/misterdownloadmanager-nmhost`). Nothing else.
+//!   (`/usr/bin/ietdownloadmanager-nmhost`). Nothing else.
 
 use std::io::{self, Read, Write};
 use std::path::PathBuf;
@@ -42,7 +42,7 @@ use serde::{Deserialize, Serialize};
 #[cfg(windows)]
 mod win32;
 
-const HOST_NAME: &str = "com.misterdownloadmanager.host";
+const HOST_NAME: &str = "com.ietdownloadmanager.host";
 use mdm_ipc::extension::{FIREFOX_ID, STORE_ID, chromium_ids, store_id};
 /// Where each Chromium browser looks for native messaging hosts on Windows, under HKCU (one
 /// user) or HKLM (everyone). Chromium-branded builds (Chromium, Helium, Thorium, and Brave and
@@ -102,7 +102,7 @@ struct Message {
     proxy: Option<String>,
     proxy_pac: Option<String>,
     proxy_login: bool,
-    /// The user asked for this download (right-click → Download with Mister Download Manager):
+    /// The user asked for this download (right-click → Download with IET Download Manager):
     /// Options' automatic-capture rules don't apply, as IDM's "Download with IDM" takes any link.
     explicit: bool,
     /// May the download button show over videos on page `url`? With `referrer`: the tab's
@@ -132,10 +132,10 @@ struct Message {
     links: Vec<String>,
     /// The toolbar button: leave this site (a host name) to the browser.
     exclude_site: Option<String>,
-    /// The toolbar button: bring Mister Download Manager's window up.
+    /// The toolbar button: bring IET Download Manager's window up.
     open: bool,
     /// The extension left a download to the browser by Options' rules (it has them from
-    /// `rules`) without asking about it: for MDM's log. Under its own key, with no `url`: an
+    /// `rules`) without asking about it: for IETDM's log. Under its own key, with no `url`: an
     /// older host takes it for an address it can't download, and hands nothing over.
     declined: Option<Notice>,
     /// The video button's quality menu: look this video up (with the message's `cookies`,
@@ -237,7 +237,7 @@ struct Reply {
     /// (docs/browser-help.md): `not-running`, `too-large`, `refused`, `options`.
     #[serde(skip_serializing_if = "Option::is_none")]
     why: Option<&'static str>,
-    /// Mister Download Manager's version (this host comes with it).
+    /// IET Download Manager's version (this host comes with it).
     #[serde(skip_serializing_if = "Option::is_none")]
     version: Option<&'static str>,
     /// For `rules`: Options → File types.
@@ -270,7 +270,7 @@ struct Reply {
     #[serde(skip_serializing_if = "Option::is_none")]
     video_lookup: Option<bool>,
     /// The quality menu's answer: where the look-up is, or what became of the choice. Its
-    /// states are never a `why`: they say nothing of whether MDM is reachable.
+    /// states are never a `why`: they say nothing of whether IETDM is reachable.
     #[serde(skip_serializing_if = "Option::is_none")]
     lookup: Option<mdm_ipc::api::VideoLookupAnswer>,
 }
@@ -421,7 +421,7 @@ fn answer(m: Message, rules: &mdm_ipc::capture::CaptureRules) -> Reply {
             .cloned()
             .collect();
         if links.is_empty() {
-            return Reply::failed("refused", "no link MDM downloads");
+            return Reply::failed("refused", "no link IETDM downloads");
         }
         Some(mdm_ipc::Command {
             links,
@@ -505,11 +505,11 @@ fn log_left(browser: &str, site: &str, name: &str, reason: impl AsRef<str>, priv
     log_line(&left_line(browser, site, name, reason.as_ref(), private));
 }
 
-/// A line in MDM's log (`<data>/logs/mdm.log`, crates/crash/src/logs.rs), dated as the app's
+/// A line in IETDM's log (`<data>/logs/mdm.log`, crates/crash/src/logs.rs), dated as the app's
 /// own lines: the host runs apart from the app, which may not be running at all. Appended
 /// whole, so it never splits a line the app writes at the same time.
 fn log_line(message: &str) {
-    // Unit tests run without a data folder of their own: never into the real MDM's log
+    // Unit tests run without a data folder of their own: never into the real IETDM's log
     // (tests/host.rs runs the program with its own and reads what it wrote).
     if cfg!(test) {
         return;
@@ -689,7 +689,7 @@ fn menu_command(
 }
 
 /// One of the quality menu's messages, asked of the running app (never started for it: a menu
-/// over a video isn't worth starting MDM unseen; the button's click does that).
+/// over a video isn't worth starting IETDM unseen; the button's click does that).
 fn quality_menu(
     ask: MenuAsk,
     m: &Message,
@@ -949,7 +949,7 @@ enum Undelivered {
     Refused(String),
 }
 
-/// How long a Mister Download Manager just started gets to open its channel (a first start, a
+/// How long a IET Download Manager just started gets to open its channel (a first start, a
 /// slow disk or an antivirus scan can take a while); the browser's download waits meanwhile.
 const START_WAIT: Duration = Duration::from_secs(20);
 
@@ -965,7 +965,7 @@ fn bundle_of(exe: &std::path::Path) -> Option<PathBuf> {
         .map(PathBuf::from)
 }
 
-/// Hand `cmd` to Mister Download Manager, starting it only if none is running.
+/// Hand `cmd` to IET Download Manager, starting it only if none is running.
 fn deliver(cmd: &mdm_ipc::Command) -> Result<(), Undelivered> {
     // Whatever it asks may open a window: the app may bring it to the front (Windows only: Linux
     // and macOS have no foreground lock for a host to lift).
@@ -984,9 +984,9 @@ fn deliver(cmd: &mdm_ipc::Command) -> Result<(), Undelivered> {
     let app = match std::fs::read_to_string(dir.join("app-path")) {
         Ok(path) if !path.trim().is_empty() => PathBuf::from(path.trim()),
         _ => dir.join(if cfg!(windows) {
-            "misterdownloadmanager.exe"
+            "ietdownloadmanager.exe"
         } else {
-            "misterdownloadmanager"
+            "ietdownloadmanager"
         }),
     };
     let safari = SAFARI.load(std::sync::atomic::Ordering::Relaxed);
@@ -1026,7 +1026,7 @@ fn deliver(cmd: &mdm_ipc::Command) -> Result<(), Undelivered> {
         }
     }
     Err(Undelivered::NotRunning(
-        "Mister Download Manager did not start".into(),
+        "IET Download Manager did not start".into(),
     ))
 }
 
@@ -1114,7 +1114,7 @@ fn this_program() -> Result<PathBuf, String> {
 fn chromium_manifest(program: &std::path::Path) -> serde_json::Value {
     serde_json::json!({
         "name": HOST_NAME,
-        "description": "Mister Download Manager",
+        "description": "IET Download Manager",
         "path": program,
         "type": "stdio",
         "allowed_origins": chromium_ids().into_iter().map(origin).collect::<Vec<_>>(),
@@ -1125,7 +1125,7 @@ fn chromium_manifest(program: &std::path::Path) -> serde_json::Value {
 fn firefox_manifest(program: &std::path::Path) -> serde_json::Value {
     serde_json::json!({
         "name": HOST_NAME,
-        "description": "Mister Download Manager",
+        "description": "IET Download Manager",
         "path": program,
         "type": "stdio",
         "allowed_extensions": [FIREFOX_ID],
@@ -1144,7 +1144,7 @@ fn portable_refused() -> Result<(), String> {
     if mdm_ipc::portable_dir().is_some() {
         return Err(
             "portable mode: browser integration is not registered (nothing is written outside \
-             its folder); install Mister Download Manager to use it"
+             its folder); install IET Download Manager to use it"
                 .into(),
         );
     }
@@ -1310,7 +1310,7 @@ fn register(all_users: bool) -> Result<(), String> {
     // A browser that reads the package's manifest for everyone, naming this program, needs none
     // in the home folder: one written there before is taken away, so uninstalling the package
     // leaves nothing behind (#266). The browser reads a user's manifest first, so one naming
-    // another program (an earlier MDM, an AppImage's copy) would win over the package's: the MDM
+    // another program (an earlier IETDM, an AppImage's copy) would win over the package's: the IETDM
     // registered last is the one the browsers start, as when each wrote its own.
     let mut covered = 0;
     if !all_users {
@@ -1385,7 +1385,7 @@ fn unregister(all_users: bool) -> Result<(), String> {
 
 /// Linux: where the .deb and .rpm install this program, which their manifests name.
 #[cfg(target_os = "linux")]
-const PACKAGED_HOST: &str = "/usr/bin/misterdownloadmanager-nmhost";
+const PACKAGED_HOST: &str = "/usr/bin/ietdownloadmanager-nmhost";
 
 /// Linux (the .deb and .rpm build, tools/installer/build-linux.sh): the manifests for everyone,
 /// in each folder the browsers read them from (`mdm_ipc::browsers::LINUX_SYSTEM_HOST_DIRS`),
@@ -1433,16 +1433,16 @@ fn main() {
         // manifests' allowed_origins / allowed_extensions say the same; this is a second check).
         _ if our_caller(&args) => serve().map_err(|e| e.to_string()),
         _ => Err(format!(
-            "refusing caller {args:?}: not the Mister Download Manager extension"
+            "refusing caller {args:?}: not the IET Download Manager extension"
         )),
     };
     if let Err(e) = result {
-        eprintln!("misterdownloadmanager-nmhost: {e}");
+        eprintln!("ietdownloadmanager-nmhost: {e}");
         std::process::exit(1);
     }
 }
 
-/// The addresses MDM downloads (mdm_engine::supported): http(s), and ftp links sent from a page
+/// The addresses IETDM downloads (mdm_engine::supported): http(s), and ftp links sent from a page
 /// (browsers no longer download ftp themselves).
 fn downloadable(url: &str) -> bool {
     let scheme = url.split_once("://").map_or("", |(s, _)| s);
@@ -1459,11 +1459,11 @@ mod tests {
     #[test]
     fn safari_helper_finds_its_app() {
         let exe = std::path::Path::new(
-            "/Applications/Mister Download Manager.app/Contents/PlugIns/Mister Download Manager.appex/Contents/MacOS/misterdownloadmanager-nmhost",
+            "/Applications/IET Download Manager.app/Contents/PlugIns/IET Download Manager.appex/Contents/MacOS/ietdownloadmanager-nmhost",
         );
         assert_eq!(
             bundle_of(exe),
-            Some(PathBuf::from("/Applications/Mister Download Manager.app"))
+            Some(PathBuf::from("/Applications/IET Download Manager.app"))
         );
         assert_eq!(bundle_of(std::path::Path::new("/usr/bin/nmhost")), None);
     }
@@ -1550,7 +1550,7 @@ mod tests {
         );
         assert!(r.ok && r.types.unwrap().contains("ZIP"));
         assert_eq!(file_name_of(&msg("https://x.org/f/b.rar?x=1", "")), "b.rar");
-        // Right-click → Download with Mister Download Manager: any link, whatever Options say.
+        // Right-click → Download with IET Download Manager: any link, whatever Options say.
         let mut page = msg("https://example.com/page.html", "");
         assert!(verdict(&page, &rules).is_err());
         page.explicit = true;
@@ -2406,7 +2406,7 @@ mod tests {
         assert_eq!(c.user_agent.as_deref(), Some("UA"));
         assert_eq!(
             c.name, None,
-            "empty filename means: let Mister Download Manager decide"
+            "empty filename means: let IET Download Manager decide"
         );
         assert!(!c.later && !c.silent);
         assert_eq!((c.proxy, c.proxy_pac, c.proxy_login), (None, None, false));

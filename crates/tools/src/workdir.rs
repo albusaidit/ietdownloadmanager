@@ -1,17 +1,17 @@
 //! Where the helpers run (#834): every one starts in a folder it can write, with TEMP, TMP and
 //! TMPDIR naming that folder.
 //!
-//! A helper used to inherit MDM's own working folder, which is the install folder when MDM is
-//! opened from the Start menu (`C:\Program Files\Mister Download Manager`). yt-dlp writes there:
+//! A helper used to inherit IETDM's own working folder, which is the install folder when IETDM is
+//! opened from the Start menu (`C:\Program Files\IET Download Manager`). yt-dlp writes there:
 //! before it chooses a format a site marks as needing a check (YouTube's streams in pieces of a
 //! video put online in the last two days), it tries the format with a small file of its own in
-//! its working folder (its `temp` path, which MDM doesn't set), and Windows refused it: "[Errno
-//! 13] Permission denied: 'C:\\Program Files\\Mister Download Manager\\tmp….tmp'".
+//! its working folder (its `temp` path, which IETDM doesn't set), and Windows refused it: "[Errno
+//! 13] Permission denied: 'C:\\Program Files\\IET Download Manager\\tmp….tmp'".
 //!
 //! The folder is the person's temporary folder when a file can be made in it, else a `work`
-//! folder in MDM's data folder (said once in the log): Python, yt-dlp's and gallery-dl's
+//! folder in IETDM's data folder (said once in the log): Python, yt-dlp's and gallery-dl's
 //! language, falls back to the working folder when TEMP can't be written, and so would have
-//! landed in the install folder again. MDM's own files for the helpers (a page's cookies, a
+//! landed in the install folder again. IETDM's own files for the helpers (a page's cookies, a
 //! looked-up page) go in the same folder ([`temp_dir`]).
 
 use std::path::{Path, PathBuf};
@@ -21,7 +21,7 @@ use std::process::Command;
 #[derive(Clone, Debug, PartialEq, Eq)]
 pub struct Folders {
     /// Their working folder and TEMP, TMP and TMPDIR; `None` when no folder could be written at
-    /// all (they then get what MDM has, as before).
+    /// all (they then get what IETDM has, as before).
     pub dir: Option<PathBuf>,
     /// The person's temporary folder, when it couldn't be written and `dir` replaced it.
     pub replaced: Option<PathBuf>,
@@ -31,8 +31,8 @@ pub struct Folders {
 /// every system; Windows' programs read TMP and TEMP, Linux's and macOS's TMPDIR.
 pub const TEMP_VARS: [&str; 3] = ["TMPDIR", "TEMP", "TMP"];
 
-/// `p` as a full path (against MDM's working folder; unchanged if that can't be read): a helper
-/// runs elsewhere, so a relative path MDM gives it would name another file.
+/// `p` as a full path (against IETDM's working folder; unchanged if that can't be read): a helper
+/// runs elsewhere, so a relative path IETDM gives it would name another file.
 pub fn absolute(p: &Path) -> PathBuf {
     std::path::absolute(p).unwrap_or_else(|_| p.to_owned())
 }
@@ -83,7 +83,7 @@ pub fn choose(user: &Path, data: Option<&Path>) -> Folders {
     }
 }
 
-/// The helpers' folder, chosen once per run (the system's temporary folder, MDM's data folder).
+/// The helpers' folder, chosen once per run (the system's temporary folder, IETDM's data folder).
 /// A replaced temporary folder is said in the log the first time.
 pub fn folders() -> &'static Folders {
     static FOLDERS: std::sync::OnceLock<Folders> = std::sync::OnceLock::new();
@@ -97,8 +97,8 @@ pub fn folders() -> &'static Folders {
                 dir.display()
             ),
             (None, _) => tracing::warn!(
-                "helpers: neither the temporary folder {} nor MDM's data folder can be \
-                 written; the helpers run where MDM does",
+                "helpers: neither the temporary folder {} nor IETDM's data folder can be \
+                 written; the helpers run where IETDM does",
                 std::env::temp_dir().display()
             ),
             _ => {}
@@ -107,7 +107,7 @@ pub fn folders() -> &'static Folders {
     })
 }
 
-/// Where MDM puts its own files for a helper (a page's cookies, a looked-up page): the helpers'
+/// Where IETDM puts its own files for a helper (a page's cookies, a looked-up page): the helpers'
 /// folder, else the system's temporary folder.
 pub fn temp_dir() -> PathBuf {
     folders().dir.clone().unwrap_or_else(std::env::temp_dir)

@@ -8,15 +8,15 @@
 //! The windows always open: when the chosen way can't start (no driver for it, a virtual
 //! machine, Remote Desktop), the next is tried, and the reason is logged. A start with the
 //! system's API that ends before its first frame (a crash or a kill inside the driver) is
-//! remembered, and so is one whose first frame doesn't come within [`FIRST_FRAME_WITHIN`] (MDM
+//! remembered, and so is one whose first frame doesn't come within [`FIRST_FRAME_WITHIN`] (IETDM
 //! starts again, the next way): the next starts pass over it until that API is chosen again,
-//! and View → Draw with says why. A graphics card lost while MDM runs (a driver update or reset)
-//! starts MDM again; a second loss soon after counts as the API failing. The same code does all
+//! and View → Draw with says why. A graphics card lost while IETDM runs (a driver update or reset)
+//! starts IETDM again; a second loss soon after counts as the API failing. The same code does all
 //! of this on every system: only [`GPU`] and the backend in `gpu::options` differ.
 //!
 //! Windows: a card without Direct3D 12 draws with OpenGL, and with Direct3D 12 on Microsoft's
 //! software renderer (WARP) once OpenGL fails here (#847), remembered (`opengl-unfit.txt`) until
-//! OpenGL is chosen again: it can't start, it is too old to draw MDM ([`gl_unfit`], #835), its
+//! OpenGL is chosen again: it can't start, it is too old to draw IETDM ([`gl_unfit`], #835), its
 //! first frame doesn't come within [`FIRST_FRAME_WITHIN`], its last start ended before its first
 //! frame, or the window froze inside its driver ([`gl_driver_frame`]: the crash report's window
 //! reads that from the freeze's stack; the cards of #847 froze or crashed there while showing a
@@ -108,12 +108,12 @@ pub fn chosen(setting: Option<Api>) -> Api {
 
 /// OpenGL's starts are watched and its failures remembered, so the next starts draw with the
 /// system's API on its software renderer instead: Windows only (#847: WARP, part of every
-/// Windows 10 and 11, draws MDM right on the cards whose OpenGL froze, crashed or drew garbage).
+/// Windows 10 and 11, draws IETDM right on the cards whose OpenGL froze, crashed or drew garbage).
 /// Linux and macOS keep their plans: OpenGL is their default (#206), Mesa's software Vulkan is
 /// no better a way out than its OpenGL, and macOS has no software Metal.
 pub const WATCH_GL: bool = cfg!(windows);
 
-/// How long a watched start with the system's API may take to its first frame before MDM starts
+/// How long a watched start with the system's API may take to its first frame before IETDM starts
 /// again the next way (a driver stuck in its first present, a window that never shows). Generous:
 /// a slow computer just after it starts (#57) can take seconds.
 #[cfg(gpu)]
@@ -184,14 +184,14 @@ fn parse(name: &str) -> Option<Attempt> {
     (api.is_some() && api == GPU).then_some(Attempt::Gpu(adapters))
 }
 
-/// What the data folder remembers about this computer, read as MDM starts.
+/// What the data folder remembers about this computer, read as IETDM starts.
 #[derive(Clone, Copy, Debug, Default, PartialEq, Eq)]
 pub struct Known {
     /// The system's API failed here on the graphics card (`direct3d-failed.txt`).
     pub card_failed: bool,
     /// ... and on its software renderer (`direct3d-software-failed.txt`: WARP).
     pub software_failed: bool,
-    /// OpenGL can't draw MDM here (`opengl-unfit.txt`): it failed to start, is too old
+    /// OpenGL can't draw IETDM here (`opengl-unfit.txt`): it failed to start, is too old
     /// ([`gl_unfit`]), drew no first frame, or froze inside its driver (Windows, #835, #847).
     pub gl_failed: bool,
 }
@@ -232,7 +232,7 @@ pub struct Plan {
     pub watch: Vec<Attempt>,
     /// Why the first way is the one tried first, for the log and the crash reports.
     pub because: Because,
-    /// An OpenGL that can't draw MDM ([`gl_unfit`]) ends this start, is remembered, and MDM
+    /// An OpenGL that can't draw IETDM ([`gl_unfit`]) ends this start, is remembered, and IETDM
     /// starts again without it: the app's own starts (not an override's, nor the crash report's,
     /// which only passes over one already remembered).
     pub gl_checked: bool,
@@ -259,7 +259,7 @@ pub enum Because {
     /// The system's API is the choice, but it failed here before on the card: OpenGL until it is
     /// chosen again.
     FailedBefore,
-    /// OpenGL can't draw MDM here (remembered): the system's API, on a software renderer if it
+    /// OpenGL can't draw IETDM here (remembered): the system's API, on a software renderer if it
     /// failed on the card, until OpenGL is chosen again.
     OpenGlUnfit,
 }
@@ -273,7 +273,7 @@ impl Because {
             Because::Default => "the default here".into(),
             Because::Override => "the testing override (/renderer, MDM_RENDERER)".into(),
             Because::OpenGlUnfit => format!(
-                "OpenGL can't draw MDM here: {}",
+                "OpenGL can't draw IETDM here: {}",
                 details(&GL_DETAILS).unwrap_or_default()
             ),
             Because::FailedBefore => format!(
@@ -289,10 +289,10 @@ impl Because {
 ///
 /// The system's API chosen: on the card, unless it failed there before; then OpenGL, and the
 /// system's API on a software renderer last (Remote Desktop, a virtual machine: no card's
-/// driver, and Windows' own OpenGL 1.1 can't draw MDM). OpenGL chosen: OpenGL, the system's API
+/// driver, and Windows' own OpenGL 1.1 can't draw IETDM). OpenGL chosen: OpenGL, the system's API
 /// (card, else software) only if OpenGL can't start.
 ///
-/// `known.gl_failed`: this computer's OpenGL can't draw MDM (remembered, Windows: #835, #847). It
+/// `known.gl_failed`: this computer's OpenGL can't draw IETDM (remembered, Windows: #835, #847). It
 /// becomes the last way, after the system's API on the card (unless that failed here before) and
 /// on its software renderer (unless that failed too: then OpenGL first, nothing else drew),
 /// whatever the setting; an override still gets it. A card without Direct3D 12 on Windows:
@@ -321,7 +321,7 @@ pub fn plan(setting: Option<Api>, overridden: Option<&str>, known: Known) -> Pla
         Attempt::Gpu(Adapters::Any),
     );
     let wants_gpu = Some(chosen(setting)) == GPU;
-    // OpenGL passed over: it can't draw MDM here, and the software renderer is left to try.
+    // OpenGL passed over: it can't draw IETDM here, and the software renderer is left to try.
     let skip_gl = gl_failed && GPU.is_some() && !software_failed;
     // Only this system's own choices count as chosen (chosen()).
     let as_set = if setting.is_some_and(|s| s == chosen(setting)) {
@@ -330,7 +330,7 @@ pub fn plan(setting: Option<Api>, overridden: Option<&str>, known: Known) -> Pla
         Because::Default
     };
     let (attempts, because) = match forced {
-        // OpenGL last, even one that can't draw MDM: the windows always open.
+        // OpenGL last, even one that can't draw IETDM: the windows always open.
         Some(a @ Attempt::Gpu(_)) => (vec![a, gl], Because::Override),
         Some(_) => (vec![gl, any], Because::Override),
         None if wants_gpu => {
@@ -339,7 +339,7 @@ pub fn plan(setting: Option<Api>, overridden: Option<&str>, known: Known) -> Pla
                 ways.push(card);
             }
             if skip_gl {
-                // OpenGL can't draw MDM here: the software renderer (what drew #835's card
+                // OpenGL can't draw IETDM here: the software renderer (what drew #835's card
                 // right), OpenGL only if that can't start.
                 ways.extend([soft, gl]);
             } else if card_failed {
@@ -355,7 +355,7 @@ pub fn plan(setting: Option<Api>, overridden: Option<&str>, known: Known) -> Pla
             };
             (ways, because)
         }
-        // OpenGL would have drawn first, but can't draw MDM: the system's API instead, on a
+        // OpenGL would have drawn first, but can't draw IETDM: the system's API instead, on a
         // software renderer when it failed on the card here, else on the card if any.
         None if skip_gl => (
             vec![if card_failed { soft } else { any }, gl],
@@ -384,7 +384,7 @@ pub fn plan(setting: Option<Api>, overridden: Option<&str>, known: Known) -> Pla
 }
 
 /// Is this way's start watched (in the app's own plan)? Only where remembering its failure
-/// changes the next start's plan (else a way that never draws would start MDM again and again):
+/// changes the next start's plan (else a way that never draws would start IETDM again and again):
 ///
 /// - the system's API on the card or on its software renderer, before OpenGL;
 /// - OpenGL (Windows, [`WATCH_GL`]), not known to fail here, with the system's API on a software
@@ -432,7 +432,7 @@ const FAILED: &str = "failed.txt";
 /// The same two for its software renderer (WARP: `direct3d-software-failed.txt`).
 const SOFTWARE_STARTING: &str = "software-starting";
 const SOFTWARE_FAILED: &str = "software-failed.txt";
-/// The same two for OpenGL (Windows): why it can't draw MDM here; while it is there, OpenGL is
+/// The same two for OpenGL (Windows): why it can't draw IETDM here; while it is there, OpenGL is
 /// the last way (#835, #847).
 const GL_STARTING: &str = "opengl-starting";
 const GL_FAILED: &str = "opengl-unfit.txt";
@@ -500,7 +500,7 @@ pub enum Why {
     EndedEarly,
     /// The graphics card was lost twice within 10 minutes.
     LostTwice,
-    /// OpenGL older than MDM can draw with ([`gl_unfit`], #835).
+    /// OpenGL older than IETDM can draw with ([`gl_unfit`], #835).
     TooOld,
     /// The window froze inside OpenGL's driver ([`gl_driver_frame`], #847).
     FrozeInDriver,
@@ -547,7 +547,7 @@ impl Why {
 /// The system's API failed here (before this start, or in it) and wasn't chosen again since:
 /// why (the first failure: the card's, when it was tried).
 static GPU_FAILED: Mutex<Option<Why>> = Mutex::new(None);
-/// OpenGL can't draw MDM here (remembered, or found in this start) and wasn't chosen again since:
+/// OpenGL can't draw IETDM here (remembered, or found in this start) and wasn't chosen again since:
 /// why.
 static GL_FAILED_WHY: Mutex<Option<Why>> = Mutex::new(None);
 
@@ -584,7 +584,7 @@ pub fn gpu_failed() -> Option<Why> {
     GPU_FAILED.lock().ok().and_then(|f| *f)
 }
 
-/// For View → Draw with's note: why OpenGL can't draw MDM here, if it can't.
+/// For View → Draw with's note: why OpenGL can't draw IETDM here, if it can't.
 #[cfg(gpu)]
 pub fn gl_failed() -> Option<Why> {
     GL_FAILED_WHY.lock().ok().and_then(|f| *f)
@@ -648,7 +648,7 @@ fn forget(ways: &[Way]) {
     }
 }
 
-// ---- An OpenGL that can't draw MDM (#835, #847) ----------------------------------------------
+// ---- An OpenGL that can't draw IETDM (#835, #847) ----------------------------------------------
 
 /// What an OpenGL driver says it is (glow's `version()`, read from `GL_VERSION`).
 #[derive(Clone, Copy, Debug, PartialEq, Eq)]
@@ -659,7 +659,7 @@ pub struct GlVersion {
     pub embedded: bool,
 }
 
-/// Why this OpenGL can't draw MDM, if it can't: one rule per line, so the policy can widen
+/// Why this OpenGL can't draw IETDM, if it can't: one rule per line, so the policy can widen
 /// (`windows`: on Windows, given apart so each system's rules are tested everywhere).
 ///
 /// - Windows, OpenGL older than 3.0 (#835: Intel's first HD Graphics, OpenGL 2.1, drew the
@@ -687,7 +687,7 @@ pub fn forget_gl_failure() {
 /// OpenGL (`opengl32.dll`, whose `wglSwapBuffers` shows a frame) or a card maker's OpenGL driver
 /// (Intel's `ig*icd*.dll`, NVIDIA's `nvoglv*.dll`, AMD's `atio6axx.dll` / `atioglxx.dll`). Its
 /// module's name, if so. Below the program's code, `opengl32.dll` is in every OpenGL window's
-/// message handling: a freeze in MDM's own code isn't one. `testing` (`MDM_TEST_GL_STALL` in an
+/// message handling: a freeze in IETDM's own code isn't one. `testing` (`MDM_TEST_GL_STALL` in an
 /// off-screen test copy): the program's own code counts, its stall standing for a driver's.
 pub fn gl_driver_frame<'a>(
     modules: impl IntoIterator<Item = Option<&'a str>>,
@@ -721,7 +721,7 @@ pub fn remember_gl_froze(module: &str, seconds: u64) {
         return;
     }
     let details = format!("the window froze for {seconds} s inside {module} as OpenGL drew");
-    tracing::warn!("OpenGL can't draw MDM here: {details}; passed over from the next start");
+    tracing::warn!("OpenGL can't draw IETDM here: {details}; passed over from the next start");
     remember_failure(Way::OpenGl, Why::FrozeInDriver, &details);
 }
 
@@ -775,8 +775,8 @@ fn gl_version(gl: &eframe::glow::Context) -> GlVersion {
     test.unwrap_or(real)
 }
 
-/// A start with OpenGL: when it can't draw MDM ([`gl_unfit`]) and that wasn't known yet, it is
-/// remembered and MDM starts again without it (as after a start that drew nothing: the next
+/// A start with OpenGL: when it can't draw IETDM ([`gl_unfit`]) and that wasn't known yet, it is
+/// remembered and IETDM starts again without it (as after a start that drew nothing: the next
 /// start's plan passes over it). Known already, OpenGL draws as the last way, the others having
 /// failed, and goes on: the windows always open. `checked`: the plan's `gl_checked`.
 fn check_gl(gl: &eframe::glow::Context, checked: bool, driver: &str) {
@@ -785,7 +785,7 @@ fn check_gl(gl: &eframe::glow::Context, checked: bool, driver: &str) {
     };
     let known = GL_FAILED_WHY.lock().is_ok_and(|u| u.is_some());
     if known || !checked || GPU.is_none() {
-        tracing::warn!("{why}: it may draw MDM wrong, but nothing else could start");
+        tracing::warn!("{why}: it may draw IETDM wrong, but nothing else could start");
         return;
     }
     let details = format!("{why} ({driver})");
@@ -795,7 +795,7 @@ fn check_gl(gl: &eframe::glow::Context, checked: bool, driver: &str) {
         let _ = std::fs::remove_file(starting);
     }
     #[cfg(gpu)]
-    gpu::start_again(&format!("OpenGL can't draw MDM here: {details}"));
+    gpu::start_again(&format!("OpenGL can't draw IETDM here: {details}"));
 }
 
 /// A test's failure asked for (`name`=1), honoured only by off-screen test copies.
@@ -817,7 +817,7 @@ pub fn test_slow_start() {
 }
 
 /// The start of every main-window pass: the system's API's device checked (see `gpu::poll`).
-/// The pass itself is MDM's own work, not the API's (see [`FirstFrameClock`]).
+/// The pass itself is IETDM's own work, not the API's (see [`FirstFrameClock`]).
 pub fn frame_begin() {
     own_work_begin();
     #[cfg(gpu)]
@@ -862,16 +862,16 @@ pub fn frame_done(ctx: &egui::Context) {
 // ---- The first frame's clock ----------------------------------------------------------------
 
 /// How long a watched start has been the graphics API's to bring its first frame: the time from
-/// the start of [`run`] to the first frame, less MDM's own work meanwhile (making the app:
+/// the start of [`run`] to the first frame, less IETDM's own work meanwhile (making the app:
 /// loading the list, the fonts, the icons; and its passes' logic and layout), which isn't the
 /// API's. A slow computer just after it starts can spend more than [`FIRST_FRAME_WITHIN`] there
-/// alone, and that was counted as Direct3D drawing no first frame: MDM started again with OpenGL
+/// alone, and that was counted as Direct3D drawing no first frame: IETDM started again with OpenGL
 /// and kept it (#280).
 #[derive(Clone, Copy, Debug, Default, PartialEq, Eq)]
 struct FirstFrameClock {
     /// Counted before the stretch now running.
     counted: std::time::Duration,
-    /// Since when it runs; None while MDM's own work pauses it.
+    /// Since when it runs; None while IETDM's own work pauses it.
     since: Option<std::time::Instant>,
 }
 
@@ -883,14 +883,14 @@ impl FirstFrameClock {
         }
     }
 
-    /// MDM's own work begins: not counted.
+    /// IETDM's own work begins: not counted.
     fn pause(&mut self, now: std::time::Instant) {
         if let Some(since) = self.since.take() {
             self.counted += now.saturating_duration_since(since);
         }
     }
 
-    /// MDM's own work is done: the API's turn again.
+    /// IETDM's own work is done: the API's turn again.
     fn resume(&mut self, now: std::time::Instant) {
         self.since.get_or_insert(now);
     }
@@ -912,7 +912,7 @@ fn with_clock<R>(f: impl FnOnce(&mut FirstFrameClock, std::time::Instant) -> R) 
     c.as_mut().map(|c| f(c, now))
 }
 
-/// MDM's own work begins (the app being made, a pass's logic and layout): the first-frame clock
+/// IETDM's own work begins (the app being made, a pass's logic and layout): the first-frame clock
 /// stops until [`own_work_end`].
 pub fn own_work_begin() {
     if !DRAWN.load(Ordering::Relaxed) {
@@ -920,7 +920,7 @@ pub fn own_work_begin() {
     }
 }
 
-/// MDM's own work is done: the first-frame clock runs again.
+/// IETDM's own work is done: the first-frame clock runs again.
 pub fn own_work_end() {
     if !DRAWN.load(Ordering::Relaxed) {
         with_clock(|c, now| c.resume(now));
@@ -996,7 +996,7 @@ pub fn run<A: eframe::App + 'static>(
     let mut instead: Option<String> = None;
     for &attempt in &plan.attempts {
         // A watched start (see `watchable`): marked until its first frame (one that ends before
-        // is remembered at the next start), which must come in time, or MDM starts again the
+        // is remembered at the next start), which must come in time, or IETDM starts again the
         // next way.
         let watched = Way::of(attempt).filter(|_| plan.watch.contains(&attempt));
         if let Some((starting, _)) = watched.and_then(Way::files) {
@@ -1029,7 +1029,7 @@ pub fn run<A: eframe::App + 'static>(
             Box::new(move |cc| {
                 let make = make.borrow_mut().take().ok_or("the app was already made")?;
                 started(cc, attempt, why_not, gl_checked);
-                // Making the app is MDM's own work, not the API's: off the first frame's clock.
+                // Making the app is IETDM's own work, not the API's: off the first frame's clock.
                 own_work_begin();
                 let app = make(cc);
                 own_work_end();
@@ -1084,7 +1084,7 @@ fn configure(opts: &mut eframe::NativeOptions, attempt: Attempt) {
 
 /// The app is being made: what draws is known.
 /// `why`: why this way (the plan's reason, or why the way before it didn't start).
-/// `gl_checked`: the plan's (an OpenGL that can't draw MDM starts MDM again without it).
+/// `gl_checked`: the plan's (an OpenGL that can't draw IETDM starts IETDM again without it).
 fn started(cc: &eframe::CreationContext<'_>, attempt: Attempt, why: String, gl_checked: bool) {
     #[cfg(gpu)]
     let gpu = cc
@@ -1110,7 +1110,7 @@ fn started(cc: &eframe::CreationContext<'_>, attempt: Attempt, why: String, gl_c
         "drawing with {detail}, {} ms after start ({why})",
         since_start()
     );
-    // An OpenGL that can't draw MDM: MDM starts again without it (#835).
+    // An OpenGL that can't draw IETDM: IETDM starts again without it (#835).
     if let Some(gl) = &cc.gl {
         check_gl(gl, gl_checked, &gl_driver(gl));
     }
@@ -1123,7 +1123,7 @@ fn started(cc: &eframe::CreationContext<'_>, attempt: Attempt, why: String, gl_c
     // The crash reports say it, and why ("OpenGL on Intel(R) UHD Graphics 620 (4.6.0 - Build …)
     // — Direct3D 12 failed here before: …").
     crate::crash::renderer(&format!("{detail} — {why}"));
-    // Errors are logged, not panics, and a lost graphics card starts MDM again.
+    // Errors are logged, not panics, and a lost graphics card starts IETDM again.
     #[cfg(gpu)]
     if let Some(rs) = &cc.wgpu_render_state {
         gpu::watch_device(&rs.device);
@@ -1132,7 +1132,7 @@ fn started(cc: &eframe::CreationContext<'_>, attempt: Attempt, why: String, gl_c
 }
 
 /// `/show renderer-lost` (off-screen test copies): the system's API's device lost on purpose
-/// (MDM starts again).
+/// (IETDM starts again).
 #[cfg(gpu)]
 pub fn test_device_lost() {
     gpu::lose_device();
@@ -1167,14 +1167,14 @@ mod gpu {
 
     /// The first frame of this try (`way`) must come within [`FIRST_FRAME_WITHIN`]; if it doesn't
     /// (a driver stuck in its first present, a window left black), that way is remembered as
-    /// failed and MDM starts again, drawing the next way.
+    /// failed and IETDM starts again, drawing the next way.
     pub fn watch_first_frame(way: Way, this_try: usize) {
         let _ = std::thread::Builder::new()
             .name("first frame watch".into())
             .spawn(move || {
                 let done =
                     || DRAWN.load(Ordering::Relaxed) || TRY.load(Ordering::Relaxed) != this_try;
-                // The API's time only: MDM's own work meanwhile isn't counted (#280).
+                // The API's time only: IETDM's own work meanwhile isn't counted (#280).
                 let over = || clock_counted().is_some_and(|d| d >= FIRST_FRAME_WITHIN);
                 while !over() {
                     if done() {
@@ -1205,9 +1205,9 @@ mod gpu {
     /// When the card was last lost (its time inside).
     const LOST: &str = "lost";
 
-    /// wgpu's errors go to the log instead of ending MDM (its default handler panics), and a
-    /// device lost while MDM runs (a driver update or reset: none of the three APIs recovers
-    /// by itself) starts MDM again, with the same API, or the next way after a second loss
+    /// wgpu's errors go to the log instead of ending IETDM (its default handler panics), and a
+    /// device lost while IETDM runs (a driver update or reset: none of the three APIs recovers
+    /// by itself) starts IETDM again, with the same API, or the next way after a second loss
     /// within 10 minutes.
     pub fn watch_device(device: &wgpu::Device) {
         device.on_uncaptured_error(Arc::new(|e| {
@@ -1262,10 +1262,10 @@ mod gpu {
         }
     }
 
-    /// End this copy and start MDM again: the new one waits for this one to be gone (as after
+    /// End this copy and start IETDM again: the new one waits for this one to be gone (as after
     /// an update), and draws as the failure markers now say.
     pub(super) fn start_again(why: &str) {
-        tracing::warn!("{why}: starting MDM again");
+        tracing::warn!("{why}: starting IETDM again");
         // The AppImage file itself on Linux (this program sits in its temporary mount).
         #[cfg(windows)]
         let program = std::env::current_exe().ok();
@@ -1280,7 +1280,7 @@ mod gpu {
                 .ok()
         });
         if started.is_none() {
-            tracing::error!("MDM couldn't start again");
+            tracing::error!("IETDM couldn't start again");
         }
         crate::crash::clean_exit();
         // The window thread may be stuck in the driver: end at once, without unwinding.
@@ -1294,7 +1294,7 @@ mod gpu {
     pub fn options(adapters: Adapters) -> WgpuConfiguration {
         let mut setup = WgpuSetupCreateNew::without_display_handle();
         let desc = &mut setup.instance_descriptor;
-        // The system's API only, and nothing from WGPU_* variables: what draws is MDM's choice.
+        // The system's API only, and nothing from WGPU_* variables: what draws is IETDM's choice.
         desc.flags = wgpu::InstanceFlags::from_build_config();
         #[cfg(windows)]
         {
@@ -1347,12 +1347,12 @@ mod gpu {
             }
         }));
         setup.device_descriptor = Arc::new(|_adapter| wgpu::DeviceDescriptor {
-            label: Some("MDM"),
+            label: Some("IETDM"),
             required_limits: wgpu::Limits {
                 // As eframe asks: windows as large as 4K and more.
                 max_texture_dimension_2d: 8192,
                 // Direct3D 12 keeps one descriptor heap this large, in the graphics card's memory
-                // and a copy in MDM's: wgpu's default (a million, 32 MB each) is for games. egui
+                // and a copy in IETDM's: wgpu's default (a million, 32 MB each) is for games. egui
                 // uses one per texture (icons, fonts, file icons): a few hundred. (Vulkan and
                 // Metal size their pools by use; the cap costs them nothing.)
                 max_non_sampler_bindings: 65_536,
@@ -1533,7 +1533,7 @@ mod tests {
     };
 
     /// What the data folder remembers: the card failed, its software renderer failed, OpenGL
-    /// can't draw MDM.
+    /// can't draw IETDM.
     fn k(card_failed: bool, software_failed: bool, gl_failed: bool) -> Known {
         Known {
             card_failed,
@@ -1559,7 +1559,7 @@ mod tests {
             let p = plan(setting, None, NONE);
             assert_eq!(p.attempts, [d3d, gl, warp]);
             assert_eq!(p.watch, [d3d, gl]);
-            // No Direct3D 12 on the card (also an older MDM's direct3d-failed.txt): OpenGL.
+            // No Direct3D 12 on the card (also an older IETDM's direct3d-failed.txt): OpenGL.
             let p = plan(setting, None, k(true, false, false));
             assert_eq!(p.attempts, [gl, any]);
             assert_eq!(p.watch, [gl]);
@@ -1593,7 +1593,7 @@ mod tests {
             assert_eq!(p.attempts[0], first);
             assert!(!p.watched());
         }
-        // The files' names (an older MDM's direct3d-failed.txt and #835's opengl-unfit.txt count).
+        // The files' names (an older IETDM's direct3d-failed.txt and #835's opengl-unfit.txt count).
         if let Some((starting, failed)) = Way::Card.files() {
             assert!(starting.ends_with("direct3d-starting"));
             assert!(failed.ends_with("direct3d-failed.txt"));
@@ -1624,9 +1624,9 @@ mod tests {
     #[test]
     fn a_freeze_inside_an_opengl_driver() {
         let at = |modules: &[&'static str]| modules.iter().map(|m| Some(*m)).collect::<Vec<_>>();
-        let mdm = "misterdownloadmanager.exe";
+        let mdm = "ietdownloadmanager.exe";
         // Intel HD 5500 (#871), AMD (#860), Windows' own OpenGL showing a frame, NVIDIA: above
-        // MDM's own code.
+        // IETDM's own code.
         for (stack, driver) in [
             (
                 at(&["win32u.dll", "ig8icd64.dll", "opengl32.dll", mdm]),
@@ -1645,7 +1645,7 @@ mod tests {
         ] {
             assert_eq!(gl_driver_frame(stack, false).as_deref(), Some(driver));
         }
-        // MDM's own code stuck (opengl32.dll lower down, handling the window's messages, as in
+        // IETDM's own code stuck (opengl32.dll lower down, handling the window's messages, as in
         // every OpenGL window), Direct3D's drivers, unknown frames: not OpenGL's.
         for stack in [
             at(&[
@@ -1661,7 +1661,7 @@ mod tests {
         ] {
             assert_eq!(gl_driver_frame(stack, false), None);
         }
-        // A test copy's stall (MDM_TEST_GL_STALL): MDM's own code counts.
+        // A test copy's stall (MDM_TEST_GL_STALL): IETDM's own code counts.
         let stall = at(&["ntdll.dll", "kernelbase.dll", mdm, "opengl32.dll"]);
         assert_eq!(
             gl_driver_frame(stall, true).as_deref(),
@@ -1702,7 +1702,7 @@ mod tests {
         );
     }
 
-    /// An OpenGL that can't draw MDM (#835) is the last way, after the system's API on the card
+    /// An OpenGL that can't draw IETDM (#835) is the last way, after the system's API on the card
     /// and on a software renderer; the order for any other card is unchanged (above).
     #[test]
     fn an_opengl_that_cant_draw_mdm_comes_last() {
@@ -1760,7 +1760,7 @@ mod tests {
         );
     }
 
-    /// The rule: on Windows, OpenGL older than 3.0 can't draw MDM (#835: 2.1 drew garbage);
+    /// The rule: on Windows, OpenGL older than 3.0 can't draw IETDM (#835: 2.1 drew garbage);
     /// elsewhere every version is kept.
     #[test]
     fn opengl_older_than_3_cant_draw_mdm_on_windows() {
@@ -1844,8 +1844,8 @@ mod tests {
         assert_eq!(choose(&[(VirtualGpu, true)], Adapters::Any, true), Some(0));
     }
 
-    /// The first frame's clock counts the API's time only: MDM's own work (making the app, its
-    /// passes) is left out, so a slow start of MDM's isn't taken for Direct3D failing (#280: 10.7
+    /// The first frame's clock counts the API's time only: IETDM's own work (making the app, its
+    /// passes) is left out, so a slow start of IETDM's isn't taken for Direct3D failing (#280: 10.7
     /// s from OpenGL's context to the first frame on the reporter's computer, at the 10 s limit).
     #[test]
     fn the_first_frame_clock_leaves_out_mdms_own_work() {
@@ -1859,7 +1859,7 @@ mod tests {
         c.pause(t0 + s(2));
         assert_eq!(c.counted(t0 + s(14)), s(2));
         c.resume(t0 + s(14));
-        // Its first pass, 3 s of MDM's, then 1 s of painting and presenting.
+        // Its first pass, 3 s of IETDM's, then 1 s of painting and presenting.
         c.pause(t0 + s(14));
         c.resume(t0 + s(17));
         assert_eq!(c.counted(t0 + s(18)), s(3));

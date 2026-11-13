@@ -1,4 +1,4 @@
-//! `misterdownloadmanager --headless` (#157): MDM on a server (a NAS, Docker, Unraid), without a
+//! `ietdownloadmanager --headless` (#157): IETDM on a server (a NAS, Docker, Unraid), without a
 //! window. The same app runs (its list, queues, Scheduler, limits, torrents, the automation API
 //! and the remote control), driven by a loop instead of the window's frames; downloads come from
 //! the remote control's page, the browser extension pointed at it, or the command line.
@@ -16,7 +16,7 @@
 //! | | `MDM_REMOTE_URL` | the page's address as people open it (a container's isn't) |
 //!
 //! The remote control is on (that is the point); `MDM_REMOTE=off` turns it off. With no device
-//! paired yet, a pairing code is printed at start; `misterdownloadmanager-cli pair` prints
+//! paired yet, a pairing code is printed at start; `ietdownloadmanager-cli pair` prints
 //! another.
 
 use std::path::PathBuf;
@@ -66,7 +66,7 @@ pub fn main(args: Vec<String>) -> ExitCode {
     }
     let Some(_instance) = mdm_ipc::instance_lock() else {
         eprintln!(
-            "Another Mister Download Manager uses the data folder {}.",
+            "Another IET Download Manager uses the data folder {}.",
             data.display()
         );
         return ExitCode::FAILURE;
@@ -76,7 +76,7 @@ pub fn main(args: Vec<String>) -> ExitCode {
     // the one links added by hand go with (#668).
     crate::defaultbrowser::start();
     tracing::info!(
-        "Mister Download Manager {} ({}) starting without a window",
+        "IET Download Manager {} ({}) starting without a window",
         crate::help::VERSION,
         crate::help::COMMIT
     );
@@ -177,7 +177,7 @@ pub fn main(args: Vec<String>) -> ExitCode {
     ExitCode::SUCCESS
 }
 
-/// The folder, made if it isn't there, and a file written in it: a folder MDM can't write fails
+/// The folder, made if it isn't there, and a file written in it: a folder IETDM can't write fails
 /// at start, not at each download.
 fn writable(dir: &std::path::Path) -> std::io::Result<()> {
     std::fs::create_dir_all(dir)?;
@@ -187,10 +187,10 @@ fn writable(dir: &std::path::Path) -> std::io::Result<()> {
 }
 
 /// What to do when a folder belongs to another user: Docker makes a folder it mounts that isn't
-/// there yet (`-v /srv/mdm-config:/config`) as root's, and MDM runs as another user.
+/// there yet (`-v /srv/mdm-config:/config`) as root's, and IETDM runs as another user.
 fn not_ours(e: &std::io::Error) -> &'static str {
     if e.kind() == std::io::ErrorKind::PermissionDenied {
-        "\nIt belongs to another user: make it before the first start, owned by the user MDM runs \
+        "\nIt belongs to another user: make it before the first start, owned by the user IETDM runs \
          as (`mkdir`, then `chown` it or give Docker that user with `--user`)."
     } else {
         ""
@@ -223,7 +223,7 @@ fn tell(app: &mut crate::app::App) -> bool {
                     serde_json::from_str(&app.pair_answer());
                 if let Ok(a) = answer {
                     println!(
-                        "No device is paired yet. Open the address (or scan this) and enter the code {} {} (it works for {} minutes; `misterdownloadmanager-cli pair` shows a new one):\n{}",
+                        "No device is paired yet. Open the address (or scan this) and enter the code {} {} (it works for {} minutes; `ietdownloadmanager-cli pair` shows a new one):\n{}",
                         &a.code[..4],
                         &a.code[4..],
                         a.minutes,

@@ -6,7 +6,7 @@
 //! download chosen in the browser's quality menu, which takes the look-up the menu was made from
 //! ([`Preloaded`]): the page is then read once for the menu and the download together.
 //!
-//! The bytes come down through MDM's engine (#769, [`crate::streams`]): yt-dlp chooses the
+//! The bytes come down through IETDM's engine (#769, [`crate::streams`]): yt-dlp chooses the
 //! formats, the engine downloads each stream into the file yt-dlp looks for, then yt-dlp merges
 //! them, saves the subtitles and the metadata as after its own download. What the engine can't
 //! download (a live stream, RTMP…) yt-dlp downloads itself, as before.
@@ -41,7 +41,7 @@ pub struct Progress {
     /// Subtitles that didn't come with the video, once it is done (#68): the video is saved all
     /// the same.
     pub sub_problems: Vec<SubProblem>,
-    /// While MDM's engine downloads the streams (#769): its segments, connections and server.
+    /// While IETDM's engine downloads the streams (#769): its segments, connections and server.
     pub engine: Option<crate::streams::View>,
     /// Why yt-dlp downloads this one itself (#769), once a run has found out.
     pub helper: Option<crate::streams::Helper>,
@@ -221,7 +221,7 @@ pub fn set_chapters(on: bool) {
 }
 
 /// The chapters a video's page lists, put into the file (#827): `--embed-chapters` on yt-dlp's
-/// last run, the one that merges and fixes the file up (after MDM's engine too). Only with ffmpeg,
+/// last run, the one that merges and fixes the file up (after IETDM's engine too). Only with ffmpeg,
 /// which writes them, and for a video or the sound as the site has it, not a conversion to MP3,
 /// Opus or FLAC. A video without chapters is left as it is.
 fn chapter_args(chapters: bool, ffmpeg: bool, converted: bool) -> Vec<String> {
@@ -445,7 +445,7 @@ impl InfoSlot {
 }
 
 /// The browser's quality menu's look-up for the download chosen there (its first run only):
-/// the look-up, and the choice as the menu offered it (MDM's selector, its label, untranslated,
+/// the look-up, and the choice as the menu offered it (IETDM's selector, its label, untranslated,
 /// and whether the menu's list had merged qualities). The page yt-dlp read must offer that very
 /// choice, or the run looks the page up itself.
 pub struct Preloaded {
@@ -492,10 +492,10 @@ const SUBTITLES: [&str; 10] = [
 /// Whether `rest`, a file name after `<stem>.` (lower case), is one yt-dlp writes for a download
 /// saved as `<stem>.%(ext)s`: an unfinished run's (`<ext>.part`, `<ext>.ytdl`,
 /// `<ext>.part-Frag<N>[.part]`, each also for one stream of a merged choice as `f<id>.<ext>…`,
-/// that stream once whole, `f<id>.<ext>`, and a merge's `temp.<ext>`; MDM's engine's part file
+/// that stream once whole, `f<id>.<ext>`, and a merge's `temp.<ext>`; IETDM's engine's part file
 /// and resume state for such a stream, `f<id>.<ext>.mdm.part` and `.mdm.json`, #769); with
 /// `outputs`, also the finished file (`<ext>`) and its subtitles (`<language>.<srt|vtt…>`).
-/// Nothing else: another download's files (MDM's own `.mdm.part`), a file merely named alike.
+/// Nothing else: another download's files (IETDM's own `.mdm.part`), a file merely named alike.
 fn yt_dlp_leftover(rest: &str, outputs: bool) -> bool {
     let media = |s: &str| MEDIA.contains(&s);
     let word = |s: &str| {
@@ -1083,7 +1083,7 @@ fn run(
                 && quality.as_deref().is_some_and(several_streams)
             {
                 // Several streams: ffmpeg joins them now (#736). Told by this run's `MDMQ`, not
-                // by the meter: when MDM's engine downloaded the streams (#769) there is none,
+                // by the meter: when IETDM's engine downloaded the streams (#769) there is none,
                 // and that is how most videos come down.
                 *merged.lock().unwrap() = Some(merge_file(Path::new(rest.trim())));
                 progress.lock().unwrap().merging = Some(None);
@@ -1398,7 +1398,7 @@ fn attempt(
         return failed(format!("Cannot write the video information: {e}"), rerouted);
     }
     let _cleanup = Remove(file.clone());
-    // MDM's engine downloads the streams (#769); yt-dlp then finds them in place.
+    // IETDM's engine downloads the streams (#769); yt-dlp then finds them in place.
     let mut by_engine = false;
     if let Some(e) = engine {
         match e.fetch(exe, url, browser, &file, progress, dead, reroute) {
@@ -1557,7 +1557,7 @@ fn choose(exe: &Path, args: &[String], file: &Path) -> Result<serde_json::Value,
 /// yt-dlp's choice as a line of JSON: `MDMJ {…}` (`filename` and the chosen formats in it).
 const CHOICE: &str = "MDMJ %()j";
 
-/// MDM's engine for a video's streams (#769): the engine itself, the arguments yt-dlp chooses
+/// IETDM's engine for a video's streams (#769): the engine itself, the arguments yt-dlp chooses
 /// the formats with (`choose`), and the download's engine part under way.
 pub(crate) struct ByEngine {
     engine: crate::streams::Engine,
@@ -1723,7 +1723,7 @@ fn template_text(s: &str) -> String {
     s.replace('%', "%%")
 }
 
-/// yt-dlp's speed when it downloads by itself (#708; MDM's engine downloads every other video,
+/// yt-dlp's speed when it downloads by itself (#708; IETDM's engine downloads every other video,
 /// #769): at most `rate` bytes/s.
 pub fn limit_args(rate: Option<u64>) -> Vec<String> {
     rate.map(|r| vec!["--limit-rate".into(), r.to_string()])
@@ -1748,7 +1748,7 @@ impl VideoJob {
     /// choice was shown with (every stream), so the progress starts from the whole. `browser`:
     /// what the browser's request for the page carried (proc::FromBrowser). `subs`: the
     /// subtitles to save with it (#68; none for a sound alone, which has no picture to put them
-    /// on). `engine`: MDM's engine, which downloads the streams yt-dlp finds (#769; its options'
+    /// on). `engine`: IETDM's engine, which downloads the streams yt-dlp finds (#769; its options'
     /// speed limit is the download's); without it, or for what it can't download, yt-dlp does.
     #[allow(clippy::too_many_arguments)]
     pub fn start(
@@ -2022,7 +2022,7 @@ mod tests {
 
     /// A video download's files that "overwrite" (a duplicate added again) removes: exactly what
     /// yt-dlp leaves for its stem, the finished file and subtitles only with `outputs`; never a
-    /// file merely named alike, another stem's, or MDM's own part files.
+    /// file merely named alike, another stem's, or IETDM's own part files.
     #[test]
     fn a_videos_own_files_are_exactly_yt_dlps() {
         let dir = tempfile::tempdir().unwrap();
@@ -2178,7 +2178,7 @@ mod tests {
         let dir = tempfile::tempdir().unwrap();
         let format = std::env::var("MDM_LIVE_FORMAT").unwrap_or_else(|_| "worstaudio".into());
         let ffmpeg = std::env::var("MDM_LIVE_FFMPEG").ok().map(PathBuf::from);
-        // MDM's engine downloads the streams (#769), unless MDM_LIVE_YTDLP_ALONE is set.
+        // IETDM's engine downloads the streams (#769), unless MDM_LIVE_YTDLP_ALONE is set.
         let rt = tokio::runtime::Runtime::new().unwrap();
         let engine =
             std::env::var_os("MDM_LIVE_YTDLP_ALONE")

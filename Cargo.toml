@@ -34,7 +34,7 @@ craft-i18n = { git = "https://github.com/storytold/craft-libs", rev = "1a11a4897
 # a clipboard of its own, and Ctrl+V / Cmd+V never sees what other programs copied).
 eframe = { version = "0.37.0", default-features = false, features = ["glow", "default_fonts", "accesskit", "clipboard"] }
 egui = "0.37.0"
-# The lock that keeps MDM's own clipboard reads and writes apart from egui's (main.rs, #629).
+# The lock that keeps IETDM's own clipboard reads and writes apart from egui's (main.rs, #629).
 egui-winit = { version = "0.37.0", default-features = false }
 egui_extras = { version = "0.37.0", features = ["svg", "image"] }
 image = { version = "0.25.10", default-features = false, features = ["png"] }
@@ -93,12 +93,12 @@ sysinfo = { version = "0.40.0", default-features = false, features = ["disk"] }
 proptest = "1.12.0"
 # HTTP/1.1 only: each engine worker must be one real TCP connection (notes/ENGINE.md §4).
 # The browser-like connection (#668, crates/engine/src/browserlike.rs): a download whose site's
-# bot check refused MDM's own connection is asked once more the way a browser connects (its TLS
+# bot check refused IETDM's own connection is asked once more the way a browser connects (its TLS
 # handshake, HTTP/2 settings and header order), on BoringSSL. Builds BoringSSL from source:
 # CMake, a C/C++ compiler, libclang and, on Windows, NASM.
 wreq = { version = "=0.16.3", default-features = false, features = ["webpki-roots", "tokio-rt", "socks", "stream", "gzip", "brotli", "zstd", "deflate"] }
 wreq-util = { version = "=0.2.1", default-features = false, features = ["emulation"] }
-# Its trusted certificates: Mozilla's (as wreq's own default) and the system's, which MDM's own
+# Its trusted certificates: Mozilla's (as wreq's own default) and the system's, which IETDM's own
 # connection trusts too (an antivirus's or a company's HTTPS inspection adds its own there).
 rustls-native-certs = "0.8.5"
 webpki-root-certs = "1.0.11"
@@ -186,12 +186,12 @@ opt-level = 3
 opt-level = 3
 
 # Dependencies' debug info: file:line only, so backtraces still name them, in debug symbols a
-# fraction of the size (every test program links them all). MDM's own crates keep full debug
+# fraction of the size (every test program links them all). IETDM's own crates keep full debug
 # info, for stepping through them in a debugger.
 [profile.dev.package."*"]
 debug = "line-tables-only"
 
-# storytold's egui fork (as storytold/craft-libs, D-003) plus MDM's commits on anefzaoui/egui
+# storytold's egui fork (as storytold/craft-libs, D-003) plus IETDM's commits on anefzaoui/egui
 # (branch mdm-start-hidden, on mdm-wgpu, on mdm-accesskit-windows): every window created hidden
 # gets an AccessKit adapter, with OpenGL (glow) and with Direct3D (wgpu, #89), so screen readers
 # read the dialogs and menus; a dialog opened while the main window is minimized no longer panics
@@ -202,12 +202,12 @@ debug = "line-tables-only"
 # without a usable configuration is an error, not a panic, so the next renderer is tried; a main
 # window built hidden stays hidden after its first frame (a start with the session waits in the
 # notification area, #226); a monitor that has just gone away has no size instead of a panic (#335); the clipboard used
-# by one thread at a time, egui's copy and paste and MDM's own reads (`egui_winit::clipboard::
+# by one thread at a time, egui's copy and paste and IETDM's own reads (`egui_winit::clipboard::
 # lock_system_clipboard`, #629). craft-libs can take the same commits to share one egui again.
 [patch.crates-io]
 # librqbit 9.1.0 with per-torrent rate limits that change while a torrent runs (#39), and a
 # magnet lookup's progress counted (#92), and every socket bound to one address (`bind_ip`,
-# #143), and every HTTP client of a session built through MDM's TLS setup (`configure_http_client`:
+# #143), and every HTTP client of a session built through IETDM's TLS setup (`configure_http_client`:
 # a system without CA certificates), and a DHT that stops asking a bootstrap node that never
 # answers once another one has, and loads its saved IPv6 nodes (#650), and a piece whose hash
 # check a pause cuts short queued again instead of lost (#706), until upstream has them

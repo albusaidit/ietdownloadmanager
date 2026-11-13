@@ -1,4 +1,4 @@
-//! The interface language (M16, D-019). craft-i18n reads MDM's catalogs (`i18n/<locale>.tsv`,
+//! The interface language (M16, D-019). craft-i18n reads IETDM's catalogs (`i18n/<locale>.tsv`,
 //! embedded at build time) and looks the English source text up: a missing translation is the
 //! English itself. The language follows Windows' display language until the user picks one in
 //! View → Language; numbers are grouped and pointed as the interface language writes them
@@ -156,8 +156,8 @@ pub fn isolate(value: &str) -> String {
     craft_i18n::isolate(value)
 }
 
-/// Text MDM hands to the system to draw (#919): a window's title (the taskbar, its preview and
-/// tip, Alt+Tab), the notification-area icon's tip, a file dialog's title. MDM's own drawing
+/// Text IETDM hands to the system to draw (#919): a window's title (the taskbar, its preview and
+/// tip, Alt+Tab), the notification-area icon's tip, a file dialog's title. IETDM's own drawing
 /// keeps a file name or a number apart from the sentence around it with Unicode's isolates
 /// (FSI, LRI, RLI … PDI: [`isolate`], [`ltr`], [`fmt`]), which Unicode added in 2013 and
 /// Windows 10's shell draws as boxes. They go:
@@ -167,7 +167,7 @@ pub fn isolate(value: &str) -> String {
 /// - elsewhere each isolate becomes the older controls that keep the same order, which Windows
 ///   has drawn as nothing since Windows 2000 (its text boxes offer them under "Insert Unicode
 ///   control character"): an embedding (LRE U+202A or RLE U+202B … PDF U+202C) in the value's
-///   own direction, so a Hebrew name with a Latin ".txt" reads as it does in MDM, and the
+///   own direction, so a Hebrew name with a Latin ".txt" reads as it does in IETDM, and the
 ///   surrounding text's mark (LRM U+200E, RLM U+200F) on each side of it, so a number or a
 ///   bracket next to it stays on its own side ("71%" before an English name in an Arabic
 ///   title). The text outside every isolate takes the interface's direction, which the first
@@ -359,7 +359,7 @@ pub fn info(code: &str) -> Option<Info> {
         })
 }
 
-/// The code of Windows' display language as MDM offers it (English when none fits).
+/// The code of Windows' display language as IETDM offers it (English when none fits).
 pub fn system_code() -> &'static str {
     i18n().code(i18n().system_lang())
 }
@@ -436,7 +436,7 @@ mod tests {
     }
 
     /// #919: what goes to the system has no isolate (Windows 10's taskbar drew them as boxes),
-    /// and reads in the same order as MDM's own drawing of it.
+    /// and reads in the same order as IETDM's own drawing of it.
     #[test]
     fn text_for_the_system_has_no_isolates_and_keeps_its_order() {
         let name = |n: &str| isolate(n);
@@ -449,8 +449,8 @@ mod tests {
         // No isolate: untouched, in any direction.
         for rtl in [false, true] {
             assert_eq!(
-                os_text_in("Mister Download Manager", rtl),
-                "Mister Download Manager"
+                os_text_in("IET Download Manager", rtl),
+                "IET Download Manager"
             );
             assert_eq!(os_text_in("مدير التنزيل", rtl), "مدير التنزيل");
         }
@@ -472,7 +472,7 @@ mod tests {
             // Counts in an Arabic tip, one per line (the notification area's icon).
             (
                 format!(
-                    "Mister Download Manager\n{}",
+                    "IET Download Manager\n{}",
                     fmt(
                         "{n} تنزيلات، {speed}",
                         &[("n", &ltr("3")), ("speed", &ltr("1.2 MB/s"))]

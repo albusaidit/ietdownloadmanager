@@ -227,7 +227,7 @@ pub fn galley(p: &Painter, font: FontId, s: &str, color: Color32) -> std::sync::
 }
 
 /// The banner atop a first-start window (the browser extension's offer, the video helpers):
-/// MDM's logo at the start side, a bold headline, and a muted subline that wraps. 84 px tall, and
+/// IETDM's logo at the start side, a bold headline, and a muted subline that wraps. 84 px tall, and
 /// taller by what a long translation's extra lines need: that extra is returned, for the window
 /// to add to its height and to move what is below the banner down by (it is known from the frame
 /// before: [`crate::dialogs::grow_extra`] under `key`).
@@ -966,7 +966,7 @@ fn wrap_lines(p: &Painter, s: &str, room: f32) -> Vec<String> {
                     n = k + 1;
                 }
                 let latin = |k: usize| g[k].chars().all(|c| c.is_ascii_alphanumeric());
-                // Not inside a Latin word ("Mister Download Manager" in Japanese): before it.
+                // Not inside a Latin word ("IET Download Manager" in Japanese): before it.
                 if n > 0
                     && n < g.len()
                     && latin(n - 1)

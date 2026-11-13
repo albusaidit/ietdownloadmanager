@@ -1,6 +1,6 @@
 [package]
 name = "mdm-engine"
-description = "MDM download engine: dynamic segmentation, workers, resume"
+description = "IETDM download engine: dynamic segmentation, workers, resume"
 version.workspace = true
 edition.workspace = true
 rust-version.workspace = true
@@ -10,7 +10,7 @@ publish.workspace = true
 
 [features]
 default = ["browser-connection"]
-# The browser-like connection for sites whose bot check refuses MDM's own (#668,
+# The browser-like connection for sites whose bot check refuses IETDM's own (#668,
 # src/browserlike.rs). Without it a bot check's refusal stands (the browser takes the download).
 browser-connection = ["dep:wreq", "dep:wreq-util", "dep:rustls-native-certs", "dep:webpki-root-certs"]
 

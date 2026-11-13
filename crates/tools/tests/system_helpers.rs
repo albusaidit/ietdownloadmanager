@@ -81,7 +81,7 @@ fn check(root: &std::path::Path) {
             rt.block_on(mdm_tools::install_latest(&dir, &net, None)),
             Err(mdm_tools::Error::Adapter(mdm_engine::NetError::Down { .. }))
         ),
-        "the explicit way to MDM's own copy goes to the network"
+        "the explicit way to IETDM's own copy goes to the network"
     );
     assert!(!dir.join("yt-dlp").exists(), "nothing installed on the way");
 
@@ -125,9 +125,9 @@ fn check(root: &std::path::Path) {
     gallery_dl(root, &dir, &rt, &net);
 }
 
-/// gallery-dl as yt-dlp (#571): the system's found, run with the options every release MDM
+/// gallery-dl as yt-dlp (#571): the system's found, run with the options every release IETDM
 /// drives accepts (a distribution's may be old: Ubuntu 24.04's 1.26.9 refuses `--no-input`),
-/// passed over for MDM's own copy and for the person's.
+/// passed over for IETDM's own copy and for the person's.
 #[cfg(unix)]
 fn gallery_dl(
     root: &std::path::Path,
@@ -148,14 +148,14 @@ fn gallery_dl(
         .map(|a| a.to_string_lossy().into_owned())
         .collect();
     assert_eq!(args, ["--ignore-config", "--", "https://x.test/g"]);
-    // Helpers' Use MDM's own copy: an explicit install, to the network (refused here).
+    // Helpers' Use IETDM's own copy: an explicit install, to the network (refused here).
     if gallery::asset().is_some() {
         assert!(
             matches!(
                 rt.block_on(gallery::install_latest(dir, net, None)),
                 Err(mdm_tools::Error::Adapter(mdm_engine::NetError::Down { .. }))
             ),
-            "the explicit way to MDM's own copy goes to the network"
+            "the explicit way to IETDM's own copy goes to the network"
         );
     }
     assert!(
@@ -163,7 +163,7 @@ fn gallery_dl(
         "nothing installed on the way"
     );
 
-    // MDM's own copy wins, and the person's over both.
+    // IETDM's own copy wins, and the person's over both.
     let own = Installed {
         version: "1.31.0".into(),
         exe: root.join("managed-gallery-dl"),

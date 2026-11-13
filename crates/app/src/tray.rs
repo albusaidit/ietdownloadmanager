@@ -39,7 +39,7 @@ pub enum TrayCmd {
     ShowDownload(u64),
 }
 
-/// Whether a tray shows MDM's icon at all, so hiding a window there can be undone. Windows and
+/// Whether a tray shows IETDM's icon at all, so hiding a window there can be undone. Windows and
 /// macOS (the menu bar) always have one; on Linux only when a StatusNotifierItem host runs (#59),
 /// asked each time: it may come and go. (Linux's icon itself is made beside the window: `Setup`.)
 pub fn available() -> bool {
@@ -70,7 +70,7 @@ pub enum OnClose {
 /// shell said the icon is gone. No answer, or an old one, hides the window as an icon that is
 /// there does (#750, #718, #754: a shell that couldn't confirm the icon left the window in the
 /// taskbar with the icon right there); such a window still comes back from the icon once the
-/// shell answers, and a second start of MDM always brings it back.
+/// shell answers, and a second start of IETDM always brings it back.
 pub fn on_close(keep_running: bool, tray: bool, icon: Icon, taskbar: bool) -> OnClose {
     if !(keep_running && tray) {
         OnClose::Quit
@@ -393,7 +393,7 @@ impl Native {
     }
 
     /// Whether a window hidden in the notification area should come back to the taskbar: the
-    /// shell, running and answering, has said for some seconds that it has no icon of MDM's
+    /// shell, running and answering, has said for some seconds that it has no icon of IETDM's
     /// (`watch::rescue`). Never on no answer. Windows only: macOS leaves a window hidden in the
     /// menu bar as it was.
     #[cfg(windows)]
@@ -426,7 +426,7 @@ impl Native {
         };
         add(
             &menu,
-            crate::i18n::mark("Open Mister Download Manager"),
+            crate::i18n::mark("Open IET Download Manager"),
             TrayCmd::Show,
         );
         menu.append(&PredefinedMenuItem::separator()).ok();

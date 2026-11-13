@@ -1,12 +1,12 @@
 {
   "name": {
-    "message": "Mister Download Manager"
+    "message": "IET Download Manager"
   },
   "description": {
-    "message": "ማውረዶችን ከብሮውዘር ወደ Mister Download Manager ያስተላልፋል።"
+    "message": "ማውረዶችን ከብሮውዘር ወደ IET Download Manager ያስተላልፋል።"
   },
   "menu": {
-    "message": "በMister Download Manager ያውርዱ"
+    "message": "በIET Download Manager ያውርዱ"
   },
   "video_download": {
     "message": "ቪዲዮ አውርድ"
@@ -30,19 +30,19 @@
     "message": "የአዝራር ቅንብሮች..."
   },
   "video_sent": {
-    "message": "ወደ Mister Download Manager ተልኳል"
+    "message": "ወደ IET Download Manager ተልኳል"
   },
   "menu_selected": {
-    "message": "የተመረጡ አገናኞችን በMister Download Manager ያውርዱ"
+    "message": "የተመረጡ አገናኞችን በIET Download Manager ያውርዱ"
   },
   "menu_all": {
-    "message": "ሁሉንም አገናኞች በMister Download Manager ያውርዱ"
+    "message": "ሁሉንም አገናኞች በIET Download Manager ያውርዱ"
   },
   "status_connected": {
-    "message": "ከMister Download Manager ጋር ተገናኝቷል"
+    "message": "ከIET Download Manager ጋር ተገናኝቷል"
   },
   "status_connected_version": {
-    "message": "ከMister Download Manager $version$ ጋር ተገናኝቷል",
+    "message": "ከIET Download Manager $version$ ጋር ተገናኝቷል",
     "placeholders": {
       "version": {
         "content": "$1",
@@ -54,22 +54,22 @@
     "message": "ባለበት ቆሟል፦ ውርዶች በአሳሹ ይቀራሉ"
   },
   "status_not_installed": {
-    "message": "Mister Download Manager አልተጫነም፣ ወይም የአሳሽ ውህደቱ አልተዘጋጀም"
+    "message": "IET Download Manager አልተጫነም፣ ወይም የአሳሽ ውህደቱ አልተዘጋጀም"
   },
   "status_forbidden": {
-    "message": "Mister Download Manager የዚህን ቅጥያ ቅጂ አይቀበልም"
+    "message": "IET Download Manager የዚህን ቅጥያ ቅጂ አይቀበልም"
   },
   "status_not_running": {
-    "message": "Mister Download Manager በጊዜ አልጀመረም"
+    "message": "IET Download Manager በጊዜ አልጀመረም"
   },
   "status_host_failed": {
-    "message": "ከMister Download Manager ጋር ያለው ግንኙነት አልተሳካም"
+    "message": "ከIET Download Manager ጋር ያለው ግንኙነት አልተሳካም"
   },
   "status_too_large": {
     "message": "የዚህ ውርድ ዝርዝሮች ለማስተላለፍ በጣም ትልቅ ነበሩ"
   },
   "status_update_app": {
-    "message": "ይህ ቅጥያ የሚያቀርበውን ሁሉ ለመጠቀም Mister Download Managerን ያዘምኑ"
+    "message": "ይህ ቅጥያ የሚያቀርበውን ሁሉ ለመጠቀም IET Download Managerን ያዘምኑ"
   },
   "popup_take": {
     "message": "ውርዶችን ከዚህ አሳሽ ይውሰዱ"
@@ -78,10 +78,10 @@
     "message": "ውርዶችን በዚህ አሳሽ ፕሮክሲ ወይም ቪፒኤን ቅጥያ በኩል ይላኩ"
   },
   "popup_proxy_title": {
-    "message": "Mister Download Manager ከዚያ በዚህ አሳሽ ከሚጠቀምበት ፕሮክሲ በኩል ያወርዳል። አሳሹ አንድ ጊዜ እንዲፈቅዱ ይጠይቅዎታል፤ ይህን ማጥፋት ፈቃዱን ይሽራል።"
+    "message": "IET Download Manager ከዚያ በዚህ አሳሽ ከሚጠቀምበት ፕሮክሲ በኩል ያወርዳል። አሳሹ አንድ ጊዜ እንዲፈቅዱ ይጠይቅዎታል፤ ይህን ማጥፋት ፈቃዱን ይሽራል።"
   },
   "popup_proxy_title_chromium": {
-    "message": "Mister Download Manager ከዚያም በዚህ አሳሽ በኩል በተመሳሳይ ፕሮክሲ ያወርዳል። ይህ ሲጠፋ፣ ቅጥያው የአሳሹን ፕሮክሲ አያነብም።"
+    "message": "IET Download Manager ከዚያም በዚህ አሳሽ በኩል በተመሳሳይ ፕሮክሲ ያወርዳል። ይህ ሲጠፋ፣ ቅጥያው የአሳሹን ፕሮክሲ አያነብም።"
   },
   "popup_exclude_site": {
     "message": "ከ$site$ የሚመጡ ውርዶችን ዳግም አትውሰዱ",
@@ -102,7 +102,7 @@
     }
   },
   "popup_open": {
-    "message": "Mister Download Managerን ይክፈቱ"
+    "message": "IET Download Managerን ይክፈቱ"
   },
   "popup_options": {
     "message": "አማራጮች..."
@@ -111,7 +111,7 @@
     "message": "እርዳታ"
   },
   "popup_support": {
-    "message": "MDMን ይደግፉ"
+    "message": "IETDMን ይደግፉ"
   },
   "popup_fix": {
     "message": "እንዴት ማስተካከል ይቻላል"
@@ -189,16 +189,16 @@
     "message": "እዚህ የሚወርድ ቪዲዮ የለም"
   },
   "video_playlist": {
-    "message": "የቪዲዮዎች ዝርዝር፦ በMister Download Manager ውስጥ ይምረጧቸው"
+    "message": "የቪዲዮዎች ዝርዝር፦ በIET Download Manager ውስጥ ይምረጧቸው"
   },
   "video_no_ytdlp": {
-    "message": "Mister Download Manager ለዚህ ቪዲዮ yt-dlp ይፈልጋል"
+    "message": "IET Download Manager ለዚህ ቪዲዮ yt-dlp ይፈልጋል"
   },
   "video_too_long": {
     "message": "መፈለጉ በጣም ረጅም ጊዜ ወሰደ"
   },
   "video_busy": {
-    "message": "Mister Download Manager በሌሎች ቪዲዮዎች ተጠምዷል"
+    "message": "IET Download Manager በሌሎች ቪዲዮዎች ተጠምዷል"
   },
   "video_queued": {
     "message": "ወደ ወረፋው ታክሏል"
@@ -222,7 +222,7 @@
     "message": "ይህ ኮምፒውተር"
   },
   "popup_send_remote": {
-    "message": "ሌላ Mister Download Manager (አገልጋይ)"
+    "message": "ሌላ IET Download Manager (አገልጋይ)"
   },
   "popup_remote_code": {
     "message": "የማጣመሪያ ኮድ"
@@ -234,7 +234,7 @@
     "message": "ያጣምሩ"
   },
   "popup_remote_help": {
-    "message": "አድራሻውን አንድ ጊዜ ይክፈቱ እና የምስክር ወረቀቱን ይቀበሉ፣ ከዚያ ከ Options, Remote, Pair a device (ወይም misterdownloadmanager-cli pair) ኮድ ያስገቡ።"
+    "message": "አድራሻውን አንድ ጊዜ ይክፈቱ እና የምስክር ወረቀቱን ይቀበሉ፣ ከዚያ ከ Options, Remote, Pair a device (ወይም ietdownloadmanager-cli pair) ኮድ ያስገቡ።"
   },
   "status_remote": {
     "message": "ውርዶች ወደ $address$ ይሄዳሉ",
@@ -291,19 +291,19 @@
     "message": "ምርጡን ጥራት ያውርዱ"
   },
   "video_sending": {
-    "message": "ወደ MDM በመላክ ላይ..."
+    "message": "ወደ IETDM በመላክ ላይ..."
   },
   "video_added": {
-    "message": "ወደ MDM ታክሏል"
+    "message": "ወደ IETDM ታክሏል"
   },
   "video_show": {
     "message": "አሳይ"
   },
   "video_no_answer": {
-    "message": "MDM ምላሽ አልሰጠም"
+    "message": "IETDM ምላሽ አልሰጠም"
   },
   "video_get_mdm": {
-    "message": "MDM ያግኙ"
+    "message": "IETDM ያግኙ"
   },
   "video_retry": {
     "message": "እንደገና ይሞክሩ"
@@ -318,7 +318,7 @@
     "message": "ሁሉም ጥራቶች እና የትርጉም ጽሑፎች..."
   },
   "video_failed": {
-    "message": "Mister Download Manager አልተጫነም ወይም አልጀመረም"
+    "message": "IET Download Manager አልተጫነም ወይም አልጀመረም"
   },
   "video_download_best": {
     "message": "ምርጡን አውርድ"

@@ -788,7 +788,7 @@ pub fn popup<C: Clone>(
 const FOCUS_GRACE: f64 = 0.4;
 
 /// Whether the system says another program's window is in front now: the click that took the
-/// focus away landed outside MDM (the desktop, the taskbar, another program's window), and an
+/// focus away landed outside IETDM (the desktop, the taskbar, another program's window), and an
 /// open menu closes on this pass, as Win32's own menus do. Waiting FOCUS_GRACE for it kept a
 /// menu on the screen 0.4 s after such a click (#859): a menu's window never takes the focus on
 /// Windows (WS_EX_NOACTIVATE), so there the grace only ever delayed the close.
@@ -798,7 +798,7 @@ fn another_program_in_front() -> bool {
         crate::win32::foreground_is_another_program()
     }
     // Linux and macOS: a program isn't told whose window has the focus (Wayland never says; X11
-    // and macOS would, through calls MDM doesn't make), so FOCUS_GRACE decides there, as before.
+    // and macOS would, through calls IETDM doesn't make), so FOCUS_GRACE decides there, as before.
     #[cfg(not(windows))]
     {
         false
@@ -1054,7 +1054,7 @@ fn place_menu(ctx: &egui::Context, at: Pos2, size: egui::Vec2, parent: Option<Re
 }
 
 /// Whether the menu bar's menus share one window per level ([`menu_viewport`]): on X11 and
-/// XWayland, where MDM places its menus itself.
+/// XWayland, where IETDM places its menus itself.
 fn bar_shares_window() -> bool {
     #[cfg(target_os = "linux")]
     {
@@ -1143,7 +1143,7 @@ fn popup_level<C: Clone>(
         // Where the submenu is, for its menu's next pass (`heading_into`, #579).
         ctx.data_mut(|d| d.insert_temp(sub_key.with("sub-rect"), screen));
     }
-    let title = format!("misterdownloadmanager menu {depth}"); // not translated: an id
+    let title = format!("ietdownloadmanager menu {depth}"); // not translated: an id
     let builder = popup_viewport(&title)
         .with_active(false)
         .with_position(screen.min)

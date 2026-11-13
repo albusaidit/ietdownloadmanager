@@ -1,6 +1,6 @@
-//! The default browser of this computer and its version (#668), found once when MDM starts, on a
+//! The default browser of this computer and its version (#668), found once when IETDM starts, on a
 //! thread of its own (reading a version can start a program: `--version`, bounded in time): its
-//! User-Agent becomes the one MDM sends for links added by hand (`mdm_engine::agent`). Where to
+//! User-Agent becomes the one IETDM sends for links added by hand (`mdm_engine::agent`). Where to
 //! look is each system's (`win32::default_browser`, `unix::default_browser`); reading what they
 //! find (a command line, a `.desktop` file, a version's output) is here, the same everywhere.
 
@@ -18,7 +18,7 @@ pub fn start() -> mpsc::Receiver<()> {
         .spawn(move || {
             let started = std::time::Instant::now();
             let found = find();
-            let browser = found.as_ref().map_or("none MDM knows".to_owned(), |f| {
+            let browser = found.as_ref().map_or("none IETDM knows".to_owned(), |f| {
                 format!("{:?} {}", f.browser, f.version.as_deref().unwrap_or("?"))
             });
             mdm_engine::agent::set_automatic(found);

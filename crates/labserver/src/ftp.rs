@@ -186,7 +186,7 @@ pub(crate) fn certificate() -> Result<(rustls::ServerConfig, Vec<u8>), String> {
     let mut ca = CertificateParams::new(Vec::<String>::new()).map_err(e)?;
     ca.is_ca = IsCa::Ca(BasicConstraints::Unconstrained);
     ca.distinguished_name
-        .push(DnType::CommonName, "MDM lab test CA");
+        .push(DnType::CommonName, "IETDM lab test CA");
     ca.key_usages = vec![
         KeyUsagePurpose::KeyCertSign,
         KeyUsagePurpose::CrlSign,
@@ -311,7 +311,7 @@ where
     let mut lines = BufReader::new(read).lines();
     if greet
         && write
-            .write_all(reply(220, "MDM lab FTP").as_bytes())
+            .write_all(reply(220, "IETDM lab FTP").as_bytes())
             .await
             .is_err()
     {

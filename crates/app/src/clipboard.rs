@@ -9,7 +9,7 @@
 //! nothing but the next read.
 //!
 //! The watch for copied links (Options → General, [`watch`]) looks at the clipboard from its own
-//! thread, once a second, and wakes the window only when a new text was copied: an idle MDM
+//! thread, once a second, and wakes the window only when a new text was copied: an idle IETDM
 //! draws no frame for it (each one cost the processor much on a software renderer, #847). On
 //! Windows it reads the clipboard only when its sequence number changed.
 
@@ -138,7 +138,7 @@ impl Drop for Reader {
 /// The window woken when an answer comes (set once the window exists).
 static WINDOW: OnceLock<egui::Context> = OnceLock::new();
 
-/// MDM's reader, of the system clipboard ([`crate::clipboard_text`]); started at its first ask.
+/// IETDM's reader, of the system clipboard ([`crate::clipboard_text`]); started at its first ask.
 fn reader() -> &'static Reader {
     static READER: OnceLock<Reader> = OnceLock::new();
     READER.get_or_init(|| {
@@ -237,7 +237,7 @@ pub fn copied() -> Option<String> {
 }
 
 /// The watch's thread: a look each second while it is on, through the reader (one read at a
-/// time in MDM), quietly: the window is woken only for a new text.
+/// time in IETDM), quietly: the window is woken only for a new text.
 fn watching() {
     let mut seen = Watch::default();
     loop {

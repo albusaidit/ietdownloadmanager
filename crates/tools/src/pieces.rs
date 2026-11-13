@@ -1,6 +1,6 @@
-//! A stream in pieces downloaded by MDM's engine (#769): HLS (yt-dlp's `m3u8_native`) and DASH
+//! A stream in pieces downloaded by IETDM's engine (#769): HLS (yt-dlp's `m3u8_native`) and DASH
 //! (`http_dash_segments`), brought in as yt-dlp's own downloaders for them (hlsnative,
-//! dashsegments) do, by MDM: the pieces listed (an HLS media playlist read as hlsnative reads it,
+//! dashsegments) do, by IETDM: the pieces listed (an HLS media playlist read as hlsnative reads it,
 //! DASH's from yt-dlp's `fragments`), downloaded several at once (as many as Options →
 //! Connection gives a file) over the engine's connections (proxy, network adapter, DNS), under
 //! the speed limits, each kept on disk once whole so that a stop goes on from the pieces there,
@@ -44,7 +44,7 @@ pub struct Key {
     pub iv: [u8; 16],
 }
 
-/// Why a playlist's pieces can't be MDM's to download.
+/// Why a playlist's pieces can't be IETDM's to download.
 #[derive(Clone, Debug, PartialEq, Eq)]
 pub enum Unlisted {
     /// No end yet: a live stream still being recorded.

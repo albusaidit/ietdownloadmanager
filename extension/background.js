@@ -1,8 +1,8 @@
-// Mister Download Manager's browser extension: the background part (Chrome, Edge, Brave, Opera
+// IET Download Manager's browser extension: the background part (Chrome, Edge, Brave, Opera
 // and Vivaldi run it as a service worker, Firefox as a background script; one file for both, see
 // manifest.json and manifest.firefox.json).
 //
-// Downloads of the file types Mister Download Manager takes are handed to it: the browser's own
+// Downloads of the file types IET Download Manager takes are handed to it: the browser's own
 // download is cancelled, and the address, referrer, cookies, User-Agent, file name, size, type
 // and (for a form) the posted body go to the app through the native messaging host
 // (crates/nmhost). When it can't be reached the download stays with the browser, so nothing is
@@ -11,7 +11,7 @@
 // (the rules, the status, the pause) is kept in storage, not in memory.
 
 const ext = globalThis.browser ?? globalThis.chrome;
-const HOST = "com.misterdownloadmanager.host";
+const HOST = "com.ietdownloadmanager.host";
 const VERSION = ext.runtime.getManifest().version;
 const HELP = "https://misterdownloadmanager.com/help/browser-help.html";
 const action = ext.action ?? ext.browserAction;
@@ -32,7 +32,7 @@ const t = (key, ...subs) => ext.i18n.getMessage(key, subs) || key;
 
 // ---- the native host ---------------------------------------------------------------------
 
-// How long an answer may take: the host starts Mister Download Manager when it isn't running
+// How long an answer may take: the host starts IET Download Manager when it isn't running
 // and waits for it (crates/nmhost START_WAIT); the browser's download waits meanwhile.
 const HOST_WAIT = 30000;
 
@@ -59,7 +59,7 @@ function hostProblem(error) {
 // browser's status, and the rules depend on the browser). Never throws: failures come back as
 // `{ok: false, why}`.
 async function native(message, ms = HOST_WAIT) {
-  // A download for another MDM (a server, #157): sent there, not to this computer's.
+  // A download for another IETDM (a server, #157): sent there, not to this computer's.
   if (typeof message.url === "string" && message.url) {
     const target = await remoteTarget();
     if (target) return remoteSend(target, message);
@@ -78,15 +78,15 @@ async function native(message, ms = HOST_WAIT) {
     return reply;
   } catch (e) {
     const why = hostProblem(e);
-    // With another MDM chosen, this computer's needn't be there.
+    // With another IETDM chosen, this computer's needn't be there.
     if (!(await remoteTarget())) await noteStatus(why);
     return { ok: false, why, error: String((e && e.message) || e) };
   }
 }
 
-// ---- another MDM (#157): a server's, through its remote control ------------------------------
+// ---- another IETDM (#157): a server's, through its remote control ------------------------------
 
-// {url, token} while downloads go to another MDM instead of this computer's, else null.
+// {url, token} while downloads go to another IETDM instead of this computer's, else null.
 async function remoteTarget() {
   const { remote } = await ext.storage.local.get({ remote: null });
   return remote && remote.url && remote.token ? remote : null;
@@ -120,7 +120,7 @@ async function remoteCall(base, path, body, token) {
   }
 }
 
-// A download handed to the other MDM: its address only (a site's sign-in stays in this browser).
+// A download handed to the other IETDM: its address only (a site's sign-in stays in this browser).
 async function remoteSend(target, message) {
   const r = await remoteCall(target.url, "api/add", { url: message.url, start: true }, target.token);
   if (r.status === 200 && r.body && !r.body.error) return { ok: true };
@@ -129,11 +129,11 @@ async function remoteSend(target, message) {
 }
 
 // The file types the app takes by default (mdm_ipc::capture::DEFAULT_AUTO_TYPES; a test keeps
-// them the same): what is caught for another MDM when this computer has none to ask.
+// them the same): what is caught for another IETDM when this computer has none to ask.
 const DEFAULT_TYPES =
   "00* 3DM 3DS 3GP 3MF 7Z AAB AAC ABC ACE AFDESIGN AFPHOTO AI AIF AIFF APE APK APKM APKS APPIMAGE APPX APPXBUNDLE ARJ ARROW ARW ASF AU AVI AVRO AZW AZW3 BAK BAM BIN BLEND BZ BZ2 C4D CAB CAF CBR CBZ CCD CHD CKPT CPIO CR2 CR3 CRAM CSO DAE DAT DCM DDS DEB DFF DIVX DJVU DMG DNG DOC DOCX DSF DWG DXF EPS EPUB EXE EXR F3D F4V FASTA FASTQ FB2 FBX FEATHER FIG FITS FLAC FLATPAK FQ GCODE GCZ GEM GGML GGUF GLB GLTF GPKG GRIB GRIB2 GZ GZIP H5 HDF5 HDR IGES IGS IMG INDD IPA ISO ISZ JAR JOBLIB JSONL KERAS KRA LAS LAZ LLAMAFILE LWO LZ LZ4 LZH LZMA M2T M2TS M2V M4A M4B M4V MA MAT MAX MB MBTILES MDF MDS MID MIDI MKA MKV MLMODEL MOBI MOV MP3 MP4 MPA MPE MPEG MPG MSI MSIX MSIXBUNDLE MSP MSU MTS MXF NC NDJSON NEF NEMO NII NPY NPZ NRG NSP NSZ NUPKG OBJ ODP ODS ODT OGG OGM OGV ONNX OPUS ORC ORF OTF OVA OVF PAK PARQUET PB PBF PDF PICKLE PK3 PK4 PKG PKL PLJ PLY POTX PPS PPSX PPT PPTX PSB PSD PT PTH QCOW QCOW2 QT R0* R1* R2* R3* R4* R5* R6* R7* R8* R9* RA RAF RAR RDS RM RMVB RPM RTF RUN RVZ RW2 SAFETENSORS SEA SF2 SFZ SHP SIT SITX SKETCH SKP SLDASM SLDPRT SNAP SQLITE SQLITE3 STEP STL STP TAR TBZ TBZ2 TFLITE TGA TGZ TIF TIFF TLZ TORRENT TTA TTC TTF TXZ TZST UNITYPACKAGE USD USDA USDC USDZ VDB VDI VHD VHDX VMDK VOB VPK VSIX WAV WBFS WEBM WHL WIM WMA WMV WRL WTV WUA WV X3D XAPK XCF XCI XLS XLSB XLSM XLSX XZ Z Z0* ZIP ZIPX ZPR ZST ZTL";
 
-// Pair with the MDM at `address` with a code it shows; {ok} or {ok: false, why, left}.
+// Pair with the IETDM at `address` with a code it shows; {ok} or {ok: false, why, left}.
 async function remotePair(address, code) {
   let base;
   try {
@@ -198,7 +198,7 @@ async function noteStatus(why, app) {
   if (was !== (!why || why === "update-app")) await syncOpenedRule();
 }
 
-// Whether this computer's MDM looks videos up for the button over videos (its qualities listed in
+// Whether this computer's IETDM looks videos up for the button over videos (its qualities listed in
 // the page, video.js), kept with the status beside the app's version: from every answer to
 // `rules`, and dropped when a lookup's answer says otherwise (an older host or app).
 async function noteLookup(on) {
@@ -257,7 +257,7 @@ async function askRules() {
     await syncOpenedRule();
     return rules;
   }
-  // No MDM on this computer, another one chosen: the app's default file types (the browser
+  // No IETDM on this computer, another one chosen: the app's default file types (the browser
   // keeps the files it would open).
   if (await remoteTarget()) {
     rules = { types: DEFAULT_TYPES, capture: true, excludedSites: "", excludedAddresses: [], opened: false, minKb: 0, at: Date.now() };
@@ -328,7 +328,7 @@ function excludedBy(r, url) {
   return "";
 }
 
-// ---- downloads left to the browser: why, for the popup and MDM's log (#208) ----------------
+// ---- downloads left to the browser: why, for the popup and IETDM's log (#208) ----------------
 
 // A host's refusal by Options names the rule (`declined`); one before #208 says it only in its
 // error text, by the rule's Rust name (mdm_ipc::capture::Declined).
@@ -356,7 +356,7 @@ function siteOf(url) {
 
 // The last download left to the browser by Options (or because the extension may not read the
 // site): kept for the popup ({why, name, site, at}; a private window's without its name or
-// site), and, when the extension decided alone (`told` false), told to the host for MDM's log.
+// site), and, when the extension decided alone (`told` false), told to the host for IETDM's log.
 // The host logs its own refusals itself. A download taken later clears it.
 async function noteLeft(why, name, url, incognito, told) {
   const declined = incognito ? { why, name: "", site: "", at: Date.now() } : { why, name, site: siteOf(url), at: Date.now() };
@@ -1501,7 +1501,7 @@ async function handOff(d) {
 
 // Colab's runtime proxy uses an ephemeral token tied to the browser's partitioned session.
 // Only the actual proxy transfer URL is left to the browser: a normal file linked from a Colab
-// notebook must still be capturable by MDM (#603).
+// notebook must still be capturable by IETDM (#603).
 function colabRuntimeProxy(...urls) {
   return urls.some((value) => {
     if (!value) return false;
@@ -1521,7 +1521,7 @@ function colabRuntimeProxy(...urls) {
 
 // The file name to offer the app the download under (`{name}`), or why Options leave it to
 // the browser (`{left, name}`), or null: the browser keeps it and there is nothing to say (not a
-// web address, paused, Alt held, a form that can't be posted again, MDM not reached).
+// web address, paused, Alt held, a form that can't be posted again, IETDM not reached).
 async function candidate(item, url) {
   if (!/^https?:/i.test(url)) return null; // blob:, data:, file: stay the browser's
   const { paused } = await ext.storage.local.get({ paused: false });
@@ -1547,7 +1547,7 @@ async function candidate(item, url) {
   return { name };
 }
 
-// Why it stays with the browser, said (the popup, MDM's log).
+// Why it stays with the browser, said (the popup, IETDM's log).
 function leftAlone(c, item, url) {
   if (c && c.left) noteLeft(c.left, c.name, firstUrl(item) || url, item.incognito, false).catch(() => {});
 }
@@ -1993,7 +1993,7 @@ function pageLinks(selectedOnly) {
 }
 
 // When the user asked and it couldn't be done: the help page's section opens beside (a link
-// MDM refused has none of its own: the connection's).
+// IETDM refused has none of its own: the connection's).
 const SECTIONS = ["not-installed", "forbidden", "not-running", "host-failed", "too-large", "update-app", "options"];
 function explain(why) {
   const at = SECTIONS.includes(why) ? why : "host-failed";
@@ -2039,7 +2039,7 @@ ext.contextMenus.onClicked.addListener(async (info, tab) => {
       if (!reply.ok && reply.why !== "options") explain(reply.why);
       return;
     }
-    // ftp links too: browsers no longer download them, MDM does.
+    // ftp links too: browsers no longer download them, IETDM does.
     if (!url || !/^(https?|ftps?|ftpes):/i.test(url)) return;
     const reply = await handOff({ url, referrer: info.pageUrl, incognito, storeId, explicit: true });
     if (!reply.ok) explain(reply.why);
@@ -2265,7 +2265,7 @@ async function videoTarget(m, page, sender) {
 // ---- the button's qualities: the app looks the video up, the page lists what it found --------
 // The click asks the app to look the video up (yt-dlp, in the background), video.js asks how it
 // is going until it is done, and the quality picked is downloaded without the app's window. Only
-// with an app that says it can (`videoLookup`, noteLookup) and never for another MDM: else
+// with an app that says it can (`videoLookup`, noteLookup) and never for another IETDM: else
 // ({fallback: true}) the click opens the app's Download video window, as it always did. None of
 // these messages has `video` or a top-level `url`: an older host refuses them and does nothing.
 // What a lookup comes to travels in `lookup`, never in `why`: the toolbar button's status (and
@@ -2274,7 +2274,7 @@ async function videoTarget(m, page, sender) {
 async function videoLookup(m, page, sender) {
   if (await remoteTarget()) return { fallback: true };
   if (!(await readStatus()).videoLookup) {
-    // An MDM updated since its rules were last asked may look up now: they are asked again,
+    // An IETDM updated since its rules were last asked may look up now: they are asked again,
     // for the next click.
     const r = await storedRules();
     if (!r || Date.now() - r.at > 60000) refreshRules();
@@ -2298,7 +2298,7 @@ async function videoLookup(m, page, sender) {
     ...(v.fetchedWith ? { fetchedWith: v.fetchedWith } : {}),
     private: Boolean(tab.incognito),
   });
-  // `show`: the address MDM lists a download of it under (the button's "Show"); `post`: the
+  // `show`: the address IETDM lists a download of it under (the button's "Show"); `post`: the
   // post's own page, when the video sits in a feed (its "Open post").
   if (reply.lookup && typeof reply.lookup === "object") return { lookup: reply.lookup, show: v.src || v.own, ...(v.post ? { post: v.post } : {}) };
   // No `lookup`: a host or an app that can't look up after all (an older one refuses the message),
@@ -2333,7 +2333,7 @@ async function videoPick(m, sender) {
 }
 
 const isWeb = (u) => typeof u === "string" && /^https?:\/\//i.test(u);
-// Where the button's "Get MDM" goes.
+// Where the button's "Get IETDM" goes.
 const GET_MDM = "https://misterdownloadmanager.com/download";
 // A new tab next to `tab`, opened from it.
 const beside = (tab) => ({
@@ -2388,7 +2388,7 @@ async function pageMessage(m, sender) {
     return { ok: Boolean(reply.ok), why: reply.why, ...(reply.ok && direct ? { show: v.src } : {}) };
   }
   if (m.type === "video-lookup" && page) return videoLookup(m, page, sender);
-  // The button's "Show" (#703): MDM's window with that download selected.
+  // The button's "Show" (#703): IETDM's window with that download selected.
   if (m.type === "show-download" && isWeb(m.address)) {
     return { ok: Boolean((await native({ showDownload: m.address })).ok) };
   }
@@ -2398,7 +2398,7 @@ async function pageMessage(m, sender) {
     for (const k of [...panelCache.keys()]) if (k.split(" ").includes(host)) panelCache.delete(k);
     return { ok: Boolean((await native({ showSite: host })).ok) };
   }
-  // The button's "Get MDM" (MDM didn't answer): its download page, beside this tab.
+  // The button's "Get IETDM" (IETDM didn't answer): its download page, beside this tab.
   if (m.type === "get-mdm") {
     await ext.tabs.create({ url: GET_MDM, ...beside(tab) });
     return { ok: true };

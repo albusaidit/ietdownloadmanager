@@ -1,6 +1,6 @@
 //! #816: a failed request says what kind of failure it was (`mdm_engine::fault`), from real
 //! connections to servers on this computer: refused, an HTTP status, a secure connection that
-//! isn't one, no answer in time, an answer cut short, a name that isn't found; and MDM's own
+//! isn't one, no answer in time, an answer cut short, a name that isn't found; and IETDM's own
 //! requests go through the proxy Options sets.
 
 use std::time::Duration;
@@ -124,7 +124,7 @@ async fn no_such_host() {
     assert_eq!(got, Fault::NoSuchHost);
 }
 
-/// MDM's own requests take Options' proxy: through one that isn't there, the request fails
+/// IETDM's own requests take Options' proxy: through one that isn't there, the request fails
 /// connecting to it, without looking up the server's name (which doesn't exist).
 #[tokio::test]
 async fn through_the_proxy_set_in_options() {

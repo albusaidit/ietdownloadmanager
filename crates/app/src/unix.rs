@@ -31,13 +31,13 @@ fn spawn(cmd: &mut Command) {
 fn startup_file() -> Option<PathBuf> {
     let home = PathBuf::from(std::env::var_os("HOME")?);
     if cfg!(target_os = "macos") {
-        Some(home.join("Library/LaunchAgents/io.github.anefzaoui.misterdownloadmanager.plist"))
+        Some(home.join("Library/LaunchAgents/io.github.anefzaoui.ietdownloadmanager.plist"))
     } else {
         let config = std::env::var_os("XDG_CONFIG_HOME")
             .map(PathBuf::from)
             .filter(|p| p.is_absolute())
             .unwrap_or_else(|| home.join(".config"));
-        Some(config.join("autostart/misterdownloadmanager.desktop"))
+        Some(config.join("autostart/ietdownloadmanager.desktop"))
     }
 }
 
@@ -64,7 +64,7 @@ pub fn run_at_startup() -> bool {
     startup_file().is_some_and(|f| f.is_file())
 }
 
-/// The startup entry for the program `exe`: started with the session, MDM waits in the
+/// The startup entry for the program `exe`: started with the session, IETDM waits in the
 /// notification area (`/startup`, #226). A LaunchAgent on macOS, an XDG autostart entry on
 /// Linux.
 fn startup_entry(exe: &Path, macos: bool) -> String {
@@ -80,7 +80,7 @@ fn startup_entry(exe: &Path, macos: bool) -> String {
              <!DOCTYPE plist PUBLIC \"-//Apple//DTD PLIST 1.0//EN\" \
              \"http://www.apple.com/DTDs/PropertyList-1.0.dtd\">\n\
              <plist version=\"1.0\">\n<dict>\n\
-             \x20 <key>Label</key><string>io.github.anefzaoui.misterdownloadmanager</string>\n\
+             \x20 <key>Label</key><string>io.github.anefzaoui.ietdownloadmanager</string>\n\
              \x20 <key>ProgramArguments</key><array><string>{exe}</string>\
              <string>{arg}</string></array>\n\
              \x20 <key>RunAtLoad</key><true/>\n\
@@ -96,8 +96,8 @@ fn startup_entry(exe: &Path, macos: bool) -> String {
             })
             .collect();
         format!(
-            "[Desktop Entry]\nType=Application\nName=Mister Download Manager\n\
-             Exec=\"{quoted}\" {arg}\nIcon=misterdownloadmanager\nTerminal=false\n\
+            "[Desktop Entry]\nType=Application\nName=IET Download Manager\n\
+             Exec=\"{quoted}\" {arg}\nIcon=ietdownloadmanager\nTerminal=false\n\
              X-GNOME-Autostart-enabled=true\n"
         )
     }
@@ -170,9 +170,9 @@ pub fn update_run_at_startup() {
 }
 
 /// The browsers' helper program (crates/nmhost), beside this one.
-const HOST: &str = "misterdownloadmanager-nmhost";
+const HOST: &str = "ietdownloadmanager-nmhost";
 /// The manifest it writes in each browser's folder.
-const MANIFEST: &str = "com.misterdownloadmanager.host.json";
+const MANIFEST: &str = "com.ietdownloadmanager.host.json";
 /// How long the helper's `--register` has at a start (it writes a few small files).
 const REGISTER_LIMIT: std::time::Duration = std::time::Duration::from_secs(20);
 /// Why the last registration failed, in the system's words (Test browser integration says it);
@@ -185,7 +185,7 @@ static REGISTER_ERROR: std::sync::Mutex<Option<String>> = std::sync::Mutex::new(
 ///
 /// From an AppImage, whose programs sit in a mount that is gone once it quits, the host is first
 /// copied to the data folder with the AppImage's path beside it (`app-path`: the host starts
-/// that when MDM isn't running), and registered from there (#253).
+/// that when IETDM isn't running), and registered from there (#253).
 pub fn register_browsers() {
     let started = std::thread::Builder::new()
         .name("register-browsers".into())
@@ -431,7 +431,7 @@ fn printed_within(cmd: &mut Command, secs: u64) -> Option<String> {
 /// The default browser (#668): the desktop's choice for web links (`xdg-settings`, else
 /// `mimeapps.list`), the program its `.desktop` file runs, and that program's version (Firefox's
 /// `application.ini` beside it, else its `--version`, on this thread, bounded in time). None when
-/// it isn't a browser MDM knows (MDM then speaks as Chrome).
+/// it isn't a browser IETDM knows (IETDM then speaks as Chrome).
 #[cfg(target_os = "linux")]
 pub fn default_browser() -> Option<mdm_engine::agent::Found> {
     use crate::defaultbrowser::{exec_program, mimeapps_https, version_in};
@@ -484,7 +484,7 @@ pub fn default_browser() -> Option<mdm_engine::agent::Found> {
     let browser = Browser::named(&desktop).or_else(|| base.as_deref().and_then(Browser::named))?;
     let firefox = matches!(browser, Browser::Firefox | Browser::FirefoxFork);
     // A Flatpak's launcher would start its sandbox, and its files are inside it: its version
-    // stays unknown (MDM's estimate of today's).
+    // stays unknown (IETDM's estimate of today's).
     let program = program.filter(|_| base.as_deref() != Some("flatpak"));
     let install = program
         .as_deref()
@@ -542,8 +542,8 @@ fn firefox_install(program: &str, plain: bool) -> Option<PathBuf> {
 }
 
 /// The default browser (#668): the app macOS opens https links with (LaunchServices' handlers;
-/// none set is Safari), and its version (its Info.plist's). None when it isn't a browser MDM
-/// knows (MDM then speaks as Chrome).
+/// none set is Safari), and its version (its Info.plist's). None when it isn't a browser IETDM
+/// knows (IETDM then speaks as Chrome).
 #[cfg(target_os = "macos")]
 pub fn default_browser() -> Option<mdm_engine::agent::Found> {
     use mdm_engine::agent::{Browser, Found};
@@ -651,7 +651,7 @@ pub fn show_in_folder(path: &Path) {
     });
 }
 
-/// Torrent settings → open magnet links and .torrent files with Mister Download Manager: Linux
+/// Torrent settings → open magnet links and .torrent files with IET Download Manager: Linux
 /// records it with xdg-mime for the desktop entry the packages install, macOS with Launch
 /// Services for the app (`open_events::make_default`, #698). Turning it off leaves the choice to
 /// the desktop's settings (macOS: Finder's Get Info → Open with).
@@ -664,7 +664,7 @@ pub fn set_torrent_handlers(on: bool) {
     #[cfg(not(target_os = "macos"))]
     spawn(Command::new("xdg-mime").args([
         "default",
-        "misterdownloadmanager.desktop",
+        "ietdownloadmanager.desktop",
         "x-scheme-handler/magnet",
         "application/x-bittorrent",
     ]));
@@ -1406,7 +1406,7 @@ const WAYLAND_LIBS: &[WindowLib] = &[
     },
 ];
 
-/// Linux: the display system MDM's windows use, decided once (`window_system`), and what the
+/// Linux: the display system IETDM's windows use, decided once (`window_system`), and what the
 /// system lacks for it.
 #[cfg(target_os = "linux")]
 #[derive(Debug, Default, PartialEq, Eq)]
@@ -1415,14 +1415,14 @@ pub struct WindowSystem {
     pub wayland: bool,
     /// X11 is chosen in a Wayland session (XWayland): winit is told so.
     x11_over_wayland: bool,
-    /// X11 was MDM's choice, but these are missing: Wayland's windows instead.
+    /// X11 was IETDM's choice, but these are missing: Wayland's windows instead.
     pub x11_missing: Vec<&'static WindowLib>,
     /// The chosen system lacks these: no window can open (#265).
     pub missing: Vec<&'static WindowLib>,
 }
 
 /// The windows run through X11 (XWayland, in a Wayland session) when there is one, unless
-/// `MDM_WAYLAND=1` (#50). Wayland lets no program place its own windows, and MDM's menus and drop
+/// `MDM_WAYLAND=1` (#50). Wayland lets no program place its own windows, and IETDM's menus and drop
 /// lists are windows it places under what was clicked: Wayland put them in the middle of the
 /// screen. Without the libraries X11's windows need, Wayland's when there is one (#265).
 /// `loads`: whether a library can be loaded.
@@ -1453,7 +1453,7 @@ fn choose_window_system(
     ws
 }
 
-/// Linux: the display system MDM's windows use (see `choose_window_system`), decided at the
+/// Linux: the display system IETDM's windows use (see `choose_window_system`), decided at the
 /// first question.
 #[cfg(target_os = "linux")]
 pub fn window_system() -> &'static WindowSystem {
@@ -1508,13 +1508,13 @@ pub fn event_loop_hook() -> Option<eframe::EventLoopBuilderHook> {
     }
 }
 
-/// Linux: MDM's windows are Wayland's (not X11's or XWayland's), as `window_system` decided.
+/// Linux: IETDM's windows are Wayland's (not X11's or XWayland's), as `window_system` decided.
 #[cfg(target_os = "linux")]
 pub fn on_wayland() -> bool {
     window_system().wayland
 }
 
-/// Linux, X11 and XWayland (MDM's default): a menu's window as X11 menus are (GTK's, Qt's).
+/// Linux, X11 and XWayland (IETDM's default): a menu's window as X11 menus are (GTK's, Qt's).
 /// Override-redirect: no window manager manages it, so it opens exactly where it's placed (a
 /// tiling compositor, sway, centred a managed one, #267), and compositors treat it as a menu:
 /// Hyprland gives it no border and doesn't slide or pop it in as it does a new window (it only
@@ -1574,7 +1574,7 @@ fn installer(os_release: &str) -> Option<(usize, &'static str)> {
 }
 
 /// The command that installs `libs` on the distribution /etc/os-release (`os_release`) names;
-/// None for one MDM doesn't know.
+/// None for one IETDM doesn't know.
 #[cfg(target_os = "linux")]
 fn install_command(libs: &[&WindowLib], os_release: &str) -> Option<String> {
     let (family, command) = installer(os_release)?;
@@ -1596,11 +1596,11 @@ pub fn missing_text(libs: &[&WindowLib], opening: bool) -> String {
     let names = ltr(&names.join(", "));
     let what = if opening {
         // i18n: Linux, at start, on the terminal and in a message box: a library the window needs isn't installed; {libraries} = its file names (libxkbcommon-x11.so.0…), left as they are
-        t("Mister Download Manager can't open its window: this system lacks {libraries}.")
+        t("IET Download Manager can't open its window: this system lacks {libraries}.")
     } else {
         // i18n: Linux, at start, on the terminal: the libraries an X11 window needs aren't installed, so the window opens through Wayland instead, where menus can't be placed under what was clicked; {libraries} = their file names, left as they are
         t(
-            "Mister Download Manager's X11 window needs {libraries}, which this system lacks: it opens on Wayland instead, where its menus may open away from their titles.",
+            "IET Download Manager's X11 window needs {libraries}, which this system lacks: it opens on Wayland instead, where its menus may open away from their titles.",
         )
     };
     let what = fmt(what, &[("libraries", &names)]);
@@ -1611,19 +1611,19 @@ pub fn missing_text(libs: &[&WindowLib], opening: bool) -> String {
             t("To install what's missing: {command}"),
             &[("command", &ltr(&command))],
         ),
-        // i18n: Linux, after a missing library's name, on a distribution MDM doesn't know
+        // i18n: Linux, after a missing library's name, on a distribution IETDM doesn't know
         None => t("Install what's missing from your distribution's packages.").to_owned(),
     };
     format!("{what}\n{how}")
 }
 
 /// Says `text` on the terminal, in the log and, when a display is there, in a message box
-/// (zenity or kdialog, the first there): MDM's own window can't open.
+/// (zenity or kdialog, the first there): IETDM's own window can't open.
 #[cfg(target_os = "linux")]
 pub fn tell_window_failed(text: &str) {
     eprintln!("{text}");
     tracing::error!("{text}");
-    let title = "Mister Download Manager";
+    let title = "IET Download Manager";
     // A program of the desktop's draws it: without isolates (#919).
     let text = &crate::i18n::os_text(text);
     let boxes: [(&str, Vec<&str>); 2] = [
@@ -1647,7 +1647,7 @@ pub fn tell_window_failed(text: &str) {
     }
 }
 
-/// Linux: a tray host is there to show MDM's icon (a StatusNotifierWatcher on the session bus:
+/// Linux: a tray host is there to show IETDM's icon (a StatusNotifierWatcher on the session bus:
 /// KDE, waybar's tray, GNOME's AppIndicator extension), #59. Without one (MangoWC, plain
 /// window managers), closing the window would hide it where nothing can bring it back.
 ///
@@ -1840,11 +1840,11 @@ pub fn file_icon(what: &crate::fileicons::What, px: u32) -> Option<crate::fileic
 }
 
 /// macOS hands an app what it should open (a .torrent double-clicked in Finder or dropped on
-/// MDM's icon in the Dock, a magnet link clicked in a browser) as Apple events, not on its
-/// command line, also to an MDM already running (#698). These receive them and send each one
+/// IETDM's icon in the Dock, a magnet link clicked in a browser) as Apple events, not on its
+/// command line, also to an IETDM already running (#698). These receive them and send each one
 /// down the command channel, as a .torrent or magnet link on Windows' or Linux's command line
 /// goes (`mdm_ipc::parse_args`): Add torrent opens for it. The app's Info.plist
-/// (tools/installer/build-macos.sh) tells macOS that MDM opens them.
+/// (tools/installer/build-macos.sh) tells macOS that IETDM opens them.
 #[cfg(target_os = "macos")]
 #[allow(unsafe_code)]
 pub mod open_events {
@@ -1888,7 +1888,7 @@ pub mod open_events {
             fn will_finish_launching(&self, _note: &NSNotification) {
                 let manager = NSAppleEventManager::sharedAppleEventManager();
                 // SAFETY: both selectors are this class's, taking (event, reply) as the manager
-                // calls them; the handler lives as long as MDM (`start`). The event codes are
+                // calls them; the handler lives as long as IETDM (`start`). The event codes are
                 // AEEventClass and AEEventID, 32-bit codes.
                 unsafe {
                     let _: () = msg_send![&*manager, setEventHandler: self,
@@ -1954,13 +1954,13 @@ pub mod open_events {
             );
         }
         // Neither the notification centre nor the event manager keeps its observer or handler:
-        // this one lives as long as MDM.
+        // this one lives as long as IETDM.
         std::mem::forget(this);
     }
 
     /// The app's identifier and the .torrent file type, as Info.plist names them
     /// (tools/installer/build-macos.sh).
-    pub const BUNDLE_ID: &str = "io.github.anefzaoui.misterdownloadmanager";
+    pub const BUNDLE_ID: &str = "io.github.anefzaoui.ietdownloadmanager";
     pub const TORRENT_TYPE: &str = "org.bittorrent.torrent";
 
     #[link(name = "CoreServices", kind = "framework")]
@@ -1973,7 +1973,7 @@ pub mod open_events {
         ) -> i32;
     }
 
-    /// MDM the default app for magnet links and .torrent files (Torrent settings' switch). A
+    /// IETDM the default app for magnet links and .torrent files (Torrent settings' switch). A
     /// copy started outside its app (`cargo run`) has nothing to register: the log says so.
     pub fn make_default() {
         let id = NSString::from_str(BUNDLE_ID);
@@ -1990,7 +1990,7 @@ pub mod open_events {
         };
         if magnet != 0 || file != 0 {
             tracing::info!(
-                "torrents: Launch Services didn't take MDM for magnet links ({magnet}) or                  .torrent files ({file})"
+                "torrents: Launch Services didn't take IETDM for magnet links ({magnet}) or                  .torrent files ({file})"
             );
         }
     }
@@ -2028,7 +2028,7 @@ pub mod open_events {
         use objc2_foundation::NSURL;
 
         /// #698: the files of an open-documents event, as Finder sends them, and a magnet
-        /// link's get-URL event become what MDM's command line takes.
+        /// link's get-URL event become what IETDM's command line takes.
         #[test]
         fn finder_events_become_commands() {
             let list = NSAppleEventDescriptor::listDescriptor();
@@ -2183,7 +2183,7 @@ pub fn to_trash(files: &[PathBuf]) -> bool {
         if run(Command::new("trash").args(files)) {
             return true;
         }
-        // The Finder moves them as a person would (it may ask once to let MDM drive it).
+        // The Finder moves them as a person would (it may ask once to let IETDM drive it).
         let list: Vec<String> = files
             .iter()
             .map(|f| {
@@ -2229,7 +2229,7 @@ pub fn gl_driver(gl: &eframe::glow::Context) -> String {
     format!("{renderer} ({version})")
 }
 
-/// End process `pid` (a frozen MDM the user chose to close from the crash report).
+/// End process `pid` (a frozen IETDM the user chose to close from the crash report).
 #[allow(unsafe_code)]
 pub fn end_process(pid: u32) -> bool {
     // SAFETY: a signal to a process id we were given.
@@ -2263,10 +2263,10 @@ pub fn browsers() -> Vec<(String, PathBuf)> {
             .unwrap_or_default()
     };
     // A Flatpak browser (`app.zen_browser.zen` …) isn't listed: its sandbox can't start the
-    // native host, so the extension couldn't reach MDM (docs/browser-help.md). Nor is a Chromium
+    // native host, so the extension couldn't reach IETDM (docs/browser-help.md). Nor is a Chromium
     // browser that runs as a Snap (Ubuntu's Chromium): it starts the host inside its sandbox,
-    // which can't read MDM's data folder (~/.local/share is hidden from Snaps) and so started a
-    // second, sandboxed MDM. The Snap Firefox is listed: it starts the host through the desktop
+    // which can't read IETDM's data folder (~/.local/share is hidden from Snaps) and so started a
+    // second, sandboxed IETDM. The Snap Firefox is listed: it starts the host through the desktop
     // portal, outside its sandbox.
     mdm_ipc::browsers::BROWSERS
         .iter()
@@ -2314,7 +2314,7 @@ pub fn mark_downloaded(path: &Path, url: &str, referrer: Option<&str>) {
         set_xattr(
             path,
             "com.apple.quarantine",
-            &format!("0081;{now:x};Mister Download Manager;"),
+            &format!("0081;{now:x};IET Download Manager;"),
         );
         let _ = url;
     }
@@ -2818,14 +2818,14 @@ mod host_copy_tests {
         let t = tempfile::tempdir().unwrap();
         let from = program(t.path(), "mount-host", "echo one");
         let dir = t.path().join("data/browser-host");
-        let image = Path::new("/home/u/Apps/MDM.AppImage");
+        let image = Path::new("/home/u/Apps/IETDM.AppImage");
         let copy = install_host_copy(&from, &dir, image).unwrap();
         assert_eq!(copy, dir.join(HOST));
         assert!(runs(&copy));
         assert_eq!(std::fs::read(&copy).unwrap(), std::fs::read(&from).unwrap());
         assert_eq!(
             std::fs::read_to_string(dir.join("app-path")).unwrap(),
-            "/home/u/Apps/MDM.AppImage"
+            "/home/u/Apps/IETDM.AppImage"
         );
         // Moved by an AppImage manager, and the copy deleted: both put right.
         std::fs::remove_file(&copy).unwrap();
@@ -2907,7 +2907,7 @@ mod host_copy_tests {
         }
         let write = |dir: &Path, path: &Path| {
             let json =
-                serde_json::json!({ "name": "com.misterdownloadmanager.host", "path": path });
+                serde_json::json!({ "name": "com.ietdownloadmanager.host", "path": path });
             std::fs::write(dir.join(MANIFEST), json.to_string()).unwrap();
         };
         let dirs = || vec![(a.clone(), Family::Chromium), (b.clone(), Family::Gecko)];
@@ -2926,7 +2926,7 @@ mod host_copy_tests {
         );
         write(&b, &helper);
         assert_eq!(registration_in(dirs(), false), Registration::Ready);
-        let gone = t.path().join("gone/misterdownloadmanager-nmhost");
+        let gone = t.path().join("gone/ietdownloadmanager-nmhost");
         write(&b, &gone);
         assert_eq!(
             registration_in(dirs(), false),
@@ -2953,14 +2953,14 @@ mod startup_tests {
         }
     }
 
-    /// The autostart entry and the LaunchAgent start MDM with `/startup` (#226), and name the
+    /// The autostart entry and the LaunchAgent start IETDM with `/startup` (#226), and name the
     /// program as it is, quoting and all.
     #[test]
     fn the_startup_entries_start_mdm_in_the_tray() {
         for exe in [
-            "/home/ana/Apps/Mister Download Manager.AppImage",
-            "/opt/mdm/misterdownloadmanager",
-            "/Applications/Mister Download Manager.app/Contents/MacOS/misterdownloadmanager",
+            "/home/ana/Apps/IET Download Manager.AppImage",
+            "/opt/mdm/ietdownloadmanager",
+            "/Applications/IET Download Manager.app/Contents/MacOS/ietdownloadmanager",
             "/home/a\"b$c/m&d<m>",
         ] {
             for macos in [false, true] {
@@ -2970,18 +2970,18 @@ mod startup_tests {
                 assert!(!startup_outdated(&text, Path::new(exe), macos));
             }
         }
-        let desktop = startup_entry(Path::new("/opt/mdm/misterdownloadmanager"), false);
-        assert!(desktop.contains("Exec=\"/opt/mdm/misterdownloadmanager\" /startup\n"));
-        let plist = startup_entry(Path::new("/opt/mdm/misterdownloadmanager"), true);
+        let desktop = startup_entry(Path::new("/opt/mdm/ietdownloadmanager"), false);
+        assert!(desktop.contains("Exec=\"/opt/mdm/ietdownloadmanager\" /startup\n"));
+        let plist = startup_entry(Path::new("/opt/mdm/ietdownloadmanager"), true);
         assert!(plist.contains(
-            "<array><string>/opt/mdm/misterdownloadmanager</string><string>/startup</string></array>"
+            "<array><string>/opt/mdm/ietdownloadmanager</string><string>/startup</string></array>"
         ));
     }
 
     /// An entry of a version before 0.5.0 for this program is written again; another copy's is not.
     #[test]
     fn old_startup_entries_are_rewritten() {
-        let exe = "/home/ana/Apps/Mister Download Manager.AppImage";
+        let exe = "/home/ana/Apps/IET Download Manager.AppImage";
         for macos in [false, true] {
             assert!(startup_outdated(
                 &old_entry(exe, macos),
@@ -3000,7 +3000,7 @@ mod startup_tests {
 
 // Sign-in secrets in the system's keychain (#44, secrets.rs). Linux: the Secret Service
 // (GNOME Keyring, KeePassXC, KDE's wallet in its Secret Service mode) over D-Bus, its default
-// collection only, and only while it is unlocked: MDM never unlocks it nor answers a prompt
+// collection only, and only while it is unlocked: IETDM never unlocks it nor answers a prompt
 // (desktops that log in on their own often have a locked keyring, #164), so a locked or missing
 // keyring leaves the secrets in the owner-only settings. macOS: the login keychain's generic
 // passwords (SecItemAdd / SecItemCopyMatching, through security-framework).
@@ -3033,8 +3033,8 @@ mod secret_service {
     const COLLECTION: &str = "org.freedesktop.Secret.Collection";
     const ITEM: &str = "org.freedesktop.Secret.Item";
     const SESSION: &str = "org.freedesktop.Secret.Session";
-    /// Groups MDM's entries in Seahorse and the like.
-    const SCHEMA: &str = "io.github.anefzaoui.misterdownloadmanager.Secret";
+    /// Groups IETDM's entries in Seahorse and the like.
+    const SCHEMA: &str = "io.github.anefzaoui.ietdownloadmanager.Secret";
 
     /// The D-Bus error's kind; its text (the service's own words) is never kept.
     fn fault(e: zbus::Error) -> Fault {
@@ -3118,7 +3118,7 @@ mod secret_service {
             Ok(path)
         }
 
-        /// MDM's items of `service` (one account's, or all): (unlocked, locked).
+        /// IETDM's items of `service` (one account's, or all): (unlocked, locked).
         fn find(
             &self,
             service: &str,
@@ -3309,7 +3309,7 @@ mod mac_keychain {
 #[cfg(target_os = "linux")]
 const WAKEALARM: &str = "/sys/class/rtc/rtc0/wakealarm";
 
-/// Whether MDM may wake this computer.
+/// Whether IETDM may wake this computer.
 pub fn wake_support() -> crate::wake::Support {
     #[cfg(target_os = "linux")]
     {
@@ -3325,7 +3325,7 @@ pub fn wake_support() -> crate::wake::Support {
             Support::NeedsAdmin
         }
     }
-    // macOS: `pmset schedule wake` and IOPMSchedulePowerEvent need an administrator, and MDM
+    // macOS: `pmset schedule wake` and IOPMSchedulePowerEvent need an administrator, and IETDM
     // never asks for one by itself.
     #[cfg(target_os = "macos")]
     {
@@ -3347,11 +3347,11 @@ fn rtc_offset() -> i64 {
     }
 }
 
-/// Wake the computer at `at` (seconds since 1970, UTC), or cancel MDM's wake (None).
+/// Wake the computer at `at` (seconds since 1970, UTC), or cancel IETDM's wake (None).
 #[cfg(target_os = "linux")]
 pub fn wake_at(at: Option<i64>) -> Result<(), String> {
-    // The alarm MDM set (in the chip's time), to tell it from another program's: kept in the
-    // data folder, so an alarm left by an MDM that was killed (or signed out of) is still ours.
+    // The alarm IETDM set (in the chip's time), to tell it from another program's: kept in the
+    // data folder, so an alarm left by an IETDM that was killed (or signed out of) is still ours.
     let file = mdm_ipc::data_dir().map(|d| d.join("wake-alarm"));
     let mut ours = file
         .as_ref()
@@ -3449,7 +3449,7 @@ pub fn keep_awake(reason: Option<&str>) -> bool {
         )?;
         logind.call(
             "Inhibit",
-            &("sleep:idle", "Mister Download Manager", reason, "block"),
+            &("sleep:idle", "IET Download Manager", reason, "block"),
         )
     };
     match take() {
@@ -3464,7 +3464,7 @@ pub fn keep_awake(reason: Option<&str>) -> bool {
     }
 }
 
-/// macOS: `caffeinate -i` (no idle sleep) for as long as MDM runs, ended when not needed.
+/// macOS: `caffeinate -i` (no idle sleep) for as long as IETDM runs, ended when not needed.
 #[cfg(target_os = "macos")]
 pub fn keep_awake(reason: Option<&str>) -> bool {
     use std::sync::Mutex;

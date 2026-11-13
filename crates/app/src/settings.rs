@@ -80,7 +80,7 @@ pub struct Settings {
     /// Show the "Download complete" dialog (Options → Downloads).
     pub show_complete: bool,
     /// Download complete snoozed until then (unix seconds; its window's Snooze menu, #741):
-    /// `show_complete` stays as it is. A snooze until MDM restarts is not saved.
+    /// `show_complete` stays as it is. A snooze until IETDM restarts is not saved.
     #[serde(skip_serializing_if = "Option::is_none")]
     pub complete_snoozed_until: Option<i64>,
     /// List right-click → On Double click: Open (true) or Properties (IDM default).
@@ -104,13 +104,13 @@ pub struct Settings {
     /// View → Dark Mode support (IDM 6.37): follow Windows' dark app mode; off = always light.
     pub dark_mode_support: bool,
     /// View → Always dark (#60): dark whatever the system says (a desktop that reports no
-    /// preference, or a dark MDM on a light desktop).
+    /// preference, or a dark IETDM on a light desktop).
     pub always_dark: bool,
     /// The look (#45): a built-in theme's id ("classic", the default) or a theme file's name in
     /// the data folder's `themes` folder (crate::themefile).
     pub theme: String,
     /// View → Draw with (#89): OpenGL or Direct3D (Windows only), used from the next start.
-    /// None: MDM's default (`renderer::DEFAULT`), which may change.
+    /// None: IETDM's default (`renderer::DEFAULT`), which may change.
     pub renderer: Option<crate::renderer::Api>,
     /// View → Interface size (#262), percent: one of `crate::scale::STEPS` (100 to 200). Every
     /// window drawn that much larger than the display's own scale makes it.
@@ -146,11 +146,11 @@ pub struct Settings {
     pub clipboard_autostart: bool,
     /// General: Minimize hides the main window, and a download's progress window, to the
     /// notification area, as closing the main window does (#63). On by default (the
-    /// maintainer's choice), for existing lists too. Only where a tray shows MDM's icon.
+    /// maintainer's choice), for existing lists too. Only where a tray shows IETDM's icon.
     pub minimize_to_tray: bool,
-    /// General: closing the main window keeps MDM running, hidden in the notification area (else
+    /// General: closing the main window keeps IETDM running, hidden in the notification area (else
     /// closing quits). On by default, for existing lists too, in every copy. Only where a tray
-    /// shows MDM's icon.
+    /// shows IETDM's icon.
     pub close_to_tray: bool,
     pub mv2_extensions: bool,
     pub advanced_integration: bool,
@@ -196,7 +196,7 @@ pub struct Settings {
     /// "User-Agent for manually added downloads": the user's, or empty for the automatic one
     /// (the default browser's, #668: `mdm_engine::agent::automatic`). Saved before #668 as
     /// Internet Explorer 11's, the default then: read as empty (`own_user_agent`), which an older
-    /// MDM reads as its default again.
+    /// IETDM reads as its default again.
     #[serde(deserialize_with = "automatic_agent")]
     pub user_agent: String,
     /// Connection: per-server connection limits (server, number).
@@ -251,7 +251,7 @@ pub struct Settings {
     /// Sounds: download complete, download failed, queue started, queue stopped/finished.
     pub sounds: [(bool, String); 4],
     /// The local automation API (beyond IDM): status queries over the command channel. Off by
-    /// default; `misterdownloadmanager-cli api on` turns it on.
+    /// default; `ietdownloadmanager-cli api on` turns it on.
     pub automation_api: bool,
     /// Options → Remote (#141, beyond IDM): paired phones and computers on the local network
     /// add and control downloads (crates/remote). Off by default.
@@ -264,7 +264,7 @@ pub struct Settings {
     /// Torrents keep sharing after they finish (D-018: off; a finished torrent stops, like any
     /// download).
     pub torrent_keep_sharing: bool,
-    /// Windows opens magnet links and .torrent files with MDM (D-018: opt-in, current user).
+    /// Windows opens magnet links and .torrent files with IETDM (D-018: opt-in, current user).
     pub torrent_associations: bool,
     /// Torrent settings → Network (#40, `torrent_config`): accept incoming connections, map
     /// the port with the router's UPnP, a fixed port (0: any, picked at each start), the DHT,
@@ -333,7 +333,7 @@ pub struct Settings {
 
 /// Options → File types defaults (IDM 6.42), shared with the browser host (mdm_ipc::capture).
 pub use mdm_ipc::capture::{DEFAULT_AUTO_TYPES, DEFAULT_EXCLUDED_SITES};
-/// The browsers IDM 6.42 lists, plus Firefox's forks MDM tells apart (#41; capture::browser_named),
+/// The browsers IDM 6.42 lists, plus Firefox's forks IETDM tells apart (#41; capture::browser_named),
 /// all captured on.
 pub const BROWSERS: [&str; 12] = [
     "Apple Safari",          // not translated: a product name
@@ -517,7 +517,7 @@ impl Settings {
             "proxy".into(),
             &|| {
                 format!(
-                    "Mister Download Manager: {} {}:{}",
+                    "IET Download Manager: {} {}:{}",
                     // i18n: the proxy's password in the system's keychain (Credential Manager, the keyring): its name there, followed by the proxy's address
                     crate::i18n::t("proxy server"),
                     self.proxy_host,
@@ -529,7 +529,7 @@ impl Settings {
         for (a, d) in self.debrid_accounts.iter().zip(&mut disk.debrid_accounts) {
             d.secret = kept(
                 format!("debrid/{}", a.id),
-                &|| format!("Mister Download Manager: {} ({})", a.service.name(), a.user),
+                &|| format!("IET Download Manager: {} ({})", a.service.name(), a.user),
                 &a.secret,
             );
         }
@@ -542,7 +542,7 @@ impl Settings {
 {user}"
                     ))
                 ),
-                &|| format!("Mister Download Manager: {site} ({user})"),
+                &|| format!("IET Download Manager: {site} ({user})"),
                 pw,
             );
         }
@@ -583,7 +583,7 @@ pub fn remember(list: &mut Vec<String>, value: &str) {
     list.truncate(HISTORY);
 }
 
-/// A saved "User-Agent for manually added downloads": MDM's former default (Internet Explorer
+/// A saved "User-Agent for manually added downloads": IETDM's former default (Internet Explorer
 /// 11's, before #668) or nothing is the automatic one (empty).
 fn automatic_agent<'de, D: serde::Deserializer<'de>>(d: D) -> Result<String, D::Error> {
     let saved = String::deserialize(d)?;
@@ -734,11 +734,11 @@ impl Settings {
     }
 
     /// Why a download from the browser can't start (#42): its proxy asks for a login that the
-    /// VPN or proxy extension gives, which MDM can't have. Going around it would show the
+    /// VPN or proxy extension gives, which IETDM can't have. Going around it would show the
     /// user's own address, so the download stops and says so.
     pub fn browser_proxy_refused(&self, context: &mdm_ipc::Command) -> Option<String> {
         (self.proxy_from_browser && context.proxy_login).then(|| {
-            // i18n: an error: the browser's VPN or proxy extension logs in to its proxy itself, and MDM can't; Options → Proxy / Socks → Network adapter is where an adapter can be chosen
+            // i18n: an error: the browser's VPN or proxy extension logs in to its proxy itself, and IETDM can't; Options → Proxy / Socks → Network adapter is where an adapter can be chosen
             crate::i18n::t(
                 "the browser's proxy (a VPN or proxy extension) asks for a login only that extension has: use the VPN's own app, or choose its network adapter in Options → Proxy / Socks",
             )
@@ -983,7 +983,7 @@ pub fn dns_choice(
     })
 }
 
-/// The proxy MDM's own downloads go through (its helpers, its updates, a crash report's
+/// The proxy IETDM's own downloads go through (its helpers, its updates, a crash report's
 /// symbols): Options → Proxy / Socks, kept in step by the app ([`share_proxy`]); Windows' own
 /// settings in a process without them (the crash monitor).
 static OWN_PROXY: std::sync::RwLock<Option<mdm_engine::Proxy>> = std::sync::RwLock::new(None);
@@ -1036,12 +1036,12 @@ pub fn share_video_settings(s: &Settings) {
     mdm_tools::video::set_chapters(s.video_chapters);
 }
 
-/// The network adapter MDM's connections go through now (#35).
+/// The network adapter IETDM's connections go through now (#35).
 pub fn own_route() -> mdm_engine::Route {
     OWN_ROUTE.read().unwrap().clone()
 }
 
-/// How MDM downloads its own files: its engine, as itself, through the user's proxy, DNS and
+/// How IETDM downloads its own files: its engine, as itself, through the user's proxy, DNS and
 /// network adapter.
 pub fn own_net() -> mdm_engine::Options {
     let proxy = OWN_PROXY
@@ -1061,8 +1061,8 @@ mod tests {
     use std::path::Path;
 
     /// #668: the User-Agent for links added by hand is the default browser's unless one is set.
-    /// Saved before, MDM's former default (Internet Explorer 11's) or nothing reads as automatic;
-    /// automatic is saved empty, which an older MDM reads as its own default again.
+    /// Saved before, IETDM's former default (Internet Explorer 11's) or nothing reads as automatic;
+    /// automatic is saved empty, which an older IETDM reads as its own default again.
     #[test]
     fn the_user_agent_is_automatic_unless_one_is_set() {
         use super::Settings;

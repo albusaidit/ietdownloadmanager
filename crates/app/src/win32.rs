@@ -1,4 +1,4 @@
-//! The only Windows FFI in Mister Download Manager (D-008): IDM's dialog frame for our dialog windows, and the
+//! The only Windows FFI in IET Download Manager (D-008): IDM's dialog frame for our dialog windows, and the
 //! shell's own small file-type icons (the ones Explorer and IDM show — Windows' artwork, not IDM's),
 //! and the drop target's OLE `IDropTarget` (`ole`).
 #![allow(unsafe_code)]
@@ -175,7 +175,7 @@ fn own_window(title: &str, known: Option<HWND>) -> Option<HWND> {
 
 /// The address a connection to `dst` would leave from (PAC's `myIpAddress`), asked of the
 /// routing table (GetBestRoute2). No socket is opened: a UDP socket, the usual way to ask, is a
-/// listening socket to Windows' firewall, which would ask the user about MDM. Installed as the
+/// listening socket to Windows' firewall, which would ask the user about IETDM. Installed as the
 /// engine's lookup at start (`mdm_engine::net::set_source_lookup`); unix.rs has none (the
 /// engine's UDP way raises no prompt there).
 pub fn source_address(dst: std::net::IpAddr) -> Option<std::net::IpAddr> {
@@ -781,7 +781,7 @@ fn settled_message() -> u32 {
     use windows_sys::Win32::UI::WindowsAndMessaging::RegisterWindowMessageW;
     static ID: std::sync::OnceLock<u32> = std::sync::OnceLock::new();
     *ID.get_or_init(|| {
-        let name: Vec<u16> = "MDM.caption-less.settled\0".encode_utf16().collect();
+        let name: Vec<u16> = "IETDM.caption-less.settled\0".encode_utf16().collect();
         // SAFETY: a NUL-terminated string read during the call.
         unsafe { RegisterWindowMessageW(name.as_ptr()) }
     })
@@ -1580,7 +1580,7 @@ mod find_own_window_tests {
         }
     }
 
-    /// #919: a window is given its title without isolates, and found by the title MDM knows it
+    /// #919: a window is given its title without isolates, and found by the title IETDM knows it
     /// by, isolates and all.
     #[test]
     fn a_window_titled_without_isolates_is_found() {
@@ -1885,7 +1885,7 @@ unsafe extern "system" fn main_minimize_proc(
 }
 
 /// Keep the main window's minimize command in step with "Minimize to the notification area"
-/// (`enabled`: the option is on and a tray shows MDM's icon). Call every frame (cheap once the
+/// (`enabled`: the option is on and a tray shows IETDM's icon). Call every frame (cheap once the
 /// window is found). True once after the command came: hide the window now.
 pub fn main_minimize_to_tray(ctx: &egui::Context, enabled: bool) -> bool {
     MAIN_MINIMIZE.with(|m| {
@@ -1914,7 +1914,7 @@ const TRAY_ICON_IDS: u32 = 16;
 /// Shell_NotifyIcon giving up on a busy Explorer, not the shell's answer.
 const TRAY_SLOW: std::time::Duration = std::time::Duration::from_millis(1500);
 
-/// What the shell said of MDM's notification-area icon ([`tray_icon_ask`]).
+/// What the shell said of IETDM's notification-area icon ([`tray_icon_ask`]).
 #[derive(Clone, Copy, Debug, PartialEq, Eq)]
 pub enum TrayAnswer {
     /// No taskbar (no `Shell_TrayWnd` window): Explorer isn't running, or a shell without a
@@ -2035,7 +2035,7 @@ pub fn tray_icon_tip(hwnd: isize, id: u32, tip: &str) -> bool {
 }
 
 /// Whether the window in front (the foreground window, which takes the keyboard) is another
-/// program's: a click outside MDM's windows (the desktop, the taskbar, another program) put it
+/// program's: a click outside IETDM's windows (the desktop, the taskbar, another program) put it
 /// there. False while one of ours is in front, and while none is (Windows passing the foreground
 /// on). An open menu closes at once on it (chrome.rs, #859).
 pub fn foreground_is_another_program() -> bool {
@@ -2321,8 +2321,8 @@ pub fn popup_window(title: &str, kind: Popup) -> bool {
     // SAFETY: our own window, on its thread; the subclass proc lives as long as the program;
     // the DWM attributes are read from locals during the calls.
     unsafe {
-        // Done once (comctl32 5.8, which MDM links, has no GetWindowSubclass to ask by).
-        let done: Vec<u16> = "MDM.popup\0".encode_utf16().collect();
+        // Done once (comctl32 5.8, which IETDM links, has no GetWindowSubclass to ask by).
+        let done: Vec<u16> = "IETDM.popup\0".encode_utf16().collect();
         if !GetPropW(hwnd, done.as_ptr()).is_null() {
             return false;
         }
@@ -2475,7 +2475,7 @@ pub fn caption_dark(title: &str, dark: bool) -> bool {
 }
 
 /// The popup menus Windows draws for us — the notification-area icon's (tray-icon's), the
-/// window menu of a drawn title bar — in MDM's mode, not Windows' (#682): dark on a dark surface
+/// window menu of a drawn title bar — in IETDM's mode, not Windows' (#682): dark on a dark surface
 /// (dark mode, a dark theme), light otherwise, whatever Windows' own app mode says. Windows has
 /// no documented way: uxtheme's SetPreferredAppMode (ordinal 135, ForceDark 2 / ForceLight 3)
 /// sets the process's mode and FlushMenuThemes (ordinal 136) makes menus read it again, as the
@@ -2555,7 +2555,7 @@ fn menu_mode_fns() -> Option<MenuModeFns> {
 
 #[cfg(test)]
 mod menus_dark_tests {
-    /// #682: uxtheme has the menu mode functions on every Windows MDM is tested on (10 1903 and
+    /// #682: uxtheme has the menu mode functions on every Windows IETDM is tested on (10 1903 and
     /// later, Server 2022's runner included), and setting the mode either way returns.
     #[test]
     fn the_menu_mode_functions_are_found_and_answer() {
@@ -2590,12 +2590,12 @@ pub fn dragging_out() -> bool {
 /// captured the mouse for it), so it is the right one when several show the same title; else
 /// our window titled `title`, given in the interface language, as it shows.
 ///
-/// The drop target decides what the drag does (#869): MDM offers a move, a copy and a link, so
+/// The drop target decides what the drag does (#869): IETDM offers a move, a copy and a link, so
 /// Explorer applies its own rules, as for a file dragged in Explorer: moved on the same drive or
 /// with Shift, copied to another drive or with Ctrl, a shortcut with Alt. A move is followed:
 /// `followed` is told where the file went (from the shell's change notifications), or that it
-/// went where MDM can't learn; a copy, a link or a cancelled drag tell nothing. It may come long
-/// after the drop (a move to another drive copies first), from the drag's thread. MDM never
+/// went where IETDM can't learn; a copy, a link or a cancelled drag tell nothing. It may come long
+/// after the drop (a move to another drive copies first), from the drag's thread. IETDM never
 /// deletes the file itself, even for a target that asks the source to (a move it doesn't
 /// optimize): the file stays, so nothing is lost.
 ///
@@ -3272,7 +3272,7 @@ mod dragout {
         let file = plain(std::fs::canonicalize(file).map_err(|e| e.to_string())?);
         // Watched from before the drop: a move on the same drive is done before the drag ends.
         // MDM_TEST_NO_SHELL_WATCH=1 (debug builds, for checks): not watched, as when the shell
-        // won't say, so a move is one MDM can't follow.
+        // won't say, so a move is one IETDM can't follow.
         let unwatched = cfg!(debug_assertions)
             && std::env::var_os("MDM_TEST_NO_SHELL_WATCH").is_some_and(|v| v == "1");
         let watch = if unwatched { None } else { Watch::start() };
@@ -3312,7 +3312,7 @@ mod dragout {
     }
 
     impl Dropped {
-        /// What became of the file: moved (where to, or that MDM can't learn where), or None
+        /// What became of the file: moved (where to, or that IETDM can't learn where), or None
         /// when it stayed (a copy, a link, a drop that did nothing). Waits as long as a move may
         /// take, on the drag's thread.
         pub(super) fn follow(mut self) -> Option<DraggedOut> {
@@ -3435,7 +3435,7 @@ mod dragout {
 
 /// The key of Windows' "Choose your app mode" (`AppsUseLightTheme`), under HKEY_CURRENT_USER.
 /// For tests, `MDM_PERSONALIZE_KEY` names another key to read it from (and to watch), so a check
-/// can switch the mode MDM sees without touching the system's.
+/// can switch the mode IETDM sees without touching the system's.
 fn personalize_key() -> String {
     std::env::var("MDM_PERSONALIZE_KEY")
         .ok()
@@ -3808,7 +3808,7 @@ fn reg_string(key: &str, name: &str) -> Option<String> {
 /// names have `_` for `-`.
 pub fn take_install_language() -> Option<String> {
     use windows_sys::Win32::System::Registry::{HKEY_CURRENT_USER, RegDeleteKeyValueW};
-    const KEY: &str = r"Software\MisterDownloadManager";
+    const KEY: &str = r"Software\IETDownloadManager";
     const NAME: &str = "InstallLanguage";
     let value = reg_string(KEY, NAME)?;
     let w = |s: &str| -> Vec<u16> { s.encode_utf16().chain(Some(0)).collect() };
@@ -3937,7 +3937,7 @@ pub fn windows_version() -> String {
 
 /// The default browser (#668): the program https links open with (the user's choice in Default
 /// apps, `UserChoice`'s ProgId, and that ProgId's `shell\open\command`), and its file's version.
-/// None when it isn't a browser MDM knows (MDM then speaks as Chrome).
+/// None when it isn't a browser IETDM knows (IETDM then speaks as Chrome).
 pub fn default_browser() -> Option<mdm_engine::agent::Found> {
     use mdm_engine::agent::{Browser, Found};
     use windows_sys::Win32::System::Registry::HKEY_CLASSES_ROOT;
@@ -4107,16 +4107,16 @@ pub fn play_sound(file: &str) {
 }
 
 /// Options → General → "Launch … on startup": our entry under HKCU\…\Run (set or removed).
-/// Make MDM (on) or stop it being (off) what Windows opens magnet links and .torrent files
+/// Make IETDM (on) or stop it being (off) what Windows opens magnet links and .torrent files
 /// with, for the current user (HKCU\Software\Classes; no admin). Off removes only what points
 /// at us. Windows keeps a choice the user made in "Open with" above this (it can't be set by
-/// programs), so another app chosen there stays in charge until the user picks MDM.
+/// programs), so another app chosen there stays in charge until the user picks IETDM.
 pub fn set_torrent_handlers(on: bool) {
     use windows_sys::Win32::System::Registry::{
         HKEY_CURRENT_USER, REG_SZ, RRF_RT_REG_SZ, RegDeleteKeyValueW, RegDeleteTreeW, RegGetValueW,
         RegSetKeyValueW,
     };
-    const PROGID: &str = "MisterDownloadManager.Torrent";
+    const PROGID: &str = "IETDownloadManager.Torrent";
     let w = |s: &str| -> Vec<u16> { s.encode_utf16().chain(Some(0)).collect() };
     let set = |key: &str, name: Option<&str>, value: &str| {
         let (key, value) = (w(key), w(value));
@@ -4202,28 +4202,28 @@ pub fn set_torrent_handlers(on: bool) {
     }
 }
 
-/// The Run key's value MDM keeps its startup entry in (Options → "Launch on startup", the
+/// The Run key's value IETDM keeps its startup entry in (Options → "Launch on startup", the
 /// installer's "Start when Windows starts"). An off-screen test copy never touches the user's:
 /// it uses `MDM_TEST_RUN_VALUE`'s name when given one, else none at all (#226's checks).
 fn run_value() -> Option<String> {
     if crate::offscreen() {
         return std::env::var("MDM_TEST_RUN_VALUE")
             .ok()
-            .filter(|v| v.starts_with("MisterDownloadManagerTest"));
+            .filter(|v| v.starts_with("IETDownloadManagerTest"));
     }
-    Some("MisterDownloadManager".to_owned())
+    Some("IETDownloadManager".to_owned())
 }
 
 const RUN_KEY: &str = r"Software\Microsoft\Windows\CurrentVersion\Run";
 
-/// The startup entry's command for the program `exe`: started with the session, MDM waits in
+/// The startup entry's command for the program `exe`: started with the session, IETDM waits in
 /// the notification area (`/startup`, #226).
 fn startup_command(exe: &std::path::Path) -> String {
     format!("\"{}\" {}", exe.display(), mdm_ipc::STARTUP)
 }
 
 /// A startup entry `value` (a command line) written before #226 for the program `exe`: the same
-/// program, without the argument. Another program's entry (a copy of MDM elsewhere) is not this
+/// program, without the argument. Another program's entry (a copy of IETDM elsewhere) is not this
 /// one's to rewrite.
 fn startup_outdated(value: &str, exe: &std::path::Path) -> bool {
     // The program compared as Windows compares paths: in any case, either slash.
@@ -4250,7 +4250,7 @@ fn startup_outdated(value: &str, exe: &std::path::Path) -> bool {
         .any(|a| a.eq_ignore_ascii_case(mdm_ipc::STARTUP))
 }
 
-/// Is Mister Download Manager in the user's Run key (set by Options or by the installer's
+/// Is IET Download Manager in the user's Run key (set by Options or by the installer's
 /// "Start when Windows starts")? The registry is the truth for Options → "Launch on startup".
 pub fn run_at_startup() -> bool {
     run_value().is_some_and(|name| {
@@ -4321,7 +4321,7 @@ mod startup_tests {
     use super::{startup_command, startup_outdated};
     use std::path::Path;
 
-    const EXE: &str = r"C:\Program Files\Mister Download Manager\misterdownloadmanager.exe";
+    const EXE: &str = r"C:\Program Files\IET Download Manager\ietdownloadmanager.exe";
 
     /// The entry Options and the installer write (#226): the program, quoted, then `/startup`.
     #[test]
@@ -4338,7 +4338,7 @@ mod startup_tests {
     }
 
     /// An entry of a version before 0.5.0, or of its installer, is written again; one for another
-    /// copy of MDM, or one already up to date, is left alone.
+    /// copy of IETDM, or one already up to date, is left alone.
     #[test]
     fn old_startup_entries_are_rewritten() {
         let exe = Path::new(EXE);
@@ -4359,7 +4359,7 @@ mod startup_tests {
         assert!(!startup_outdated(&format!("\"{EXE}\" /STARTUP"), exe));
         // Another copy's (a portable one, a build elsewhere).
         assert!(!startup_outdated(
-            r#""D:\mdm\misterdownloadmanager.exe""#,
+            r#""D:\mdm\ietdownloadmanager.exe""#,
             exe
         ));
         assert!(!startup_outdated("", exe));
@@ -4370,7 +4370,7 @@ mod startup_tests {
     fn the_installer_writes_the_same_entry() {
         let iss = include_str!("../../../tools/installer/mdm.iss");
         assert!(iss.contains(
-            r#"ValueName: "MisterDownloadManager"; ValueData: """{app}\{#AppExe}"" /startup""#
+            r#"ValueName: "IETDownloadManager"; ValueData: """{app}\{#AppExe}"" /startup""#
         ));
     }
 }
@@ -5123,7 +5123,7 @@ pub mod ole {
 /// with the process.
 pub fn mark_running() {
     use windows_sys::Win32::System::Threading::CreateMutexW;
-    let name: Vec<u16> = "MisterDownloadManager.Running\0".encode_utf16().collect();
+    let name: Vec<u16> = "IETDownloadManager.Running\0".encode_utf16().collect();
     // SAFETY: NUL-terminated name; the handle is deliberately kept for the process's life.
     unsafe {
         CreateMutexW(std::ptr::null(), 0, name.as_ptr());
@@ -5269,7 +5269,7 @@ pub fn process_alive(pid: u32) -> bool {
     }
 }
 
-/// The command line in this windowed program (main.rs, `misterdownloadmanager-cli`'s
+/// The command line in this windowed program (main.rs, `ietdownloadmanager-cli`'s
 /// launcher started it): the console it was started from, for what it prints and reads and for
 /// Ctrl+C. Input and output the launcher handed over stay as they are (a file, a pipe, the console
 /// itself); only those it didn't have get the console's. With the launcher's process id, this
@@ -5358,7 +5358,7 @@ pub fn clipboard_sequence() -> u32 {
     unsafe { windows_sys::Win32::System::DataExchange::GetClipboardSequenceNumber() }
 }
 
-/// End process `pid` (a frozen MDM the user chose to close from the crash report).
+/// End process `pid` (a frozen IETDM the user chose to close from the crash report).
 pub fn end_process(pid: u32) -> bool {
     use windows_sys::Win32::Foundation::CloseHandle;
     use windows_sys::Win32::System::Threading::{OpenProcess, PROCESS_TERMINATE, TerminateProcess};
@@ -5572,8 +5572,8 @@ pub fn host_registration() -> crate::extension::Registration {
     use windows_sys::Win32::System::Registry::{HKEY_CURRENT_USER, HKEY_LOCAL_MACHINE};
     let mut broken = None;
     for key in [
-        r"Software\Google\Chrome\NativeMessagingHosts\com.misterdownloadmanager.host",
-        r"Software\Mozilla\NativeMessagingHosts\com.misterdownloadmanager.host",
+        r"Software\Google\Chrome\NativeMessagingHosts\com.ietdownloadmanager.host",
+        r"Software\Mozilla\NativeMessagingHosts\com.ietdownloadmanager.host",
     ] {
         for root in [HKEY_CURRENT_USER, HKEY_LOCAL_MACHINE] {
             let Some(manifest) = reg_string_in(root, key, "") else {
@@ -5666,7 +5666,7 @@ fn blob_bytes(
 }
 
 // Sign-in secrets in Windows Credential Manager (#44, secrets.rs): generic credentials named
-// `<service>/<account>`, for this Windows user, roaming with the profile as MDM's data folder
+// `<service>/<account>`, for this Windows user, roaming with the profile as IETDM's data folder
 // (%APPDATA%) does. Credential Manager (Control Panel → Credential Manager → Windows
 // Credentials) shows them, the label as their user name, and can remove them.
 
@@ -5698,7 +5698,7 @@ fn cred_not_found() -> bool {
     unsafe { GetLastError() == ERROR_NOT_FOUND }
 }
 
-/// Whether Credential Manager answers (listing MDM's own entries).
+/// Whether Credential Manager answers (listing IETDM's own entries).
 pub fn keychain_probe(service: &str) -> Result<(), crate::secrets::Fault> {
     keychain_list(service).map(|_| ())
 }
@@ -5789,7 +5789,7 @@ pub fn keychain_delete(service: &str, account: &str) -> Result<(), crate::secret
     Ok(())
 }
 
-/// The accounts of `service`'s generic credentials (the filter `<service>/*`: only MDM's; the
+/// The accounts of `service`'s generic credentials (the filter `<service>/*`: only IETDM's; the
 /// others' blobs are never read).
 #[allow(unsafe_code)]
 pub fn keychain_list(service: &str) -> Result<Vec<String>, crate::secrets::Fault> {
@@ -5912,9 +5912,9 @@ struct WakeCmd {
 
 /// Wake the computer at `at` (seconds since 1970, UTC; for the queue named), or cancel the wake
 /// (None). A waitable timer set to resume the computer (SetWaitableTimer, fResume): it lives in
-/// MDM's process (Windows cancels it if the thread that set it ends, so one thread of its own
-/// keeps it), lists in `powercfg /waketimers`, and goes with MDM: nothing is left behind when
-/// MDM quits or is uninstalled.
+/// IETDM's process (Windows cancels it if the thread that set it ends, so one thread of its own
+/// keeps it), lists in `powercfg /waketimers`, and goes with IETDM: nothing is left behind when
+/// IETDM quits or is uninstalled.
 pub fn wake_at(at: Option<(i64, &str)>) -> Result<(), String> {
     use std::sync::{Mutex, OnceLock, mpsc};
     static THREAD: OnceLock<Mutex<mpsc::Sender<WakeCmd>>> = OnceLock::new();

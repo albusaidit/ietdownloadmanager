@@ -14,9 +14,9 @@
 | adwaita-icon-theme 51.0, 50 of its icons (the Adwaita theme's toolbar, categories, file types and title-bar buttons), unchanged; its one-colour icons are drawn in the theme's text colour when read | The GNOME Project, <https://gitlab.gnome.org/GNOME/adwaita-icon-theme> (commit 70ecd52) | LGPL-3.0 (of LGPL-3.0 or CC BY-SA 3.0 US) — `crates/app/assets/themes/adwaita/icons/LICENSE`, `COPYING` | `crates/app/assets/themes/adwaita/icons/` (its PDF, torrent-file and Hide to the notification area icons are MDM's own) |
 | breeze-icons 6.31, 51 of its icons (the Breeze theme's toolbar, categories, file types and title-bar buttons), unchanged; its one-colour icons are drawn in the theme's text colour when read | Uri Herrera and the KDE Visual Design Group, <https://invent.kde.org/frameworks/breeze-icons> (commit 60ca517) | LGPL-3.0-or-later — `crates/app/assets/themes/breeze/icons/LICENSE` | `crates/app/assets/themes/breeze/icons/` (its PDF and Hide to the notification area icons are MDM's own) |
 
-The app icon (`art/Mister Download Manager.png`) was made for Mister Download Manager by its
-author, Ahmed Nefzaoui, with ChatGPT (OpenAI's image generation); every icon size is built from
-it by `tools/icon/build_icon.py`.
+IET Download Manager's app icon (`art/IET Download Manager.png`, `crates/app/assets/icons/app/`,
+`extension/icons/`) is original to this fork, drawn in 2026. It replaces Mister Download
+Manager's icon, which was made for that project by its author, Ahmed Nefzaoui.
 
 The Luna, Aero and Aqua themes' icons (`crates/app/assets/themes/luna/icons/`, `aero/icons/`,
 `aqua/icons/`) were drawn for Mister Download Manager, as were the Metro, Adwaita and Breeze

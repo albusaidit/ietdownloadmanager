@@ -88,12 +88,12 @@ impl Fmt {
     }
 }
 
-/// Doubt: something yt-dlp may read otherwise than MDM would. The stream is left to yt-dlp.
+/// Doubt: something yt-dlp may read otherwise than IETDM would. The stream is left to yt-dlp.
 struct Doubt;
 
 impl Master {
     /// The master playlist `text`, from `url` (the address it came from, after any redirect).
-    /// None: not a master playlist, or one MDM doesn't read exactly as yt-dlp would.
+    /// None: not a master playlist, or one IETDM doesn't read exactly as yt-dlp would.
     pub fn parse(text: &str, url: &Url) -> Option<Master> {
         let lines = lines(text)?;
         if !text.starts_with("#EXTM3U")
@@ -570,7 +570,7 @@ fn title_of(url: &Url) -> Option<String> {
     (!title.trim().is_empty()).then_some(title)
 }
 
-/// Characters an address may hold as it is (RFC 3986), so that yt-dlp's and MDM's readings of
+/// Characters an address may hold as it is (RFC 3986), so that yt-dlp's and IETDM's readings of
 /// it can't differ.
 fn plain_address(s: &str) -> bool {
     !s.is_empty()
@@ -655,7 +655,7 @@ fn unique_ids(formats: &[Fmt]) -> Vec<String> {
 
 /// Whether the choices made of `formats` (`resolve::choices`, which keeps the last of the
 /// formats equal in size) come out the same in any order: formats tied for a height's place, or
-/// for the sound's, must make the same line (frame rate shown, sound or not, type). MDM's order
+/// for the sound's, must make the same line (frame rate shown, sound or not, type). IETDM's order
 /// ([`worse_first`]) is yt-dlp's for every stream of the corpus, but isn't proven equal: where
 /// it would decide something, the stream is left to yt-dlp.
 fn ties_are_harmless(formats: &[Format]) -> bool {
@@ -698,7 +698,7 @@ fn ties_are_harmless(formats: &[Format]) -> bool {
 
 /// Read the stream at `url` as yt-dlp would list it, asked as the browser asked for it (`from`:
 /// its page as the Referer, its User-Agent, its Cookie header) through `opts` (Options' proxy,
-/// DNS and network adapter, as MDM's own requests). None whenever the stream isn't one this
+/// DNS and network adapter, as IETDM's own requests). None whenever the stream isn't one this
 /// reads exactly as yt-dlp does, or anything goes wrong: within [`BUDGET`] for both requests.
 pub async fn fetch(url: &str, from: &FromBrowser, opts: &mdm_engine::Options) -> Option<Video> {
     fetch_within(url, from, opts, BUDGET).await
@@ -717,7 +717,7 @@ async fn fetch_within(
 }
 
 async fn read(url: &str, from: &FromBrowser, opts: &mdm_engine::Options) -> Option<Video> {
-    // An address yt-dlp and MDM can only read alike: a playlist's on the web, as written.
+    // An address yt-dlp and IETDM can only read alike: a playlist's on the web, as written.
     let start = Url::parse(url).ok()?;
     if !matches!(start.scheme(), "http" | "https")
         || start.as_str() != url
@@ -906,7 +906,7 @@ mod tests {
         ),
     ];
 
-    /// What MDM reads of each stream is what yt-dlp listed: the same title, duration, formats in
+    /// What IETDM reads of each stream is what yt-dlp listed: the same title, duration, formats in
     /// the same order (IDs, heights, frame rates, codecs present, bitrates) and sizes, exactly
     /// (the duration is yt-dlp's `int(sum(EXTINF))`, summed in the same order, and the size the
     /// same `tbr × duration × 125`: no tolerance), the same subtitle languages; so the same
@@ -1069,7 +1069,7 @@ mod tests {
     }
 
     /// Two variants of one height, the same size and different frame rates: which one
-    /// `resolve::choices` shows depends on the order, and MDM's isn't proven to be yt-dlp's
+    /// `resolve::choices` shows depends on the order, and IETDM's isn't proven to be yt-dlp's
     /// there.
     #[test]
     fn ties_that_matter_are_left_to_yt_dlp() {

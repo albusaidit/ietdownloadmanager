@@ -1,12 +1,12 @@
 {
   "name": {
-    "message": "Mister Download Manager"
+    "message": "IET Download Manager"
   },
   "description": {
-    "message": "Sender nedlastinger fra nettleseren til Mister Download Manager."
+    "message": "Sender nedlastinger fra nettleseren til IET Download Manager."
   },
   "menu": {
-    "message": "Last ned med Mister Download Manager"
+    "message": "Last ned med IET Download Manager"
   },
   "video_download": {
     "message": "Last ned video"
@@ -30,19 +30,19 @@
     "message": "Knappeinnstillinger ..."
   },
   "video_sent": {
-    "message": "Sendt til Mister Download Manager"
+    "message": "Sendt til IET Download Manager"
   },
   "menu_selected": {
-    "message": "Last ned valgte koblinger med Mister Download Manager"
+    "message": "Last ned valgte koblinger med IET Download Manager"
   },
   "menu_all": {
-    "message": "Last ned alle koblinger med Mister Download Manager"
+    "message": "Last ned alle koblinger med IET Download Manager"
   },
   "status_connected": {
-    "message": "Tilkoblet Mister Download Manager"
+    "message": "Tilkoblet IET Download Manager"
   },
   "status_connected_version": {
-    "message": "Tilkoblet Mister Download Manager $version$",
+    "message": "Tilkoblet IET Download Manager $version$",
     "placeholders": {
       "version": {
         "content": "$1",
@@ -54,22 +54,22 @@
     "message": "Pauset: nedlastingene blir i nettleseren"
   },
   "status_not_installed": {
-    "message": "Mister Download Manager er ikke installert, eller nettleserintegrasjonen er ikke konfigurert"
+    "message": "IET Download Manager er ikke installert, eller nettleserintegrasjonen er ikke konfigurert"
   },
   "status_forbidden": {
-    "message": "Mister Download Manager godtar ikke denne kopien av utvidelsen"
+    "message": "IET Download Manager godtar ikke denne kopien av utvidelsen"
   },
   "status_not_running": {
-    "message": "Mister Download Manager startet ikke i tide"
+    "message": "IET Download Manager startet ikke i tide"
   },
   "status_host_failed": {
-    "message": "Tilkoblingen til Mister Download Manager mislyktes"
+    "message": "Tilkoblingen til IET Download Manager mislyktes"
   },
   "status_too_large": {
     "message": "Detaljene for denne nedlastingen var for store til å overføre"
   },
   "status_update_app": {
-    "message": "Oppdater Mister Download Manager for å bruke alt denne utvidelsen tilbyr"
+    "message": "Oppdater IET Download Manager for å bruke alt denne utvidelsen tilbyr"
   },
   "popup_take": {
     "message": "Ta nedlastinger fra denne nettleseren"
@@ -78,10 +78,10 @@
     "message": "Send nedlastinger via denne nettleserens proxy- eller VPN-utvidelse"
   },
   "popup_proxy_title": {
-    "message": "Mister Download Manager laster da ned via samme proxy som denne nettleseren. Nettleseren spør deg én gang om å tillate det; hvis du slår dette av, trekkes tillatelsen tilbake."
+    "message": "IET Download Manager laster da ned via samme proxy som denne nettleseren. Nettleseren spør deg én gang om å tillate det; hvis du slår dette av, trekkes tillatelsen tilbake."
   },
   "popup_proxy_title_chromium": {
-    "message": "Mister Download Manager laster da ned via samme proxy som denne nettleseren. Når dette er slått av, leser ikke utvidelsen nettleserens proxy."
+    "message": "IET Download Manager laster da ned via samme proxy som denne nettleseren. Når dette er slått av, leser ikke utvidelsen nettleserens proxy."
   },
   "popup_exclude_site": {
     "message": "Aldri ta nedlastinger fra $site$",
@@ -102,7 +102,7 @@
     }
   },
   "popup_open": {
-    "message": "Åpne Mister Download Manager"
+    "message": "Åpne IET Download Manager"
   },
   "popup_options": {
     "message": "Alternativer..."
@@ -111,7 +111,7 @@
     "message": "Hjelp"
   },
   "popup_support": {
-    "message": "Støtt MDM"
+    "message": "Støtt IETDM"
   },
   "popup_fix": {
     "message": "Hvordan fikse det"
@@ -189,16 +189,16 @@
     "message": "Ingen video å laste ned her"
   },
   "video_playlist": {
-    "message": "En liste med videoer: velg dem i Mister Download Manager"
+    "message": "En liste med videoer: velg dem i IET Download Manager"
   },
   "video_no_ytdlp": {
-    "message": "Mister Download Manager trenger yt-dlp for denne videoen"
+    "message": "IET Download Manager trenger yt-dlp for denne videoen"
   },
   "video_too_long": {
     "message": "Oppslaget tok for lang tid"
   },
   "video_busy": {
-    "message": "Mister Download Manager er opptatt med andre videoer"
+    "message": "IET Download Manager er opptatt med andre videoer"
   },
   "video_queued": {
     "message": "Lagt til i køen"
@@ -222,7 +222,7 @@
     "message": "Denne datamaskinen"
   },
   "popup_send_remote": {
-    "message": "En annen Mister Download Manager (en server)"
+    "message": "En annen IET Download Manager (en server)"
   },
   "popup_remote_code": {
     "message": "Paringskode"
@@ -234,7 +234,7 @@
     "message": "Par"
   },
   "popup_remote_help": {
-    "message": "Åpne adressen én gang og godta sertifikatet, og skriv deretter inn en kode fra Alternativer, Ekstern, Par en enhet (eller misterdownloadmanager-cli pair)."
+    "message": "Åpne adressen én gang og godta sertifikatet, og skriv deretter inn en kode fra Alternativer, Ekstern, Par en enhet (eller ietdownloadmanager-cli pair)."
   },
   "status_remote": {
     "message": "Nedlastinger går til $address$",
@@ -291,19 +291,19 @@
     "message": "Last ned den beste kvaliteten"
   },
   "video_sending": {
-    "message": "Sender til MDM..."
+    "message": "Sender til IETDM..."
   },
   "video_added": {
-    "message": "Lagt til i MDM"
+    "message": "Lagt til i IETDM"
   },
   "video_show": {
     "message": "Vis"
   },
   "video_no_answer": {
-    "message": "MDM svarte ikke"
+    "message": "IETDM svarte ikke"
   },
   "video_get_mdm": {
-    "message": "Skaff MDM"
+    "message": "Skaff IETDM"
   },
   "video_retry": {
     "message": "Prøv på nytt"
@@ -318,7 +318,7 @@
     "message": "Alle kvaliteter og undertekster..."
   },
   "video_failed": {
-    "message": "Mister Download Manager er ikke installert eller startet ikke"
+    "message": "IET Download Manager er ikke installert eller startet ikke"
   },
   "video_download_best": {
     "message": "Last ned beste kvalitet"

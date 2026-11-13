@@ -82,7 +82,7 @@ pub struct TorrentDialog {
     /// Asking whether to use files of the torrent's names already in the folder (#40).
     asking_files: crate::dialogs::FilesGate<()>,
     /// A .torrent on the web (#39, Add URL or the browser): the request it is fetched with
-    /// (the browser's cookies). One typed in the box goes as MDM's own downloads do.
+    /// (the browser's cookies). One typed in the box goes as IETDM's own downloads do.
     remote: Option<crate::torrents::Remote>,
     /// The clipboard's magnet link, read off the window's thread (#661).
     clip: crate::clipboard::Prefill,
@@ -957,7 +957,7 @@ impl TorrentDialog {
 }
 
 /// Torrent settings (ours, D-018): sharing after a torrent finishes, whether Windows opens
-/// magnet links and .torrent files with MDM (both off by default), and the torrent engine's
+/// magnet links and .torrent files with IETDM (both off by default), and the torrent engine's
 /// network (#40: what it does on the network is the person's to choose).
 pub struct TorrentSettings {
     share: bool,
@@ -1147,7 +1147,7 @@ impl TorrentSettings {
                     ui,
                     pos2(o.x + 14.0, o.y + 108.0),
                     &mut self.assoc,
-                    "Open magnet links and .torrent files with Mister Download Manager",
+                    "Open magnet links and .torrent files with IET Download Manager",
                     true,
                 );
                 winui::fit(
@@ -1156,13 +1156,13 @@ impl TorrentSettings {
                     o.x + 32.0,
                     o.y + 136.0,
                     // What the switch does is the system's: Windows asks per account, macOS and
-                    // Linux register MDM as the handler.
+                    // Linux register IETDM as the handler.
                     if cfg!(windows) {
                         crate::i18n::t(
                             "For your Windows account only. Another app chosen in \"Open with\" stays first.",
                         )
                     } else {
-                        // i18n: Torrent settings, under the switch that makes MDM open magnet links and .torrent files (macOS, Linux)
+                        // i18n: Torrent settings, under the switch that makes IETDM open magnet links and .torrent files (macOS, Linux)
                         crate::i18n::t(
                             "For your account only. Another app set as the default stays first.",
                         )
@@ -1380,7 +1380,7 @@ impl TorrentSettings {
 }
 
 /// Right-click → Torrent → Add trackers… (#39): tracker addresses, one a line, for download `id`.
-/// OK gives them once each is one MDM may contact (`mdm_torrent::trackers::allowed`).
+/// OK gives them once each is one IETDM may contact (`mdm_torrent::trackers::allowed`).
 pub struct AddTrackers {
     pub id: u64,
     name: String,
@@ -1419,7 +1419,7 @@ impl AddTrackers {
             // out of sight.
             if !mdm_torrent::trackers::allowed(line, false) {
                 return Err(crate::i18n::fmt(
-                    // i18n: Add trackers: MDM never contacts a tracker on this computer or the local network
+                    // i18n: Add trackers: IETDM never contacts a tracker on this computer or the local network
                     crate::i18n::t(
                         "A tracker on this computer or the local network is never contacted: {line}",
                     ),

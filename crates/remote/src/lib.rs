@@ -1,12 +1,12 @@
-//! Mister Download Manager's remote control (#141): a phone or another computer on the local
+//! IET Download Manager's remote control (#141): a phone or another computer on the local
 //! network adds downloads and torrents, sees the list and controls it, from a small web page
-//! MDM serves over HTTPS. Off by default (Options → Remote).
+//! IETDM serves over HTTPS. Off by default (Options → Remote).
 //!
 //! * One command path: every request becomes an [`mdm_ipc::Command`] marked `remote`, handed to
 //!   the app through its command channel ([`mdm_ipc::Sink`]) and answered by the app as the
 //!   automation API is: downloads added this way get the categories, queues, limits, adapter
 //!   and kill switch of any other.
-//! * Paired devices only: a code shown in MDM pairs a device ([`pairing`]), which gets a token of
+//! * Paired devices only: a code shown in IETDM pairs a device ([`pairing`]), which gets a token of
 //!   its own ([`devices`]), removable in Options.
 //! * Local network only: one listener per local network address ([`addrs`]), never all at once.
 //! * HTTPS with a certificate made once and kept ([`tls`]); plain `http://` is redirected.
@@ -77,7 +77,7 @@ pub struct PageTexts {
 }
 
 /// The app's translations for the page: given the browser's languages (`de-DE,de,en`), the
-/// texts in the best one MDM has.
+/// texts in the best one IETDM has.
 pub type Texts = Arc<dyn Fn(&str) -> PageTexts + Send + Sync>;
 
 /// The remote control: one per app, cheap to clone.

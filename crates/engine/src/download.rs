@@ -95,13 +95,13 @@ pub struct Options {
     /// The download's User-Agent: by default the automatic one (`agent::automatic`, the default
     /// browser's), else the user's or the one a browser handed over.
     pub user_agent: String,
-    /// `user_agent` is MDM's automatic one, not one the user set or a browser handed over: a
+    /// `user_agent` is IETDM's automatic one, not one the user set or a browser handed over: a
     /// site that wants an agent of its own (Google Drive's hosts, `sites::user_agent`) gets it.
     /// [`Options::speak_as`] sets another agent and clears this.
     pub automatic_agent: bool,
     /// Asked with instead of `user_agent` when the server refuses the first request with 403
     /// (#372): a browser's User-Agent on a connection that isn't a browser's trips some sites'
-    /// bot checks (Cloudflare, seen on a public PDF), while MDM's own passes. Set when
+    /// bot checks (Cloudflare, seen on a public PDF), while IETDM's own passes. Set when
     /// `user_agent` is the browser's. A later 403 is left to the download.
     pub agent_fallback: Option<String>,
     /// From the browser: the address its own download of this file ended at, its redirects
@@ -169,7 +169,7 @@ pub struct Options {
     /// quarantine attribute — stays with the finished file.
     pub on_file_created: Option<FileHook>,
     /// From the browser: the MIME type its own download had. A web page where it had another
-    /// type is the server refusing MDM (a firewall's "The requested URL was rejected"), an error
+    /// type is the server refusing IETDM (a firewall's "The requested URL was rejected"), an error
     /// and never saved as the file (#533, `expects_other_file`).
     pub expected_type: Option<String>,
     /// From the browser: the size its own download announced. A file larger than any waiting
@@ -283,7 +283,7 @@ impl Options {
     }
 
     /// A site's own User-Agent may replace this download's (`request_agent`): the agent is the
-    /// automatic one, or MDM's former one (#372's fallback, D-007), as before #668.
+    /// automatic one, or IETDM's former one (#372's fallback, D-007), as before #668.
     fn site_agent(&self) -> bool {
         self.automatic_agent || self.user_agent == crate::agent::IE11_USER_AGENT
     }
@@ -374,9 +374,9 @@ pub enum Error {
     #[error("the path is too long for Windows: {}", .0.display())]
     PathTooLong(PathBuf),
     /// A web page came instead of the file (a file host's countdown or captcha, a sign-in wall,
-    /// an expired link's notice, #533, #701): the browser gets past it, MDM doesn't.
+    /// an expired link's notice, #533, #701): the browser gets past it, IETDM doesn't.
     #[error(
-        "the site sent a web page instead of the file (a waiting page, a captcha or a sign-in): open the link in your browser, finish there, and the download comes back to MDM"
+        "the site sent a web page instead of the file (a waiting page, a captcha or a sign-in): open the link in your browser, finish there, and the download comes back to IETDM"
     )]
     GotWebPage,
     /// A full answer to a range request for the same, unchanged file: the server (or one CDN
@@ -680,7 +680,7 @@ fn post_for(opts: &Options, as_get: bool, headers: &mut HeaderMap) -> Option<Byt
 
 /// A request for `url` with `headers`: a POST with `post` as its body, else a GET. The client
 /// sends the download's User-Agent (`Options::user_agent`); a site that wants a browser's gets
-/// it instead when `site_agent` (`Options::site_agent`: the agent is MDM's automatic one).
+/// it instead when `site_agent` (`Options::site_agent`: the agent is IETDM's automatic one).
 fn build(
     client: &Client,
     url: Url,
@@ -703,7 +703,7 @@ fn build(
 
 /// The User-Agent a request to `url` carries instead of the download's own: a site's browser
 /// agent (`sites::user_agent`: Google Drive's hosts), only when `site_agent` (the download's is
-/// MDM's automatic one, `Options::site_agent`). A browser's agent handed over with the download,
+/// IETDM's automatic one, `Options::site_agent`). A browser's agent handed over with the download,
 /// or one the user set, always wins.
 fn request_agent(site_agent: bool, url: &Url) -> Option<&'static str> {
     site_agent.then(|| sites::user_agent(url)).flatten()
@@ -920,7 +920,7 @@ pub async fn probe_kept(
     );
     // Where the look asked, and with what: asked again there if the site refuses (#668).
     let (asked_at, asked_with) = (target.clone(), headers.clone());
-    // A browser's User-Agent refused (#372): asked once more as MDM.
+    // A browser's User-Agent refused (#372): asked once more as IETDM.
     let (client, asked) = match get(
         &client,
         target.clone(),
@@ -955,7 +955,7 @@ pub async fn probe_kept(
             seen.answered(&resp);
             (Head::of(&resp), Body::Http(resp), None, headers, took)
         }
-        // #668: the site refused MDM's connection as a program's (`refused_as_a_program`):
+        // #668: the site refused IETDM's connection as a program's (`refused_as_a_program`):
         // looked at once more the way a browser connects, its answer kept for the download
         // (which then asks no more).
         Err(e) if refused_as_a_program(&e) && unlocked.is_none() && opts.post.is_none() => {
@@ -1254,7 +1254,7 @@ impl Download {
     }
 }
 
-/// Download `url` to `path` and wait for it: MDM's own downloads that aren't in the list (its
+/// Download `url` to `path` and wait for it: IETDM's own downloads that aren't in the list (its
 /// helpers, its updates, a crash report's symbols) use the engine like every download. An
 /// earlier attempt cut off at `path` resumes; `progress(done, total)` while it runs.
 pub async fn fetch(
@@ -1686,7 +1686,7 @@ fn client_with(
             }
             b
         }
-        // The script's first route MDM can use: a proxy, or straight to the server.
+        // The script's first route IETDM can use: a proxy, or straight to the server.
         (Proxy::Pac { script }, _) => {
             let first = crate::pac::routes(script, url).ok().and_then(|routes| {
                 routes.into_iter().find_map(|r| match r {
@@ -1860,7 +1860,7 @@ async fn run_fresh(
             let seen = shared.seen.get_or_init(Default::default).clone();
             let as_given = opts.clone();
             // The download's own User-Agent, which the browser-like connection carries (#668),
-            // even when MDM's connection had to give it up (#372).
+            // even when IETDM's connection had to give it up (#372).
             let given_agent = opts.user_agent.clone();
             let ask = FirstAsk {
                 as_get: &as_get,
@@ -1899,7 +1899,7 @@ async fn run_fresh(
                     }
                 }
             }
-            // #668: the site refused MDM's connection as a program's (its bot check, or a 412):
+            // #668: the site refused IETDM's connection as a program's (its bot check, or a 412):
             // asked once more, the way a browser connects, at the same address with the same
             // headers. Its refusal stays the one told if that fails too.
             match first {
@@ -2055,7 +2055,7 @@ async fn run_fresh(
                 post: post.clone(),
                 generation: 0,
             }),
-            // Asked again through MDM's own connection, which the site's bot check refuses: a
+            // Asked again through IETDM's own connection, which the site's bot check refuses: a
             // browser-like download keeps the address it has (#668).
             origin: (req.url != final_url && browser.is_none())
                 .then(|| (req.url.clone(), req.headers.clone())),
@@ -2362,7 +2362,7 @@ async fn run_resume(
     let seen = shared.seen.get_or_init(Default::default).clone();
     let client = client(&opts, &saved.url, &as_get, &seen)?;
     // Only the browser-like connection got past the site's bot check (#668): it goes on with
-    // it, on one connection, at the address it had (MDM's own connection would be refused).
+    // it, on one connection, at the address it had (IETDM's own connection would be refused).
     let browser = match saved.browser_like && crate::browserlike::AVAILABLE {
         true => Some(Arc::new(crate::browserlike::Browser::new(
             &opts,
@@ -2852,7 +2852,7 @@ struct FirstAsk<'a> {
     cancel: &'a CancellationToken,
 }
 
-/// A first request's client, its answer (or why not) and whether it went as MDM (#372).
+/// A first request's client, its answer (or why not) and whether it went as IETDM (#372).
 type FirstAnswer = (
     Client,
     Result<((Response, HeaderMap), Duration), Error>,
@@ -2860,8 +2860,8 @@ type FirstAnswer = (
 );
 
 impl FirstAsk<'_> {
-    /// `first_get` at `url` with its client; asked once more as MDM when the browser's
-    /// User-Agent is refused (#372, `opts` then goes on as MDM: the third value says so).
+    /// `first_get` at `url` with its client; asked once more as IETDM when the browser's
+    /// User-Agent is refused (#372, `opts` then goes on as IETDM: the third value says so).
     async fn at(
         &self,
         opts: &mut Options,
@@ -2872,10 +2872,10 @@ impl FirstAsk<'_> {
         let client0 = client(opts, url, self.as_get, self.seen)?;
         match first_get(&client0, url, headers, opts, expects, shared, cancel).await {
             Err(e) if agent_refused(&e) && opts.agent_fallback.is_some() => {
-                // #372: the rest of the download goes as MDM too.
+                // #372: the rest of the download goes as IETDM too.
                 opts.user_agent = opts.agent_fallback.take().unwrap_or_default();
                 shared.event(
-                    "The server refused the browser's User-Agent; asking as Mister Download Manager",
+                    "The server refused the browser's User-Agent; asking as IET Download Manager",
                 );
                 let client1 = client(opts, url, self.as_get, self.seen)?;
                 let first = first_get(&client1, url, headers, opts, expects, shared, cancel).await;
@@ -2887,20 +2887,20 @@ impl FirstAsk<'_> {
 }
 
 /// A plain 403, which a browser's User-Agent may have brought on (#372). A site's bot check
-/// isn't asked again as MDM: it gets one try the way a browser connects (`browser_first`).
+/// isn't asked again as IETDM: it gets one try the way a browser connects (`browser_first`).
 fn agent_refused(e: &Error) -> bool {
     matches!(e, Error::Status(s) if s.as_u16() == 403)
 }
 
-/// A first answer that refuses MDM's connection for not being a browser's (#668): the site's bot
-/// check (`Error::BotCheck`, Cloudflare's), or 412 Precondition Failed, which MDM's first
+/// A first answer that refuses IETDM's connection for not being a browser's (#668): the site's bot
+/// check (`Error::BotCheck`, Cloudflare's), or 412 Precondition Failed, which IETDM's first
 /// request, sent without any precondition (no `If-…` header), can only get as such a refusal
 /// (FileHippo's, #630).
 fn refused_as_a_program(e: &Error) -> bool {
     matches!(e, Error::BotCheck) || matches!(e, Error::Status(s) if s.as_u16() == 412)
 }
 
-/// #668: the first request once more, after the site refused MDM's own connection as a
+/// #668: the first request once more, after the site refused IETDM's own connection as a
 /// program's (`refused_as_a_program`, its error `refused`): through the browser-like connection
 /// (`crate::browserlike`), at the same address with the same headers, once, its answer checked
 /// as the first one is. When that fails too, `refused` is what is told (the error users know,
@@ -5161,7 +5161,7 @@ mod tests {
     fn drive_gets_a_browsers_agent_and_only_drive() {
         let u = |s: &str| Url::parse(s).unwrap();
         let browser = Some(sites::gdrive::USER_AGENT);
-        // MDM's automatic agent (the default browser's, #668), by default.
+        // IETDM's automatic agent (the default browser's, #668), by default.
         let auto = Options::default();
         assert!(auto.automatic_agent && auto.site_agent());
         for drive in [
@@ -5197,7 +5197,7 @@ mod tests {
                 None
             );
         }
-        // MDM's former agent, asked with when a browser's is refused (#372), still gets it.
+        // IETDM's former agent, asked with when a browser's is refused (#372), still gets it.
         let mut fallback = Options::default();
         fallback.speak_as(crate::agent::IE11_USER_AGENT.to_owned());
         assert!(fallback.site_agent());

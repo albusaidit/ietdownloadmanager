@@ -15,7 +15,7 @@ use std::path::Path;
 use std::process::{Child, Command};
 use std::time::{Duration, Instant};
 
-const APP: &str = env!("CARGO_BIN_EXE_misterdownloadmanager");
+const APP: &str = env!("CARGO_BIN_EXE_ietdownloadmanager");
 
 /// The app's log so far (every file of `logs/`).
 fn log(data: &Path) -> String {
@@ -92,7 +92,7 @@ fn hand_overs_while(away: &str) {
 
         second_launch(data, &["/show", away]);
         std::thread::sleep(Duration::from_millis(1500));
-        let magnet = "magnet:?xt=urn:btih:5b4f0c3a9e1d27f86c0b3a4e9d1f2a7c6e8b0d14&dn=MDM%20test";
+        let magnet = "magnet:?xt=urn:btih:5b4f0c3a9e1d27f86c0b3a4e9d1f2a7c6e8b0d14&dn=IETDM%20test";
         second_launch(data, &[magnet]);
         wait_for(&mut app, data, "window opened: add-torrent", wait);
 

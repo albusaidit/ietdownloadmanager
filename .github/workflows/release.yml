@@ -119,7 +119,7 @@ jobs:
           GH_TOKEN: ${{ github.token }} # downloads the build's helpers signed in (fetch_release.py)
         run: |
           $v = [regex]::Match((Get-Content Cargo.toml -Raw), '(?m)^version\s*=\s*"([^"]+)"').Groups[1].Value
-          $exes = "misterdownloadmanager", "misterdownloadmanager-nmhost", "misterdownloadmanager-cli", "misterdownloadmanager-mcp" |
+          $exes = "ietdownloadmanager", "ietdownloadmanager-nmhost", "ietdownloadmanager-cli", "ietdownloadmanager-mcp" |
             ForEach-Object { "target/release/$_.exe" }
           python tools/installer/symbols.py windows-x64 $v target/dist @exes
           if ($LASTEXITCODE) { throw "symbols failed" }
@@ -163,12 +163,12 @@ jobs:
           node tools/extension/check-pack.mjs
           $v = [regex]::Match((Get-Content Cargo.toml -Raw), '(?m)^version\s*=\s*"([^"]+)"').Groups[1].Value
           New-Item -ItemType Directory -Force target/dist | Out-Null
-          Copy-Item target/extension/mdm-chromium.zip "target/dist/MisterDownloadManager-$v-extension-chromium.zip"
-          Copy-Item target/extension/mdm-firefox.xpi "target/dist/MisterDownloadManager-$v-extension-firefox.xpi"
+          Copy-Item target/extension/mdm-chromium.zip "target/dist/IETDownloadManager-$v-extension-chromium.zip"
+          Copy-Item target/extension/mdm-firefox.xpi "target/dist/IETDownloadManager-$v-extension-firefox.xpi"
           # For the Chrome Web Store (the next step, or its dashboard by hand): kept with the
           # build, not the release.
           New-Item -ItemType Directory -Force target/store | Out-Null
-          Copy-Item target/extension/mdm-chrome-store.zip "target/store/MisterDownloadManager-$v-chrome-web-store.zip"
+          Copy-Item target/extension/mdm-chrome-store.zip "target/store/IETDownloadManager-$v-chrome-web-store.zip"
 
       # The stores' tools, at the exact versions and hashes of tools/release/package-lock.json.
       - name: Store tools
@@ -333,8 +333,8 @@ jobs:
           $files = Get-ChildItem dist -File | Sort-Object Name
           $sums = $files | ForEach-Object { "$((Get-FileHash $_.FullName -Algorithm SHA256).Hash.ToLower())  $($_.Name)" }
           Set-Content -Encoding ascii dist/SHA256SUMS.txt $sums
-          # Signed with MDM's release key (fingerprint 5826D399249DE856EA087D802E293C28E8A69D74):
-          # MDM updates itself only from a list it signed
+          # Signed with IETDM's release key (fingerprint 5826D399249DE856EA087D802E293C28E8A69D74):
+          # IETDM updates itself only from a list it signed
           # (crates/tools/src/update.rs; the public key is crates/tools/keys/mdm-release.asc).
           if ($env:MDM_RELEASE_KEY) {
             $key = Join-Path $env:RUNNER_TEMP "mdm-release.asc"
@@ -347,7 +347,7 @@ jobs:
             gpg --batch --verify dist/SHA256SUMS.txt.sig dist/SHA256SUMS.txt
             if ($LASTEXITCODE) { throw "the signature of SHA256SUMS.txt doesn't verify" }
           } else {
-            Write-Warning "MDM_RELEASE_KEY isn't set: this release is unsigned, and MDM won't update to it by itself."
+            Write-Warning "MDM_RELEASE_KEY isn't set: this release is unsigned, and IETDM won't update to it by itself."
           }
           # Notes: the version's section of CHANGELOG.md ("## [X.Y.Z]" up to the next "## "),
           # else GitHub's list of changes since the last tag; first, the invitation to try the
@@ -355,7 +355,7 @@ jobs:
           $v = "${{ github.ref_name }}".TrimStart("v")
           $log = Get-Content CHANGELOG.md -Raw -ErrorAction SilentlyContinue
           $m = [regex]::Match("$log", "(?ms)^## \[$([regex]::Escape($v))\][^\n]*\n(.*?)(?=^## |\z)")
-          $title = "Mister Download Manager ${{ github.ref_name }}"
+          $title = "IET Download Manager ${{ github.ref_name }}"
           $invite = ""
           if ($files.Name -like "*-experimental*") {
             $invite = "**On a Mac?** The ``-experimental`` files are fresh builds for Mac " +

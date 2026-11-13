@@ -1,11 +1,11 @@
-//! The browser's quality menu over a video (the extension's button, crates/nmhost): MDM looks
+//! The browser's quality menu over a video (the extension's button, crates/nmhost): IETDM looks
 //! the video up with yt-dlp on a thread of its own and answers at once with a token
 //! (`video_lookup`); the browser asks how it goes (`video_poll`) and sends the choice made there
-//! (`video_pick`), a place in the list MDM offered, which MDM downloads with its own selector for
+//! (`video_pick`), a place in the list IETDM offered, which IETDM downloads with its own selector for
 //! it and the look-up's own browser context.
 //!
 //! Faster than a look-up and a download each running yt-dlp on the page:
-//! - an HLS stream's playlist MDM can read exactly as yt-dlp would is read by MDM itself
+//! - an HLS stream's playlist IETDM can read exactly as yt-dlp would is read by IETDM itself
 //!   (`mdm_tools::manifest`), and its qualities offered a second and more sooner; yt-dlp looks
 //!   it up at the same time, for the download;
 //! - yt-dlp's look-up is kept as it answered (`InfoSlot`), and the download chosen from it
@@ -47,7 +47,7 @@ pub enum Found {
     Looking,
     /// A video, with the choices offered for it (none: nothing this can download).
     Video(Video, Vec<Choice>),
-    /// A list of videos (a playlist, a channel): chosen from in MDM's window.
+    /// A list of videos (a playlist, a channel): chosen from in IETDM's window.
     List,
     /// yt-dlp's error.
     Failed(String),
@@ -427,7 +427,7 @@ fn title_of<'a>(v: &'a Video, address: &str, context: &'a mdm_ipc::Command) -> &
     crate::videodlg::page_title(context, v, address).unwrap_or(&v.title)
 }
 
-/// Choice `c` as the browser's quality menu shows it: its label in MDM's language, and what the
+/// Choice `c` as the browser's quality menu shows it: its label in IETDM's language, and what the
 /// menu's line says beside it (#755: height, codec, frame rate, range; #801: an about size).
 fn menu_choice(c: &Choice) -> VideoChoice {
     VideoChoice {
@@ -446,7 +446,7 @@ fn menu_choice(c: &Choice) -> VideoChoice {
 }
 
 /// What the menu says with video `v`'s choices, as the Download video window says it (#852:
-/// YouTube looked up without a JavaScript runtime), with its help page in MDM's language.
+/// YouTube looked up without a JavaScript runtime), with its help page in IETDM's language.
 fn notice(v: &Video) -> Option<VideoNotice> {
     v.needs_js_runtime.then(|| VideoNotice {
         text: crate::videodlg::js_runtime_note().to_owned(),
@@ -456,7 +456,7 @@ fn notice(v: &Video) -> Option<VideoNotice> {
     })
 }
 
-/// The answer for look-up `token` as it stands: the choices labelled in MDM's language, an
+/// The answer for look-up `token` as it stands: the choices labelled in IETDM's language, an
 /// error in its words (as the Download video window says them).
 fn answer(token: &str, s: &Search) -> VideoLookupAnswer {
     match &*lock(&s.found) {
@@ -490,11 +490,11 @@ fn answer(token: &str, s: &Search) -> VideoLookupAnswer {
 
 /// The download choice `p` adds, into `folder` (the Video category's), or `music` (the Music
 /// category's, None when the user deleted it) for a sound-only choice, listed under that category
-/// as the Download video window does (#611): MDM's own selector for it, the file named as the
+/// as the Download video window does (#611): IETDM's own selector for it, the file named as the
 /// Download video window names it, the subtitles that window would preselect from `pref`
 /// (settings.video_subs, not changed by it), started now unless `start_now` is false (Options:
 /// only add to the queue), from the look-up's own yt-dlp answer (its first run). None for an
-/// address MDM can't take.
+/// address IETDM can't take.
 pub fn video_add(
     p: Picked,
     folder: &Path,
@@ -557,12 +557,12 @@ impl Drop for Ended {
 /// gave it.
 type Kept = (Result<Looked, String>, Option<mdm_tools::proc::LookedUp>);
 
-/// A look-up's two readings at once, the first answer taking the menu: MDM's own of a stream's
+/// A look-up's two readings at once, the first answer taking the menu: IETDM's own of a stream's
 /// playlists (`fast`, on the runtime `rt`, 5 s at most; preferred, and much the quicker), and
 /// yt-dlp's (`slow`, on this thread), started at once whatever the other does (a slow playlist
 /// server never holds it up) and kept for the download either way (`info`). An answer once
 /// written stays (the browser may be showing its choices, and picks by place in them); a
-/// failure of yt-dlp's waits for MDM's reading, which may still bring the video.
+/// failure of yt-dlp's waits for IETDM's reading, which may still bring the video.
 fn settle(
     found: &Shared,
     info: &InfoSlot,
@@ -597,7 +597,7 @@ fn settle(
 /// Run `job` with yt-dlp `exe` on a thread of its own, as the Download video window looks a
 /// video up (`rt`: a plain file's size from its server, and an HLS stream's playlists): its
 /// state written when yt-dlp answers (within its 90 s, twice that without the cookies), or
-/// sooner when MDM reads the stream itself ([`settle`]), its place given back as the thread
+/// sooner when IETDM reads the stream itself ([`settle`]), its place given back as the thread
 /// ends. A look-up forgotten meanwhile (10 minutes, or 20 newer ones) ends all the same, with
 /// nothing to read it.
 pub fn run(job: Job, exe: PathBuf, rt: tokio::runtime::Handle) -> std::io::Result<()> {
@@ -617,7 +617,7 @@ pub fn run(job: Job, exe: PathBuf, rt: tokio::runtime::Handle) -> std::io::Resul
                 found: found.clone(),
                 info: info.clone(),
             };
-            // A stream's playlist MDM reads exactly as yt-dlp would (as Options' proxy and the
+            // A stream's playlist IETDM reads exactly as yt-dlp would (as Options' proxy and the
             // browser's request for it); none for anything else.
             let fast = {
                 let (address, browser) = (address.clone(), browser.clone());
@@ -625,7 +625,7 @@ pub fn run(job: Job, exe: PathBuf, rt: tokio::runtime::Handle) -> std::io::Resul
                 async move { mdm_tools::manifest::fetch(&address, &browser, &opts).await }
             };
             // yt-dlp's look-up all the same (the click asked for the video): kept for the
-            // download, and the menu's answer when MDM can't read the stream.
+            // download, and the menu's answer when IETDM can't read the stream.
             settle(&found, &info, merge, &rt, fast, || {
                 crate::videodlg::look_up_kept(&exe, &address, &browser, &rt)
             });
@@ -734,7 +734,7 @@ mod tests {
         assert!(ready.choices.iter().all(|c| !c.audio), "videos");
         assert_eq!(ready.notice, None, "nothing lacked");
         assert_eq!(l.poll(&b.token, now).state, lookup::PENDING, "its own");
-        // The choice takes the look-up's context and MDM's selector for that place.
+        // The choice takes the look-up's context and IETDM's selector for that place.
         let p = l
             .pick(&pick(&a.token, 1, Some("firefox-container-1")), false, now)
             .unwrap();
@@ -1022,8 +1022,8 @@ mod tests {
         assert!(!info.pending());
     }
 
-    /// MDM's reading of a stream and yt-dlp's run at once: yt-dlp starts at once however slow
-    /// the stream's server, the first answer takes the menu and stays, MDM's reading wins
+    /// IETDM's reading of a stream and yt-dlp's run at once: yt-dlp starts at once however slow
+    /// the stream's server, the first answer takes the menu and stays, IETDM's reading wins
     /// against a yt-dlp that failed; yt-dlp's answer is kept for the download either way.
     #[test]
     fn the_two_readings_run_at_once() {
@@ -1061,7 +1061,7 @@ mod tests {
         };
         let fresh = || (Shared::default(), InfoSlot::new(Instant::now()));
 
-        // MDM's reading first: the menu's; yt-dlp's kept for the download.
+        // IETDM's reading first: the menu's; yt-dlp's kept for the download.
         let (found, info) = fresh();
         settle(
             &found,
@@ -1077,7 +1077,7 @@ mod tests {
         assert_eq!(title(&found), "mine");
         assert!(!info.pending());
 
-        // yt-dlp first: its answer, which MDM's later reading doesn't replace.
+        // yt-dlp first: its answer, which IETDM's later reading doesn't replace.
         let (found, info) = fresh();
         settle(
             &found,
@@ -1092,7 +1092,7 @@ mod tests {
         assert_eq!(title(&found), "yt-dlp's", "stays");
         drop(info);
 
-        // yt-dlp failed first: MDM's reading still brings the video.
+        // yt-dlp failed first: IETDM's reading still brings the video.
         let (found, info) = fresh();
         settle(
             &found,
@@ -1252,7 +1252,7 @@ mod tests {
     }
 
     /// What isn't a video to choose from is said: a list, nothing to download, yt-dlp's error
-    /// (in MDM's words when it has some).
+    /// (in IETDM's words when it has some).
     #[test]
     fn lists_and_failures_are_said() {
         let mut l = Lookups::default();
@@ -1291,7 +1291,7 @@ mod tests {
         assert!(matches!(Found::of(Err("e".into()), true), Found::Failed(_)));
     }
 
-    /// The choice is added with MDM's selector for it, named after the page that played it,
+    /// The choice is added with IETDM's selector for it, named after the page that played it,
     /// with the subtitles the window would preselect; started, or queued when Options say so.
     #[test]
     fn the_choice_is_added_as_the_window_would() {
@@ -1318,7 +1318,7 @@ mod tests {
         assert_eq!(add.page.as_str(), SRC);
         assert_eq!(
             add.selector, "hls-2500/b[height=720]",
-            "MDM's own, never the browser's"
+            "IETDM's own, never the browser's"
         );
         assert_eq!(add.dest, folder.join("A talk_ in Lisbon.mp4"));
         assert_eq!(add.size, Some(60 * 2500 * 125));

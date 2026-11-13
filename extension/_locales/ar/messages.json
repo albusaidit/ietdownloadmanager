@@ -1,12 +1,12 @@
 {
   "name": {
-    "message": "Mister Download Manager"
+    "message": "IET Download Manager"
   },
   "description": {
-    "message": "يسلم التنزيلات من المستعرض إلى Mister Download Manager."
+    "message": "يسلم التنزيلات من المستعرض إلى IET Download Manager."
   },
   "menu": {
-    "message": "تنزيل باستخدام Mister Download Manager"
+    "message": "تنزيل باستخدام IET Download Manager"
   },
   "video_download": {
     "message": "تنزيل الفيديو"
@@ -30,19 +30,19 @@
     "message": "إعدادات الزر..."
   },
   "video_sent": {
-    "message": "تم الإرسال إلى Mister Download Manager"
+    "message": "تم الإرسال إلى IET Download Manager"
   },
   "menu_selected": {
-    "message": "تنزيل الروابط المحددة باستخدام Mister Download Manager"
+    "message": "تنزيل الروابط المحددة باستخدام IET Download Manager"
   },
   "menu_all": {
-    "message": "تنزيل جميع الروابط باستخدام Mister Download Manager"
+    "message": "تنزيل جميع الروابط باستخدام IET Download Manager"
   },
   "status_connected": {
-    "message": "متصل بـ Mister Download Manager"
+    "message": "متصل بـ IET Download Manager"
   },
   "status_connected_version": {
-    "message": "متصل بـ Mister Download Manager $version$",
+    "message": "متصل بـ IET Download Manager $version$",
     "placeholders": {
       "version": {
         "content": "$1",
@@ -54,22 +54,22 @@
     "message": "متوقف مؤقتا: تبقى التنزيلات مع المستعرض"
   },
   "status_not_installed": {
-    "message": "لم يتم تثبيت Mister Download Manager، أو لم يتم إعداد الربط بالمستعرض الخاص به"
+    "message": "لم يتم تثبيت IET Download Manager، أو لم يتم إعداد الربط بالمستعرض الخاص به"
   },
   "status_forbidden": {
-    "message": "لا يقبل Mister Download Manager هذه النسخة من الملحق"
+    "message": "لا يقبل IET Download Manager هذه النسخة من الملحق"
   },
   "status_not_running": {
-    "message": "لم يبدأ Mister Download Manager في الوقت المحدد"
+    "message": "لم يبدأ IET Download Manager في الوقت المحدد"
   },
   "status_host_failed": {
-    "message": "فشل الاتصال بـ Mister Download Manager"
+    "message": "فشل الاتصال بـ IET Download Manager"
   },
   "status_too_large": {
     "message": "كانت تفاصيل هذا التنزيل كبيرة جدا بحيث لا يمكن تسليمها"
   },
   "status_update_app": {
-    "message": "قم بتحديث Mister Download Manager لاستخدام كل ما يوفره هذا الملحق"
+    "message": "قم بتحديث IET Download Manager لاستخدام كل ما يوفره هذا الملحق"
   },
   "popup_take": {
     "message": "تلقي التنزيلات من هذا المستعرض"
@@ -78,10 +78,10 @@
     "message": "إرسال التنزيلات عبر وكيل هذا المستعرض أو ملحق VPN"
   },
   "popup_proxy_title": {
-    "message": "يجري Mister Download Manager التنزيل بعد ذلك عبر الوكيل نفسه الذي يستخدمه هذا المستعرض. يطلب منك المستعرض مرة واحدة السماح بذلك؛ وإيقاف هذا يلغي ذلك."
+    "message": "يجري IET Download Manager التنزيل بعد ذلك عبر الوكيل نفسه الذي يستخدمه هذا المستعرض. يطلب منك المستعرض مرة واحدة السماح بذلك؛ وإيقاف هذا يلغي ذلك."
   },
   "popup_proxy_title_chromium": {
-    "message": "يجري Mister Download Manager التنزيل بعد ذلك عبر الوكيل نفسه الذي يستخدمه هذا المستعرض. عندما يكون هذا الخيار متوقفا، لا يقرأ الملحق وكيل المستعرض."
+    "message": "يجري IET Download Manager التنزيل بعد ذلك عبر الوكيل نفسه الذي يستخدمه هذا المستعرض. عندما يكون هذا الخيار متوقفا، لا يقرأ الملحق وكيل المستعرض."
   },
   "popup_exclude_site": {
     "message": "عدم التقاط التنزيلات من $site$ أبدا",
@@ -102,7 +102,7 @@
     }
   },
   "popup_open": {
-    "message": "فتح Mister Download Manager"
+    "message": "فتح IET Download Manager"
   },
   "popup_options": {
     "message": "خيارات..."
@@ -111,7 +111,7 @@
     "message": "تعليمات"
   },
   "popup_support": {
-    "message": "ادعم MDM"
+    "message": "ادعم IETDM"
   },
   "popup_fix": {
     "message": "كيفية إصلاحها"
@@ -189,16 +189,16 @@
     "message": "لا يوجد فيديو للتنزيل هنا"
   },
   "video_playlist": {
-    "message": "قائمة فيديوهات: اختر منها في Mister Download Manager"
+    "message": "قائمة فيديوهات: اختر منها في IET Download Manager"
   },
   "video_no_ytdlp": {
-    "message": "يحتاج Mister Download Manager إلى yt-dlp لهذا الفيديو"
+    "message": "يحتاج IET Download Manager إلى yt-dlp لهذا الفيديو"
   },
   "video_too_long": {
     "message": "استغرق البحث وقتا طويلا"
   },
   "video_busy": {
-    "message": "Mister Download Manager مشغول بفيديوهات أخرى"
+    "message": "IET Download Manager مشغول بفيديوهات أخرى"
   },
   "video_queued": {
     "message": "تمت الإضافة إلى قائمة الانتظار"
@@ -222,7 +222,7 @@
     "message": "هذا الكمبيوتر"
   },
   "popup_send_remote": {
-    "message": "Mister Download Manager آخر (خادم)"
+    "message": "IET Download Manager آخر (خادم)"
   },
   "popup_remote_code": {
     "message": "رمز الإقران"
@@ -234,7 +234,7 @@
     "message": "إقران"
   },
   "popup_remote_help": {
-    "message": "افتح عنوانه مرة واحدة واقبل شهادته، ثم أدخل رمزا من خياراته، عن بعد، إقران جهاز (أو misterdownloadmanager-cli pair)."
+    "message": "افتح عنوانه مرة واحدة واقبل شهادته، ثم أدخل رمزا من خياراته، عن بعد، إقران جهاز (أو ietdownloadmanager-cli pair)."
   },
   "status_remote": {
     "message": "تنتقل التنزيلات إلى $address$",
@@ -291,19 +291,19 @@
     "message": "نزل أفضل جودة"
   },
   "video_sending": {
-    "message": "قيد الإرسال إلى MDM..."
+    "message": "قيد الإرسال إلى IETDM..."
   },
   "video_added": {
-    "message": "أضيف إلى MDM"
+    "message": "أضيف إلى IETDM"
   },
   "video_show": {
     "message": "إظهار"
   },
   "video_no_answer": {
-    "message": "لم يستجب MDM"
+    "message": "لم يستجب IETDM"
   },
   "video_get_mdm": {
-    "message": "احصل على MDM"
+    "message": "احصل على IETDM"
   },
   "video_retry": {
     "message": "أعد المحاولة"
@@ -318,7 +318,7 @@
     "message": "كل الجودات والترجمات..."
   },
   "video_failed": {
-    "message": "لم يتم تثبيت Mister Download Manager أو لم يبدأ"
+    "message": "لم يتم تثبيت IET Download Manager أو لم يبدأ"
   },
   "video_download_best": {
     "message": "تنزيل بأفضل جودة"

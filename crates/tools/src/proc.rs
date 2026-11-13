@@ -265,7 +265,7 @@ pub fn cookie_trouble(line: &str) -> bool {
 }
 
 /// Options -> Proxy / Socks for the helpers (#363): yt-dlp and gallery-dl go through the same proxy
-/// as MDM's downloads. The app shares it as it changes ([`set_proxy`]).
+/// as IETDM's downloads. The app shares it as it changes ([`set_proxy`]).
 static PROXY: std::sync::RwLock<mdm_engine::Proxy> =
     std::sync::RwLock::new(mdm_engine::Proxy::None);
 
@@ -456,7 +456,7 @@ const FFMPEG_PROTOCOLS: &str = "file,crypto,data,http,https,tls,tcp,httpproxy";
 /// ones (no configuration file of the person's, never a question on the console), then `--` and
 /// the address. Its output is read as UTF-8, as yt-dlp's is (#79). With an adapter chosen it goes
 /// through the relay (#35, [`through_adapter`]). Only options `tool`'s version accepts
-/// (`gallery::Accepts`, #236: a distribution's may be older than MDM's own copy).
+/// (`gallery::Accepts`, #236: a distribution's may be older than IETDM's own copy).
 pub fn gallery_dl(
     tool: &crate::Installed,
     ours: &[String],
@@ -527,7 +527,7 @@ impl FromBrowser {
         if let Some(ua) = given(&self.user_agent) {
             args.extend(["--user-agent".to_owned(), safe(ua)?.to_owned()]);
         }
-        // yt-dlp sends it with the address and keeps it in each format's headers, which MDM's
+        // yt-dlp sends it with the address and keeps it in each format's headers, which IETDM's
         // engine sends with the stream's playlists and each of its pieces (#769).
         if let Some(origin) = given(&self.origin) {
             args.extend([
@@ -731,7 +731,7 @@ fn nvm_node(home: &Path) -> Option<PathBuf> {
 /// runtime, and yt-dlp looks for Deno alone, on the PATH, unless told of another. Deno on the
 /// PATH (`dirs`): nothing to say. Else Deno where its own installer puts it
 /// (`~/.deno/bin`, #852: no PATH of a program started from the desktop has it), or in `more`
-/// (folders a runtime installed after MDM started is in, [`runtime_dirs`]); else Node.js or Bun.
+/// (folders a runtime installed after IETDM started is in, [`runtime_dirs`]); else Node.js or Bun.
 fn js_runtime(
     dirs: &[PathBuf],
     more: &[PathBuf],
@@ -755,7 +755,7 @@ fn js_runtime(
 
 /// Where Windows' installers put a JavaScript runtime (#852): winget's links (Deno, Node.js) and
 /// Node.js's own installer. They add these to the PATH of programs started after them, not to
-/// MDM's own, so a runtime installed while MDM runs is found here when the video is looked up
+/// IETDM's own, so a runtime installed while IETDM runs is found here when the video is looked up
 /// again. None elsewhere: a package manager's folder is on the PATH already ([`usable_dirs`]).
 fn runtime_dirs() -> Vec<PathBuf> {
     #[cfg(windows)]
@@ -776,14 +776,14 @@ fn runtime_dirs() -> Vec<PathBuf> {
 /// The folders of `path` (a PATH value) a helper can walk, in their order (#508): yt-dlp looks
 /// through the PATH folders, and one Windows refused to open ("[WinError 448] The path cannot be
 /// traversed because it contains an untrusted mount point": a junction Redirection Guard
-/// doesn't trust) ended the look-up. A folder MDM can't open (gone, refused, not a folder) is
+/// doesn't trust) ended the look-up. A folder IETDM can't open (gone, refused, not a folder) is
 /// left out; one reached through a junction or link is given as the folder it leads to, so the
 /// helper crosses no mount point on its way, even when Windows holds the helper to stricter
-/// rules than MDM. Every other folder stays as it was written.
+/// rules than IETDM. Every other folder stays as it was written.
 ///
 /// On Linux and macOS the package managers' folders follow, when the PATH lacks them (#659): a
 /// helper found there ([`crate::system`]) looks there for its own tools too (yt-dlp for Deno
-/// and ffmpeg), even when MDM was opened from Finder, whose PATH has no Homebrew.
+/// and ffmpeg), even when IETDM was opened from Finder, whose PATH has no Homebrew.
 fn usable_dirs(path: &std::ffi::OsStr) -> Vec<PathBuf> {
     #[allow(unused_mut)]
     let mut dirs: Vec<PathBuf> = std::env::split_paths(path)
@@ -844,7 +844,7 @@ fn child_path(path: &std::ffi::OsStr) -> Option<std::ffi::OsString> {
     std::env::join_paths(usable_dirs(path)).ok()
 }
 
-/// Give `cmd` the PATH of [`child_path`]: of the one it was given, else of MDM's own. Every
+/// Give `cmd` the PATH of [`child_path`]: of the one it was given, else of IETDM's own. Every
 /// helper starts here ([`spawn`]), and ffmpeg, started by yt-dlp, inherits it.
 fn with_usable_path(cmd: &mut Command) {
     let is_path = |k: &std::ffi::OsStr| {
@@ -947,7 +947,7 @@ pub fn ytdlp_info(
 
 /// A job of its own for one helper and every process it starts (#61): on Windows `yt-dlp.exe`
 /// is a launcher whose child does the work, and ffmpeg runs under that child. Closing the job
-/// (`Spawned::kill`, or MDM ending in any way) ends them all; ending the launcher alone left the
+/// (`Spawned::kill`, or IETDM ending in any way) ends them all; ending the launcher alone left the
 /// download running, holding its file and the bandwidth.
 #[cfg(windows)]
 fn new_job() -> Option<win32job::Job> {
@@ -1049,7 +1049,7 @@ fn with_cookie_trouble(message: String, warnings: &[String], tail: &VecDeque<Str
 
 /// Start `cmd` supervised: no window, in the job, stdout piped for the caller, stderr kept as a
 /// tail, with a PATH it can walk ([`with_usable_path`], #508), in a folder it can write that is
-/// also its TEMP ([`crate::workdir`], #834: never MDM's install folder).
+/// also its TEMP ([`crate::workdir`], #834: never IETDM's install folder).
 pub fn spawn(mut cmd: Command, name: &str) -> Result<Spawned, ProcError> {
     with_usable_path(&mut cmd);
     crate::workdir::apply(&mut cmd, crate::workdir::folders());
@@ -1533,7 +1533,7 @@ mod tests {
             path.join(format!("node{}", std::env::consts::EXE_SUFFIX))
         );
         // #852: Deno from its own installer (`~/.deno/bin`), or one in a folder a runtime
-        // installed after MDM started is in (Windows: winget's links), named to yt-dlp; Node.js
+        // installed after IETDM started is in (Windows: winget's links), named to yt-dlp; Node.js
         // there when there is nothing else.
         let more = root.path().join("winget-links");
         let exe =
@@ -1580,7 +1580,7 @@ mod tests {
             "../tests/fixtures/ytdlp-js-runtime/with-node.stderr"
         ));
         assert_eq!((none.len(), unsolved.len(), node.len()), (1, 3, 1));
-        // Its own words say it, whatever MDM found.
+        // Its own words say it, whatever IETDM found.
         assert!(missing_js_runtime(&none, false));
         assert!(missing_js_runtime(&none, true));
         // A challenge left unsolved is a runtime's want only when this computer has none: with
@@ -1639,7 +1639,7 @@ mod tests {
         );
     }
 
-    /// #659: MDM opened from Finder has no Homebrew on its PATH, yet finds yt-dlp there; the
+    /// #659: IETDM opened from Finder has no Homebrew on its PATH, yet finds yt-dlp there; the
     /// helper gets the package folders after its own, once each, so yt-dlp finds Deno and
     /// ffmpeg where Homebrew put them.
     #[cfg(unix)]
@@ -1666,7 +1666,7 @@ mod tests {
     /// #508 as it happened: Windows refuses a junction to a process held to Redirection Guard
     /// ("[WinError 448] ... untrusted mount point"). A stand-in for yt-dlp (PowerShell turning
     /// the guard on for itself, then opening each PATH folder) fails on a PATH through a
-    /// junction made here, and passes once started as MDM starts helpers: given the junction's
+    /// junction made here, and passes once started as IETDM starts helpers: given the junction's
     /// real folder, in the same place.
     #[cfg(windows)]
     #[test]
@@ -1871,7 +1871,7 @@ foreach ($d in $env:PATH.Split(';')) {
     }
 
     /// #834: a helper (here a stand-in that prints where it runs and its temporary folders)
-    /// starts in the helpers' folder, not in MDM's own working folder, and has it as TEMP, TMP
+    /// starts in the helpers' folder, not in IETDM's own working folder, and has it as TEMP, TMP
     /// and TMPDIR.
     #[test]
     fn a_helper_runs_in_the_helpers_folder() {

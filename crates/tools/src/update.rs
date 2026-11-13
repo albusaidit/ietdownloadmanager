@@ -1,6 +1,6 @@
-//! Mister Download Manager updating itself: how this copy was installed, the release file that
+//! IET Download Manager updating itself: how this copy was installed, the release file that
 //! replaces it, and that file fetched and checked against the release's SHA256SUMS.txt, whose
-//! signature by MDM's release key ([`crate::signed_by_mdm`]) is checked first. Putting the file
+//! signature by IETDM's release key ([`crate::signed_by_mdm`]) is checked first. Putting the file
 //! in place is the app's (`crates/app/src/update.rs`): it has to close itself to do it.
 
 use std::path::{Path, PathBuf};
@@ -8,7 +8,7 @@ use std::sync::atomic::{AtomicU64, Ordering};
 
 use crate::{Error, signed_by_mdm, sum_for};
 
-/// How this copy of MDM was installed: what an update replaces, and how.
+/// How this copy of IETDM was installed: what an update replaces, and how.
 #[derive(Clone, Copy, Debug, PartialEq, Eq)]
 pub enum Install {
     /// Windows, the setup program.
@@ -25,7 +25,7 @@ pub enum Install {
     /// Linux, the plain programs.
     TarGz,
     /// Linux, a package of another package manager (pacman, …): that package manager updates
-    /// it, never MDM.
+    /// it, never IETDM.
     System,
     /// Built here: never updated from a release.
     Source,
@@ -128,7 +128,7 @@ impl Install {
             Install::TarGz => ("linux-x86_64", ".tar.gz"),
             Install::System | Install::Source => return Vec::new(),
         };
-        let name = |tail: &str| format!("MisterDownloadManager-{version}-{tail}{ext}");
+        let name = |tail: &str| format!("IETDownloadManager-{version}-{tail}{ext}");
         match self {
             Install::Installer | Install::PortableZip | Install::PlainZip => vec![name(tail)],
             _ => vec![name(tail), name(&format!("{tail}-experimental"))],
@@ -138,8 +138,8 @@ impl Install {
 
 /// Linux: which package manager's package `exe` is, asking each whether it owns the file
 /// (`owns(program, arguments)`: it ran and said yes). The .deb's (dpkg), the .rpm's (rpm), or
-/// another's (pacman; a program in /usr/bin none of them owns): those MDM leaves to the system's
-/// updates. Else the plain programs (.tar.gz), which MDM replaces itself. A path that isn't
+/// another's (pacman; a program in /usr/bin none of them owns): those IETDM leaves to the system's
+/// updates. Else the plain programs (.tar.gz), which IETDM replaces itself. A path that isn't
 /// UTF-8 is never one of the packages'.
 fn linux_package(exe: &Path, owns: &dyn Fn(&str, &[&str]) -> bool) -> Install {
     let Some(path) = exe.to_str() else {
@@ -180,8 +180,8 @@ impl Progress {
     }
 }
 
-/// Fetch release file `name` from `assets` (name, download address) into `dir` with MDM's own
-/// engine (`net`), after checking the release's SHA256SUMS.txt is signed by MDM's key, and check
+/// Fetch release file `name` from `assets` (name, download address) into `dir` with IETDM's own
+/// engine (`net`), after checking the release's SHA256SUMS.txt is signed by IETDM's key, and check
 /// the file against it. Returns the file.
 pub async fn fetch(
     assets: &[(String, String)],
@@ -349,8 +349,8 @@ Connection: close
 
     #[tokio::test]
     async fn a_release_file_is_taken_only_from_a_list_signed_by_mdm() {
-        let zip = "MisterDownloadManager-9.9.9-x64.zip";
-        let setup = "MisterDownloadManager-9.9.9-setup.exe";
+        let zip = "IETDownloadManager-9.9.9-x64.zip";
+        let setup = "IETDownloadManager-9.9.9-setup.exe";
         let assets = |base: &str| -> Vec<(String, String)> {
             ["SHA256SUMS.txt", "SHA256SUMS.txt.sig", zip, setup]
                 .iter()
@@ -365,7 +365,7 @@ Connection: close
             (setup, "mdm-SHA256SUMS.txt"),
         ]);
         let dir = tempfile::tempdir().unwrap();
-        // Through MDM's own engine, as the app fetches it.
+        // Through IETDM's own engine, as the app fetches it.
         let net = crate::net(mdm_engine::Proxy::None);
         let progress = Progress::default();
         let file = fetch(&assets(&base), zip, dir.path(), &net, &progress)
@@ -377,7 +377,7 @@ Connection: close
         let out = dir.path().join("out");
         unzip(&file, &out).unwrap();
         assert_eq!(
-            std::fs::read(single_folder(&out).join("misterdownloadmanager.exe")).unwrap(),
+            std::fs::read(single_folder(&out).join("ietdownloadmanager.exe")).unwrap(),
             b"new program"
         );
         // A file that isn't the one the signed list names is refused, and not kept.
@@ -413,15 +413,15 @@ Connection: close
     fn every_kind_has_its_release_file() {
         assert_eq!(
             Install::Installer.assets("0.2.2"),
-            ["MisterDownloadManager-0.2.2-setup.exe"]
+            ["IETDownloadManager-0.2.2-setup.exe"]
         );
         assert_eq!(
             Install::PortableZip.assets("0.2.2"),
-            ["MisterDownloadManager-0.2.2-portable.zip"]
+            ["IETDownloadManager-0.2.2-portable.zip"]
         );
         assert_eq!(
             Install::PlainZip.assets("0.2.2"),
-            ["MisterDownloadManager-0.2.2-x64.zip"]
+            ["IETDownloadManager-0.2.2-x64.zip"]
         );
         // Linux and macOS: the plain name first, then the one up to 0.2.x.
         for (install, ext) in [
@@ -433,8 +433,8 @@ Connection: close
             assert_eq!(
                 install.assets("1.0.0"),
                 [
-                    format!("MisterDownloadManager-1.0.0-linux-x86_64{ext}"),
-                    format!("MisterDownloadManager-1.0.0-linux-x86_64-experimental{ext}"),
+                    format!("IETDownloadManager-1.0.0-linux-x86_64{ext}"),
+                    format!("IETDownloadManager-1.0.0-linux-x86_64-experimental{ext}"),
                 ]
             );
         }
@@ -447,8 +447,8 @@ Connection: close
         assert_eq!(
             Install::Dmg.assets("1.0.0"),
             [
-                format!("MisterDownloadManager-1.0.0-macos-{arch}.dmg"),
-                format!("MisterDownloadManager-1.0.0-macos-{arch}-experimental.dmg"),
+                format!("IETDownloadManager-1.0.0-macos-{arch}.dmg"),
+                format!("IETDownloadManager-1.0.0-macos-{arch}-experimental.dmg"),
             ]
         );
         assert!(Install::Source.assets("1.0.0").is_empty());
@@ -462,7 +462,7 @@ Connection: close
     fn the_linux_names_are_build_linux_sh_s() {
         let script = include_str!("../../../tools/installer/build-linux.sh").replace("\r\n", "\n");
         assert!(
-            script.contains("\nname=\"MisterDownloadManager-$version-linux-x86_64\"\n"),
+            script.contains("\nname=\"IETDownloadManager-$version-linux-x86_64\"\n"),
             "build-linux.sh names its files differently"
         );
         for (install, ext) in [
@@ -477,7 +477,7 @@ Connection: close
             );
             assert_eq!(
                 install.assets("1.0.0")[0],
-                format!("MisterDownloadManager-1.0.0-linux-x86_64{ext}")
+                format!("IETDownloadManager-1.0.0-linux-x86_64{ext}")
             );
         }
     }
@@ -487,47 +487,47 @@ Connection: close
     fn a_linux_copy_knows_its_package_manager() {
         let owner = |who: &'static str| {
             move |tool: &str, args: &[&str]| {
-                assert_eq!(args.last(), Some(&"/usr/bin/misterdownloadmanager"));
+                assert_eq!(args.last(), Some(&"/usr/bin/ietdownloadmanager"));
                 tool == who
             }
         };
-        let exe = Path::new("/usr/bin/misterdownloadmanager");
+        let exe = Path::new("/usr/bin/ietdownloadmanager");
         assert_eq!(linux_package(exe, &owner("dpkg-query")), Install::Deb);
         assert_eq!(linux_package(exe, &owner("rpm")), Install::Rpm);
-        // An Arch package (pacman), or in /usr/bin with no package manager MDM knows: the
+        // An Arch package (pacman), or in /usr/bin with no package manager IETDM knows: the
         // system's.
         assert_eq!(linux_package(exe, &owner("pacman")), Install::System);
         assert_eq!(linux_package(exe, &owner("none")), Install::System);
         // On Debian with rpm's tools installed too: still the .deb's.
         let both = |tool: &str, _: &[&str]| tool == "dpkg-query" || tool == "rpm";
         assert_eq!(linux_package(exe, &both), Install::Deb);
-        // The .tar.gz unpacked in the home folder, /opt or /usr/local: MDM's own to replace.
+        // The .tar.gz unpacked in the home folder, /opt or /usr/local: IETDM's own to replace.
         let nobody = |_: &str, _: &[&str]| false;
-        let home = Path::new("/home/me/MisterDownloadManager/misterdownloadmanager");
+        let home = Path::new("/home/me/IETDownloadManager/ietdownloadmanager");
         assert_eq!(linux_package(home, &nobody), Install::TarGz);
         assert_eq!(
-            linux_package(Path::new("/opt/mdm/misterdownloadmanager"), &nobody),
+            linux_package(Path::new("/opt/mdm/ietdownloadmanager"), &nobody),
             Install::TarGz
         );
         assert_eq!(
-            linux_package(Path::new("/usr/local/bin/misterdownloadmanager"), &nobody),
+            linux_package(Path::new("/usr/local/bin/ietdownloadmanager"), &nobody),
             Install::TarGz
         );
-        // MDM updates neither another package manager's copy nor a build of its own.
+        // IETDM updates neither another package manager's copy nor a build of its own.
         assert!(Install::System.assets("1.0.0").is_empty());
     }
 
     #[test]
     fn bundles_on_a_mac() {
         let exe = Path::new(
-            "/Applications/Mister Download Manager.app/Contents/MacOS/misterdownloadmanager",
+            "/Applications/IET Download Manager.app/Contents/MacOS/ietdownloadmanager",
         );
         assert_eq!(
             app_bundle(exe).as_deref(),
-            Some(Path::new("/Applications/Mister Download Manager.app"))
+            Some(Path::new("/Applications/IET Download Manager.app"))
         );
         assert_eq!(
-            app_bundle(Path::new("/usr/bin/misterdownloadmanager")),
+            app_bundle(Path::new("/usr/bin/ietdownloadmanager")),
             None
         );
     }
@@ -572,7 +572,7 @@ Connection: close
         let zip_path = root.path().join("r.zip");
         let mut w = zip::ZipWriter::new(std::fs::File::create(&zip_path).unwrap());
         let opts = zip::write::SimpleFileOptions::default();
-        w.start_file("MisterDownloadManager-9.9.9-x64/mdm.exe", opts)
+        w.start_file("IETDownloadManager-9.9.9-x64/mdm.exe", opts)
             .unwrap();
         w.write_all(b"exe").unwrap();
         w.start_file("../escape.txt", opts).unwrap();

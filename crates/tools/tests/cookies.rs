@@ -62,7 +62,7 @@ fn hosts_and_cookies(
         .collect()
 }
 
-/// A download as the app runs it: yt-dlp finds the clip, MDM's engine downloads it (#769) with
+/// A download as the app runs it: yt-dlp finds the clip, IETDM's engine downloads it (#769) with
 /// the cookies yt-dlp would send.
 fn download(exe: &std::path::Path, url: &str, browser: &FromBrowser) -> (State, Vec<String>) {
     let dir = tempfile::tempdir().unwrap();

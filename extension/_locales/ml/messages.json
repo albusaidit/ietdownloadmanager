@@ -1,12 +1,12 @@
 {
   "name": {
-    "message": "Mister Download Manager"
+    "message": "IET Download Manager"
   },
   "description": {
-    "message": "ബ്രൗസറിൽ നിന്നുള്ള ഡൗൺലോഡുകൾ Mister Download Manager-ലേക്ക് കൈമാറുന്നു."
+    "message": "ബ്രൗസറിൽ നിന്നുള്ള ഡൗൺലോഡുകൾ IET Download Manager-ലേക്ക് കൈമാറുന്നു."
   },
   "menu": {
-    "message": "Mister Download Manager ഉപയോഗിച്ച് ഡൗൺലോഡ് ചെയ്യുക"
+    "message": "IET Download Manager ഉപയോഗിച്ച് ഡൗൺലോഡ് ചെയ്യുക"
   },
   "video_download": {
     "message": "വീഡിയോ ഡൗൺലോഡ് ചെയ്യുക"
@@ -30,19 +30,19 @@
     "message": "ബട്ടൺ ക്രമീകരണങ്ങൾ..."
   },
   "video_sent": {
-    "message": "Mister Download Manager ലേക്ക് അയച്ചു"
+    "message": "IET Download Manager ലേക്ക് അയച്ചു"
   },
   "menu_selected": {
-    "message": "Mister Download Manager ഉപയോഗിച്ച് തിരഞ്ഞെടുത്ത ലിങ്കുകൾ ഡൗൺലോഡ് ചെയ്യുക"
+    "message": "IET Download Manager ഉപയോഗിച്ച് തിരഞ്ഞെടുത്ത ലിങ്കുകൾ ഡൗൺലോഡ് ചെയ്യുക"
   },
   "menu_all": {
-    "message": "Mister Download Manager ഉപയോഗിച്ച് എല്ലാ ലിങ്കുകളും ഡൗൺലോഡ് ചെയ്യുക"
+    "message": "IET Download Manager ഉപയോഗിച്ച് എല്ലാ ലിങ്കുകളും ഡൗൺലോഡ് ചെയ്യുക"
   },
   "status_connected": {
-    "message": "Mister Download Manager എന്നതുമായി ബന്ധിപ്പിച്ചു"
+    "message": "IET Download Manager എന്നതുമായി ബന്ധിപ്പിച്ചു"
   },
   "status_connected_version": {
-    "message": "Mister Download Manager $version$ എന്നതുമായി ബന്ധിപ്പിച്ചു",
+    "message": "IET Download Manager $version$ എന്നതുമായി ബന്ധിപ്പിച്ചു",
     "placeholders": {
       "version": {
         "content": "$1",
@@ -54,22 +54,22 @@
     "message": "താൽക്കാലികമായി നിർത്തി: ഡൗൺലോഡുകൾ ബ്രൗസറിൽ തുടരും"
   },
   "status_not_installed": {
-    "message": "Mister Download Manager ഇൻസ്റ്റാൾ ചെയ്തിട്ടില്ല, അല്ലെങ്കിൽ അതിന്റെ ബ്രൗസർ സംയോജനം സജ്ജീകരിച്ചിട്ടില്ല"
+    "message": "IET Download Manager ഇൻസ്റ്റാൾ ചെയ്തിട്ടില്ല, അല്ലെങ്കിൽ അതിന്റെ ബ്രൗസർ സംയോജനം സജ്ജീകരിച്ചിട്ടില്ല"
   },
   "status_forbidden": {
-    "message": "Mister Download Manager ഈ എക്സ്റ്റൻഷൻ കോപ്പി സ്വീകരിക്കുന്നില്ല"
+    "message": "IET Download Manager ഈ എക്സ്റ്റൻഷൻ കോപ്പി സ്വീകരിക്കുന്നില്ല"
   },
   "status_not_running": {
-    "message": "Mister Download Manager കൃത്യസമയത്ത് ആരംഭിച്ചില്ല"
+    "message": "IET Download Manager കൃത്യസമയത്ത് ആരംഭിച്ചില്ല"
   },
   "status_host_failed": {
-    "message": "Mister Download Manager ലേക്കുള്ള കണക്ഷൻ പരാജയപ്പെട്ടു"
+    "message": "IET Download Manager ലേക്കുള്ള കണക്ഷൻ പരാജയപ്പെട്ടു"
   },
   "status_too_large": {
     "message": "ഈ ഡൗൺലോഡിന്റെ വിശദാംശങ്ങൾ കൈമാറാൻ കഴിയാത്തത്ര വലുതായിരുന്നു"
   },
   "status_update_app": {
-    "message": "ഈ എക്സ്റ്റൻഷന്റെ എല്ലാ സവിശേഷതകളും ഉപയോഗിക്കാൻ Mister Download Manager അപ്‌ഡേറ്റ് ചെയ്യുക"
+    "message": "ഈ എക്സ്റ്റൻഷന്റെ എല്ലാ സവിശേഷതകളും ഉപയോഗിക്കാൻ IET Download Manager അപ്‌ഡേറ്റ് ചെയ്യുക"
   },
   "popup_take": {
     "message": "ഈ ബ്രൗസറിൽ നിന്ന് ഡൗൺലോഡുകൾ എടുക്കുക"
@@ -78,10 +78,10 @@
     "message": "ഈ ബ്രൗസറിൻ്റെ പ്രോക്സി അല്ലെങ്കിൽ VPN എക്സ്റ്റൻഷൻ വഴി ഡൗൺലോഡുകൾ അയയ്ക്കുക"
   },
   "popup_proxy_title": {
-    "message": "Mister Download Manager ഈ ബ്രൗസറിന്റെ അതേ പ്രോക്സി വഴി ഡൗൺലോഡ് ചെയ്യുന്നു. ഇത് അനുവദിക്കാൻ ബ്രൗസർ ഒരിക്കൽ ചോദിക്കും; ഇത് ഓഫാക്കുന്നത് ആ അനുമതി പിൻവലിക്കും."
+    "message": "IET Download Manager ഈ ബ്രൗസറിന്റെ അതേ പ്രോക്സി വഴി ഡൗൺലോഡ് ചെയ്യുന്നു. ഇത് അനുവദിക്കാൻ ബ്രൗസർ ഒരിക്കൽ ചോദിക്കും; ഇത് ഓഫാക്കുന്നത് ആ അനുമതി പിൻവലിക്കും."
   },
   "popup_proxy_title_chromium": {
-    "message": "Mister Download Manager ഈ ബ്രൗസറിന്റെ അതേ പ്രോക്സി വഴി ഡൗൺലോഡ് ചെയ്യുന്നു. ഇത് ഓഫായിരിക്കുമ്പോൾ, എക്സ്റ്റൻഷൻ ബ്രൗസറിന്റെ പ്രോക്സി വായിക്കില്ല."
+    "message": "IET Download Manager ഈ ബ്രൗസറിന്റെ അതേ പ്രോക്സി വഴി ഡൗൺലോഡ് ചെയ്യുന്നു. ഇത് ഓഫായിരിക്കുമ്പോൾ, എക്സ്റ്റൻഷൻ ബ്രൗസറിന്റെ പ്രോക്സി വായിക്കില്ല."
   },
   "popup_exclude_site": {
     "message": "$site$ ൽ നിന്നുള്ള ഡൗൺലോഡുകൾ ഇനി എടുക്കരുത്",
@@ -102,7 +102,7 @@
     }
   },
   "popup_open": {
-    "message": "Mister Download Manager തുറക്കുക"
+    "message": "IET Download Manager തുറക്കുക"
   },
   "popup_options": {
     "message": "ഓപ്ഷനുകൾ..."
@@ -111,7 +111,7 @@
     "message": "സഹായം"
   },
   "popup_support": {
-    "message": "MDM-നെ പിന്തുണയ്ക്കുക"
+    "message": "IETDM-നെ പിന്തുണയ്ക്കുക"
   },
   "popup_fix": {
     "message": "ഇത് എങ്ങനെ പരിഹരിക്കാം"
@@ -189,16 +189,16 @@
     "message": "ഇവിടെ ഡൗൺലോഡ് ചെയ്യാൻ വീഡിയോ ഒന്നുമില്ല"
   },
   "video_playlist": {
-    "message": "വീഡിയോകളുടെ ഒരു പട്ടിക: അവ Mister Download Manager-ൽ തിരഞ്ഞെടുക്കുക"
+    "message": "വീഡിയോകളുടെ ഒരു പട്ടിക: അവ IET Download Manager-ൽ തിരഞ്ഞെടുക്കുക"
   },
   "video_no_ytdlp": {
-    "message": "ഈ വീഡിയോയ്ക്ക് Mister Download Manager-ന് yt-dlp ആവശ്യമാണ്"
+    "message": "ഈ വീഡിയോയ്ക്ക് IET Download Manager-ന് yt-dlp ആവശ്യമാണ്"
   },
   "video_too_long": {
     "message": "തിരയാൻ വളരെയധികം സമയമെടുത്തു"
   },
   "video_busy": {
-    "message": "Mister Download Manager മറ്റ് വീഡിയോകളിൽ തിരക്കിലാണ്"
+    "message": "IET Download Manager മറ്റ് വീഡിയോകളിൽ തിരക്കിലാണ്"
   },
   "video_queued": {
     "message": "ക്യൂവിലേക്ക് ചേർത്തു"
@@ -222,7 +222,7 @@
     "message": "ഈ കമ്പ്യൂട്ടർ"
   },
   "popup_send_remote": {
-    "message": "മറ്റൊരു Mister Download Manager (ഒരു സെർവർ)"
+    "message": "മറ്റൊരു IET Download Manager (ഒരു സെർവർ)"
   },
   "popup_remote_code": {
     "message": "ജോടിയാക്കൽ കോഡ്"
@@ -234,7 +234,7 @@
     "message": "ജോടിയാക്കുക"
   },
   "popup_remote_help": {
-    "message": "അതിൻ്റെ വിലാസം ഒരിക്കൽ തുറന്ന് അതിൻ്റെ സർട്ടിഫിക്കറ്റ് സ്വീകരിക്കുക, തുടർന്ന് അതിൻ്റെ ഓപ്ഷനുകൾ, റിമോട്ട്, ഒരു ഉപകരണം ജോടിയാക്കുക (അല്ലെങ്കിൽ misterdownloadmanager-cli pair) എന്നിവയിൽ നിന്ന് ഒരു കോഡ് നൽകുക."
+    "message": "അതിൻ്റെ വിലാസം ഒരിക്കൽ തുറന്ന് അതിൻ്റെ സർട്ടിഫിക്കറ്റ് സ്വീകരിക്കുക, തുടർന്ന് അതിൻ്റെ ഓപ്ഷനുകൾ, റിമോട്ട്, ഒരു ഉപകരണം ജോടിയാക്കുക (അല്ലെങ്കിൽ ietdownloadmanager-cli pair) എന്നിവയിൽ നിന്ന് ഒരു കോഡ് നൽകുക."
   },
   "status_remote": {
     "message": "ഡൗൺലോഡുകൾ $address$ എന്നതിലേക്ക് പോകുന്നു",
@@ -291,19 +291,19 @@
     "message": "മികച്ച ഗുണനിലവാരം ഡൗൺലോഡ് ചെയ്യുക"
   },
   "video_sending": {
-    "message": "MDM-ലേക്ക് അയക്കുന്നു..."
+    "message": "IETDM-ലേക്ക് അയക്കുന്നു..."
   },
   "video_added": {
-    "message": "MDM-ലേക്ക് ചേർത്തു"
+    "message": "IETDM-ലേക്ക് ചേർത്തു"
   },
   "video_show": {
     "message": "കാണിക്കുക"
   },
   "video_no_answer": {
-    "message": "MDM പ്രതികരിച്ചില്ല"
+    "message": "IETDM പ്രതികരിച്ചില്ല"
   },
   "video_get_mdm": {
-    "message": "MDM നേടുക"
+    "message": "IETDM നേടുക"
   },
   "video_retry": {
     "message": "വീണ്ടും ശ്രമിക്കുക"
@@ -318,7 +318,7 @@
     "message": "എല്ലാ ഗുണനിലവാരങ്ങളും സബ്ടൈറ്റിലുകളും..."
   },
   "video_failed": {
-    "message": "Mister Download Manager ഇൻസ്റ്റാൾ ചെയ്തിട്ടില്ല അല്ലെങ്കിൽ ആരംഭിച്ചില്ല"
+    "message": "IET Download Manager ഇൻസ്റ്റാൾ ചെയ്തിട്ടില്ല അല്ലെങ്കിൽ ആരംഭിച്ചില്ല"
   },
   "video_download_best": {
     "message": "മികച്ചത് ഡൗൺലോഡ് ചെയ്യുക"
