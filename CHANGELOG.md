@@ -3,6 +3,13 @@
 Each release's notes on GitHub come from its section here (`## [X.Y.Z]`, see
 `.github/workflows/release.yml`).
 
+## [0.5.3]
+
+IET Download Manager 0.5.3: the first signed build of this fork.
+
+- Every program and the installer are signed with the code-signing certificate **IET Download Manager (albusaidit)** (self-signed; thumbprint `E13200DC19365E0DDBDE4905489129C85AB0BA74`). An administrator who trusts that certificate lets this and every later version run under Microsoft Defender's rules for unknown programs.
+- Otherwise the same as 0.5.2: Mister Download Manager by Ahmed Nefzaoui, renamed (see NOTICE-IET.md).
+
 ## [Unreleased]
 
 ### Added

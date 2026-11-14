@@ -9,7 +9,7 @@
 ; Windows Credential Manager (ietdownloadmanager --forget-sign-ins).
 
 #ifndef AppVersion
-  #define AppVersion "0.5.2"
+  #define AppVersion "0.5.3"
 #endif
 #define AppName "IET Download Manager"
 #define AppExe "ietdownloadmanager.exe"
